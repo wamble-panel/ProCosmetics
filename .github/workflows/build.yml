@@ -111,9 +111,9 @@ jobs:
           if ! grep -q "\[KiwiCosmetics\] Initialized!" server.log; then
             echo "::error::KiwiCosmetics did not enable"; exit 1
           fi
-          # Errors logged by or mentioning the plugin, unknown translations and broken config items
-          if grep -nE "Unknown string|Failed to parse item|Error occurred while (enabling|disabling) KiwiCosmetics|me\.dtbh\.kiwicosmetics" server.log \
-              | grep -vE "^\S*\s*at |Loading server plugin|Enabling KiwiCosmetics|Disabling KiwiCosmetics"; then
+          # Stack traces through plugin code, unknown translations and broken config items
+          if grep -nE "^\s*at me\.dtbh\.kiwicosmetics|Unknown string|Failed to parse item|Error occurred while (enabling|disabling) KiwiCosmetics" server.log; then
+            grep -nE -B30 "^\s*at me\.dtbh\.kiwicosmetics" server.log | head -200
             echo "::error::KiwiCosmetics logged errors (see above)"; exit 1
           fi
           if grep -nE "(ERROR|WARN)\]: \[KiwiCosmetics\]" server.log | grep -v "need Paper"; then
