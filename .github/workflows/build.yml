@@ -18,9 +18,9 @@ jobs:
           distribution: temurin
           java-version: '25'
 
-      - name: Cache Spigot (BuildTools output)
+      - name: Restore Spigot cache (BuildTools output)
         id: spigot-cache
-        uses: actions/cache@v4
+        uses: actions/cache/restore@v4
         with:
           path: ~/.m2/repository/org/spigotmc
           key: spigot-26.1.2-26.2-26.3-v1
@@ -33,6 +33,13 @@ jobs:
           for v in 26.1.2 26.2 26.3; do
             java -jar BuildTools.jar --rev "$v" --remapped
           done
+
+      - name: Save Spigot cache
+        if: steps.spigot-cache.outputs.cache-hit != 'true'
+        uses: actions/cache/save@v4
+        with:
+          path: ~/.m2/repository/org/spigotmc
+          key: spigot-26.1.2-26.2-26.3-v1
 
       - name: Build plugin
         run: |
