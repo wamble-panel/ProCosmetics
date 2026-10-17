@@ -59,10 +59,10 @@ public class UnequipCommand extends SimpleCommand<CommandSender> {
                 return;
             }
             String type = parseArgument(args, 0);
-            CosmeticCategory<?, ?, ?> category = plugin.getCategoryRegistries().getCategory(type);
+            CosmeticCategory<?, ?, ?> category = CosmeticsCommand.findCategory(plugin, type);
 
             // Don't expose disabled categories
-            if (category == null || !category.isEnabled()) {
+            if (category == null) {
                 user.sendMessage(user.translate("category.not_found"));
                 return;
             }

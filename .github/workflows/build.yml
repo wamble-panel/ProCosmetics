@@ -107,7 +107,9 @@ jobs:
       - name: Check for plugin errors
         working-directory: server
         run: |
-          grep -n "KiwiCosmetics" server.log | head -50
+          echo "---- everything after startup (command output) ----"
+          sed -n '/Done (/,$p' server.log
+          echo "----"
           if ! grep -q "\[KiwiCosmetics\] Initialized!" server.log; then
             echo "::error::KiwiCosmetics did not enable"; exit 1
           fi
@@ -119,3 +121,10 @@ jobs:
           if grep -nE "(ERROR|WARN)\]: \[KiwiCosmetics\]" server.log | grep -v "need Paper"; then
             echo "::warning::KiwiCosmetics logged warnings (see above)"
           fi
+
+      - name: Upload server log
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: server-log-${{ matrix.minecraft }}
+          path: server/server.log

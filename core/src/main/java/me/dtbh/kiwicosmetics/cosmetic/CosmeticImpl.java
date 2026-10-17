@@ -73,7 +73,9 @@ public abstract class CosmeticImpl<T extends CosmeticType<T, B>,
         player.closeInventory();
 
         if (!cosmeticType.hasPermission(player)) {
-            unequip(false, true);
+            if (!silent) {
+                user.sendMessage(user.translate("cosmetic.locked", Placeholder.unparsed("cosmetic", cosmeticType.getName(user))));
+            }
             return;
         }
         ConfigManagerImpl configManager = plugin.getConfigManager();

@@ -61,10 +61,10 @@ public class EquipCommand extends SimpleCommand<CommandSender> {
                 return;
             }
             String type = parseArgument(args, 0);
-            CosmeticCategory<?, ?, ?> category = plugin.getCategoryRegistries().getCategoryRaw(type);
+            CosmeticCategory<?, ?, ?> category = CosmeticsCommand.findCategory(plugin, type);
 
             // Don't expose disabled categories
-            if (category == null || !category.isEnabled()) {
+            if (category == null) {
                 user.sendMessage(user.translate("category.not_found"));
                 return;
             }
@@ -77,7 +77,7 @@ public class EquipCommand extends SimpleCommand<CommandSender> {
             }
             Cosmetic<?, ?> cosmetic = user.getCosmetic(category);
 
-            if (cosmetic != null && cosmetic.getType().equals(cosmeticType)) {
+            if (cosmetic != null && cosmetic.isEquipped() && cosmetic.getType().equals(cosmeticType)) {
                 user.sendMessage(user.translate("cosmetic.already_equipped"));
                 return;
             }
