@@ -1,4 +1,4 @@
-rootProject.name = "ProCosmetics"
+rootProject.name = "KiwiCosmetics"
 
 include("v26_3")
 include("v26_2")

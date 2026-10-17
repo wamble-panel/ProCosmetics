@@ -1,0 +1,247 @@
+# KiwiCosmetics hats
+#
+# Converted from the old ExecutableItems hats. The ids (crown, apple_hat, ...) are the same as the
+# ExecutableItems file names, which is how old hats are recognized and upgraded automatically.
+#
+# Hats work like real helmets: right-click into the air, shift-click or drag them into the
+# head slot. They can't be placed, eaten, composted or fed to animals, and are unbreakable.
+#
+# Easiest way to add one in-game: /hats create <material> [name]
+#
+# Per hat:
+#   material      the item type
+#   name / lore   MiniMessage (<#FFC8DD>, <bold>, <gradient:#FFB5A7:#FFC8DD>...) or legacy (&a, &#ff7b00, #ff7b00)
+#   glow          enchantment shine (default false)
+#   head-texture  base64 skin texture, only for PLAYER_HEAD
+#   wearable      false = just a collectible, can't be worn (default true)
+#   commands      console commands run when the hat is put on, %player% = player name
+
+settings:
+  # Recognize old ExecutableItems hats by type + name when their id tag can't be read.
+  # Only applies to items that still carry ExecutableItems data, so renamed items never count.
+  match-by-name: true
+
+hats:
+  apple_hat:
+    material: APPLE
+    name: '§x§F§F§4§D§4§Dᴀ§x§F§2§3§D§3§Dᴘ§x§E§5§2§D§2§Dᴘ§x§D§8§1§D§1§Dʟ§x§C§B§0§D§0§Dᴇ §x§B§8§0§0§0§0ʜ§x§A§6§0§0§0§0ᴀ§x§9§4§0§0§0§0ᴛ'
+    lore:
+      - '<#8A8A8A>✦ <#CDB4DB>ᴄᴏꜱᴍᴇᴛɪᴄ ʜᴀᴛ'
+      - ''
+      - '<#A2D2FF>➜ <#FFD8BE>ʀɪɢʜᴛ-ᴄʟɪᴄᴋ ᴛᴏ ᴡᴇᴀʀ'
+  azalea:
+    material: AZALEA
+    name: '#D1FFC6Azalea Hat'
+    lore:
+      - '<#8A8A8A>✦ <#CDB4DB>ᴄᴏꜱᴍᴇᴛɪᴄ ʜᴀᴛ'
+      - ''
+      - '<#A2D2FF>➜ <#FFD8BE>ʀɪɢʜᴛ-ᴄʟɪᴄᴋ ᴛᴏ ᴡᴇᴀʀ'
+  azaleaflowering:
+    material: FLOWERING_AZALEA
+    name: '#FDC6FFAzalea Flowering Hat'
+    lore:
+      - '<#8A8A8A>✦ <#CDB4DB>ᴄᴏꜱᴍᴇᴛɪᴄ ʜᴀᴛ'
+      - ''
+      - '<#A2D2FF>➜ <#FFD8BE>ʀɪɢʜᴛ-ᴄʟɪᴄᴋ ᴛᴏ ᴡᴇᴀʀ'
+  bone:
+    material: BONE
+    name: '#FAF9F6Bone Appetit'
+    lore:
+      - '<#8A8A8A>✦ <#CDB4DB>ᴄᴏꜱᴍᴇᴛɪᴄ ʜᴀᴛ'
+      - ''
+      - '<#A2D2FF>➜ <#FFD8BE>ʀɪɢʜᴛ-ᴄʟɪᴄᴋ ᴛᴏ ᴡᴇᴀʀ'
+  brown_glass:
+    material: BROWN_STAINED_GLASS
+    name: '#ffe55f&lA#ffd45d&lu#ffc35b&lt#ffb258&lu#ffa156&lm#ff8f54&ln #ff7e52&lH#ff6d4f&lA#ff5c4d&lA#ff4b4b&lT'
+    lore:
+      - '<#8A8A8A>✦ <#CDB4DB>ᴄᴏꜱᴍᴇᴛɪᴄ ʜᴀᴛ'
+      - ''
+      - '<#A2D2FF>➜ <#FFD8BE>ʀɪɢʜᴛ-ᴄʟɪᴄᴋ ᴛᴏ ᴡᴇᴀʀ'
+  cactus:
+    material: CACTUS_FLOWER
+    name: '#D1FFC6Cactus Flower Hat'
+    lore:
+      - '<#8A8A8A>✦ <#CDB4DB>ᴄᴏꜱᴍᴇᴛɪᴄ ʜᴀᴛ'
+      - ''
+      - '<#A2D2FF>➜ <#FFD8BE>ʀɪɢʜᴛ-ᴄʟɪᴄᴋ ᴛᴏ ᴡᴇᴀʀ'
+  cobweb_hat:
+    material: COBWEB
+    name: '§x§F§F§F§F§F§Fᴄ§x§F§7§F§7§F§7ᴏ§x§E§F§E§F§E§Fʙ§x§E§7§E§7§E§7ᴡ§x§D§F§D§F§D§Fᴇ§x§D§7§D§7§D§7ʙ §x§C§F§C§F§C§Fʜ§x§C§7§C§7§C§7ᴀ§x§B§F§B§F§B§Fᴛ'
+    lore:
+      - '<#8A8A8A>✦ <#CDB4DB>ᴄᴏꜱᴍᴇᴛɪᴄ ʜᴀᴛ'
+      - ''
+      - '<#A2D2FF>➜ <#FFD8BE>ʀɪɢʜᴛ-ᴄʟɪᴄᴋ ᴛᴏ ᴡᴇᴀʀ'
+  coral_fan:
+    material: BRAIN_CORAL_FAN
+    name: '#F168FFCoral Hat'
+    lore:
+      - '<#8A8A8A>✦ <#CDB4DB>ᴄᴏꜱᴍᴇᴛɪᴄ ʜᴀᴛ'
+      - ''
+      - '<#A2D2FF>➜ <#FFD8BE>ʀɪɢʜᴛ-ᴄʟɪᴄᴋ ᴛᴏ ᴡᴇᴀʀ'
+  crown:
+    material: MEDIUM_AMETHYST_BUD
+    name: '#BD84EACrown'
+    lore:
+      - '<#8A8A8A>✦ <#CDB4DB>ᴄᴏꜱᴍᴇᴛɪᴄ ʜᴀᴛ'
+      - ''
+      - '<#A2D2FF>➜ <#FFD8BE>ʀɪɢʜᴛ-ᴄʟɪᴄᴋ ᴛᴏ ᴡᴇᴀʀ'
+  eyes_hat:
+    material: FROGSPAWN
+    name: '§x§D§8§D§2§C§4ᴇ§x§C§9§C§2§B§3x§x§B§A§B§2§A§2ᴛ§x§A§B§A§2§9§1ʀ§x§9§C§9§2§8§0ᴀ §x§8§D§8§2§6§Fᴇ§x§7§E§7§2§5§Eʏ§x§6§F§6§2§4§Dᴇ§x§6§0§5§2§3§Cꜱ §x§5§1§4§2§2§Bʜ§x§4§9§3§B§2§9ᴀ§x§4§1§3§3§2§7ᴛ'
+    lore:
+      - '<#8A8A8A>✦ <#CDB4DB>ᴄᴏꜱᴍᴇᴛɪᴄ ʜᴀᴛ'
+      - ''
+      - '<#A2D2FF>➜ <#FFD8BE>ʀɪɢʜᴛ-ᴄʟɪᴄᴋ ᴛᴏ ᴡᴇᴀʀ'
+  fire_coral_fan:
+    material: FIRE_CORAL_FAN
+    name: '#FF5A75Coral Hat'
+    lore:
+      - '<#8A8A8A>✦ <#CDB4DB>ᴄᴏꜱᴍᴇᴛɪᴄ ʜᴀᴛ'
+      - ''
+      - '<#A2D2FF>➜ <#FFD8BE>ʀɪɢʜᴛ-ᴄʟɪᴄᴋ ᴛᴏ ᴡᴇᴀʀ'
+  honey:
+    material: HONEY_BLOCK
+    name: '#EBA937Honey Helmet'
+    lore:
+      - '<#8A8A8A>✦ <#CDB4DB>ᴄᴏꜱᴍᴇᴛɪᴄ ʜᴀᴛ'
+      - ''
+      - '<#A2D2FF>➜ <#FFD8BE>ʀɪɢʜᴛ-ᴄʟɪᴄᴋ ᴛᴏ ᴡᴇᴀʀ'
+  ice:
+    material: ICE
+    name: '#80cfffIce Hat'
+    lore:
+      - '<#8A8A8A>✦ <#CDB4DB>ᴡɪɴᴛᴇʀ ʜᴀᴛ'
+      - '<#FFE5EC>ᴡɪɴᴛᴇʀ ᴏꜰ 2024'
+      - ''
+      - '<#A2D2FF>➜ <#FFD8BE>ʀɪɢʜᴛ-ᴄʟɪᴄᴋ ᴛᴏ ᴡᴇᴀʀ'
+    commands:
+      - 'smite %player%'
+  kookie:
+    material: COOKIE
+    name: '#FFCB7AKookie'
+    lore:
+      - '<#8A8A8A>✦ <#CDB4DB>ᴄᴏꜱᴍᴇᴛɪᴄ ʜᴀᴛ'
+      - ''
+      - '<#A2D2FF>➜ <#FFD8BE>ʀɪɢʜᴛ-ᴄʟɪᴄᴋ ᴛᴏ ᴡᴇᴀʀ'
+  leaf_litter_hat:
+    material: LEAF_LITTER
+    name: '§x§6§B§3§F§2§2ʟ§x§7§4§4§5§2§2ᴇ§x§7§D§4§B§2§2ᴀ§x§8§6§5§1§2§2ꜰ §x§8§F§5§7§2§2ʟ§x§9§8§5§D§2§2ɪ§x§A§1§6§3§2§2ᴛ§x§A§A§6§9§2§2ᴛ§x§B§3§6§F§2§2ᴇ§x§B§C§7§5§2§2ʀ §x§C§5§7§B§2§2ʜ§x§C§E§8§1§2§2ᴀ§x§D§7§8§7§2§2ᴛ'
+    lore:
+      - '<#8A8A8A>✦ <#CDB4DB>ᴄᴏꜱᴍᴇᴛɪᴄ ʜᴀᴛ'
+      - ''
+      - '<#A2D2FF>➜ <#FFD8BE>ʀɪɢʜᴛ-ᴄʟɪᴄᴋ ᴛᴏ ᴡᴇᴀʀ'
+  papale:
+    material: SPORE_BLOSSOM
+    name: '#EA81CCPāpale'
+    lore:
+      - '<#8A8A8A>✦ <#CDB4DB>ᴄᴏꜱᴍᴇᴛɪᴄ ʜᴀᴛ'
+      - ''
+      - '<#A2D2FF>➜ <#FFD8BE>ʀɪɢʜᴛ-ᴄʟɪᴄᴋ ᴛᴏ ᴡᴇᴀʀ'
+  pink_candle:
+    material: PINK_CANDLE
+    name: '#F975F5P#F87BE0a#F781CAr#F687B5t#F58D9Fy #F5938AC#F49875a#F39E5Fn#F2A44Ad#F1AA34l#F0B01Fe'
+    lore:
+      - '<#8A8A8A>✦ <#CDB4DB>ᴘᴀʀᴛʏ ʜᴀᴛ'
+      - ''
+      - '<#A2D2FF>➜ <#FFD8BE>ʀɪɢʜᴛ-ᴄʟɪᴄᴋ ᴛᴏ ᴡᴇᴀʀ'
+    glow: true
+  pink_glass:
+    material: PINK_STAINED_GLASS
+    name: '&#fb89dfV&#fb85dca&#fb81d9l&#fb7cd7e&#fb78d4n&#fc74d1t&#fc70cei&#fc6ccbn&#fc67c9e&#fc63c6&#fc5fc3s &#fc5bc0P&#fc57bdi&#fc52bbn&#fc4eb8k &#fd4ab5H&#fd46b2e&#fd42afl&#fd3dadm&#fd39aae&#fd35a7t'
+    lore:
+      - '<#8A8A8A>✦ <#CDB4DB>ᴄᴏꜱᴍᴇᴛɪᴄ ʜᴀᴛ'
+      - ''
+      - '<#A2D2FF>➜ <#FFD8BE>ʀɪɢʜᴛ-ᴄʟɪᴄᴋ ᴛᴏ ᴡᴇᴀʀ'
+  potato:
+    material: POTATO
+    name: '#65FF00Potato Hat'
+    lore:
+      - '<#8A8A8A>✦ <#CDB4DB>ᴄᴏꜱᴍᴇᴛɪᴄ ʜᴀᴛ'
+      - ''
+      - '<#A2D2FF>➜ <#FFD8BE>ʀɪɢʜᴛ-ᴄʟɪᴄᴋ ᴛᴏ ᴡᴇᴀʀ'
+  red_candle:
+    material: RED_CANDLE
+    name: '#F975F5P#F87BE0a#F781CAr#F687B5t#F58D9Fy #F5938AC#F49875a#F39E5Fn#F2A44Ad#F1AA34l#F0B01Fe'
+    lore:
+      - '<#8A8A8A>✦ <#CDB4DB>ᴘᴀʀᴛʏ ʜᴀᴛ'
+      - ''
+      - '<#A2D2FF>➜ <#FFD8BE>ʀɪɢʜᴛ-ᴄʟɪᴄᴋ ᴛᴏ ᴡᴇᴀʀ'
+    glow: true
+  rose:
+    material: ROSE_BUSH
+    name: '#FC5667Rose Bush'
+    lore:
+      - '<#8A8A8A>✦ <#CDB4DB>ᴄᴏꜱᴍᴇᴛɪᴄ ʜᴀᴛ'
+      - ''
+      - '<#A2D2FF>➜ <#FFD8BE>ʀɪɢʜᴛ-ᴄʟɪᴄᴋ ᴛᴏ ᴡᴇᴀʀ'
+  slime:
+    material: SLIME_BLOCK
+    name: '#65FF00Slime Helmet'
+    lore:
+      - '<#8A8A8A>✦ <#CDB4DB>ᴄᴏꜱᴍᴇᴛɪᴄ ʜᴀᴛ'
+      - ''
+      - '<#A2D2FF>➜ <#FFD8BE>ʀɪɢʜᴛ-ᴄʟɪᴄᴋ ᴛᴏ ᴡᴇᴀʀ'
+  snorkel:
+    material: LIGHTNING_ROD
+    name: '#EAAA2DSnorkel'
+    lore:
+      - '<#8A8A8A>✦ <#CDB4DB>ᴄᴏꜱᴍᴇᴛɪᴄ ʜᴀᴛ'
+      - ''
+      - '<#A2D2FF>➜ <#FFD8BE>ʀɪɢʜᴛ-ᴄʟɪᴄᴋ ᴛᴏ ᴡᴇᴀʀ'
+  snow:
+    material: SNOW
+    name: '#80cfffSNOW SCARF'
+    lore:
+      - '<#8A8A8A>✦ <#CDB4DB>ᴡɪɴᴛᴇʀ ʜᴀᴛ'
+      - '<#FFE5EC>ᴄʜʀɪꜱᴛᴍᴀꜱ ᴏꜰ 2024'
+      - ''
+      - '<#A2D2FF>➜ <#FFD8BE>ʀɪɢʜᴛ-ᴄʟɪᴄᴋ ᴛᴏ ᴡᴇᴀʀ'
+    commands:
+      - 'smite %player%'
+  space:
+    material: GLASS
+    name: '#CAE4EASpace Helmet'
+    lore:
+      - '<#8A8A8A>✦ <#CDB4DB>ᴄᴏꜱᴍᴇᴛɪᴄ ʜᴀᴛ'
+      - ''
+      - '<#A2D2FF>➜ <#FFD8BE>ʀɪɢʜᴛ-ᴄʟɪᴄᴋ ᴛᴏ ᴡᴇᴀʀ'
+  spruce_hat:
+    material: SPRUCE_SAPLING
+    name: '#926143Spruce Hat'
+    lore:
+      - '<#8A8A8A>✦ <#CDB4DB>ᴄᴏꜱᴍᴇᴛɪᴄ ʜᴀᴛ'
+      - ''
+      - '<#A2D2FF>➜ <#FFD8BE>ʀɪɢʜᴛ-ᴄʟɪᴄᴋ ᴛᴏ ᴡᴇᴀʀ'
+  tropical_fish:
+    material: TROPICAL_FISH
+    name: '#D1FFC6#FF9633T#FF973Br#FF9844o#FF984Cp#FF9954i#FF9A5Dc#FF9B65a#FF9B6Dl #FF9D7EF#FF9E86i#FF9E8Fs#FF9F97h'
+    lore:
+      - '<#8A8A8A>✦ <#CDB4DB>ᴄᴏꜱᴍᴇᴛɪᴄ ʜᴀᴛ'
+      - '<#FFE5EC>ꜱᴜᴍᴍᴇʀ ᴇxᴄʟᴜꜱɪᴠᴇ'
+      - ''
+      - '<#A2D2FF>➜ <#FFD8BE>ʀɪɢʜᴛ-ᴄʟɪᴄᴋ ᴛᴏ ᴡᴇᴀʀ'
+  unicorn:
+    material: END_ROD
+    name: '#9886BEUnicorn Horn'
+    lore:
+      - '<#8A8A8A>✦ <#CDB4DB>ᴄᴏꜱᴍᴇᴛɪᴄ ʜᴀᴛ'
+      - ''
+      - '<#A2D2FF>➜ <#FFD8BE>ʀɪɢʜᴛ-ᴄʟɪᴄᴋ ᴛᴏ ᴡᴇᴀʀ'
+    glow: true
+  uwu:
+    material: PLAYER_HEAD
+    name: '§x§F§F§9§9§F§C§l§oU§x§F§F§9§5§F§C§l§ow§x§F§E§9§0§F§D§l§oU §x§F§E§8§7§F§E§l§oH§x§F§E§8§3§F§E§l§oe§x§F§D§7§E§F§F§l§oa§x§F§D§7§A§F§F§l§od'
+    lore:
+      - '<#8A8A8A>✦ <#CDB4DB>ʀᴇᴡᴀʀᴅ ɪᴛᴇᴍ'
+      - ''
+      - '<#FFD8BE>ᴇxᴄʜᴀɴɢᴇ ꜰᴏʀ ʀᴇᴡᴀʀᴅꜱ'
+    head-texture: 'eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZWNmZGM4ZDcwYWFjODRiNDBjZDliM2Q3ZDgyZDAzYTUyMGY0MDMwYTRhODJiMjJhZTZjMTVmZTdiNmVjYTQ2YyJ9fX0='
+    wearable: false
+  white_candle:
+    material: WHITE_CANDLE
+    name: '#F975F5P#F87BE0a#F781CAr#F687B5t#F58D9Fy #F5938AC#F49875a#F39E5Fn#F2A44Ad#F1AA34l#F0B01Fe'
+    lore:
+      - '<#8A8A8A>✦ <#CDB4DB>ᴘᴀʀᴛʏ ʜᴀᴛ'
+      - ''
+      - '<#A2D2FF>➜ <#FFD8BE>ʀɪɢʜᴛ-ᴄʟɪᴄᴋ ᴛᴏ ᴡᴇᴀʀ'
+    glow: true

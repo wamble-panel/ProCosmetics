@@ -1,0 +1,182 @@
+# KiwiCosmetics wardrobe: animated rainbow leather armor + hat/rainbow messages.
+# Hats themselves are in hats.yml. Both need a Paper server.
+#
+# Text supports MiniMessage (<#FFC8DD>, <bold>, <gradient:#FFB5A7:#FFC8DD>) and legacy codes (&a, &#ff7b00).
+
+settings:
+  # How often (in ticks) each player's armor is checked for rainbow pieces.
+  # Lower = new armor starts animating faster, higher = less work for the server.
+  # 10 ticks = half a second. Leave this alone unless you know you need it.
+  scan-interval: 10
+
+particles:
+  enabled: true
+  # Which worn piece emits the particles: helmet, chestplate, leggings or boots.
+  piece: boots
+  count: 10
+  # Dust particle size (1.0 is the vanilla redstone size).
+  size: 1.0
+  # Random spread around the player's feet, in blocks.
+  offset: 0.2
+  # Only players within this many blocks will see the particles.
+  view-distance: 32
+  # Don't show particles for spectators or players with the invisibility effect.
+  hide-for-spectators: true
+  hide-when-invisible: true
+
+patterns:
+  basic:
+    colors:
+      - '#ff7b00'
+      - '#000000'
+      - '#FFFFFF'
+    # How many colors are generated between each pair above. More = smoother.
+    amount-of-colors: 7
+    # How often the color changes. 20 = once per second,
+    # 10 = every half second, 2 = every tenth of a second.
+    interval: 10
+    # true  = after the last color, fade back into the first one.
+    # false = jump straight from the last color back to the first.
+    smooth-loop: true
+    items:
+      helmet:
+        name: '&aRainbow helmet'
+        lore:
+          - '<#8A8A8A>✦ <#CDB4DB>ʀᴀɪɴʙᴏᴡ ᴀʀᴍᴏʀ'
+          - ''
+          - '<#B5EAD7>✔ <#FFD8BE>ᴜɴʙʀᴇᴀᴋᴀʙʟᴇ'
+      chestplate:
+        name: '&aRainbow chestplate'
+        lore:
+          - '<#8A8A8A>✦ <#CDB4DB>ʀᴀɪɴʙᴏᴡ ᴀʀᴍᴏʀ'
+          - ''
+          - '<#B5EAD7>✔ <#FFD8BE>ᴜɴʙʀᴇᴀᴋᴀʙʟᴇ'
+      leggings:
+        name: '&aRainbow leggings'
+        lore:
+          - '<#8A8A8A>✦ <#CDB4DB>ʀᴀɪɴʙᴏᴡ ᴀʀᴍᴏʀ'
+          - ''
+          - '<#B5EAD7>✔ <#FFD8BE>ᴜɴʙʀᴇᴀᴋᴀʙʟᴇ'
+      boots:
+        name: '&aRainbow boots'
+        lore:
+          - '<#8A8A8A>✦ <#CDB4DB>ʀᴀɪɴʙᴏᴡ ᴀʀᴍᴏʀ'
+          - ''
+          - '<#B5EAD7>✔ <#FFD8BE>ᴜɴʙʀᴇᴀᴋᴀʙʟᴇ'
+  halloween:
+    colors:
+      - '#54d06b'
+      - '#321fdb'
+    amount-of-colors: 10
+    interval: 5
+    smooth-loop: true
+    items:
+      helmet:
+        name: '&aRainbow helmet'
+        lore:
+          - '<#8A8A8A>✦ <#CDB4DB>ʀᴀɪɴʙᴏᴡ ᴀʀᴍᴏʀ'
+          - ''
+          - '<#B5EAD7>✔ <#FFD8BE>ᴜɴʙʀᴇᴀᴋᴀʙʟᴇ'
+      chestplate:
+        name: '&aRainbow chestplate'
+        lore:
+          - '<#8A8A8A>✦ <#CDB4DB>ʀᴀɪɴʙᴏᴡ ᴀʀᴍᴏʀ'
+          - ''
+          - '<#B5EAD7>✔ <#FFD8BE>ᴜɴʙʀᴇᴀᴋᴀʙʟᴇ'
+      leggings:
+        name: '&aRainbow leggings'
+        lore:
+          - '<#8A8A8A>✦ <#CDB4DB>ʀᴀɪɴʙᴏᴡ ᴀʀᴍᴏʀ'
+          - ''
+          - '<#B5EAD7>✔ <#FFD8BE>ᴜɴʙʀᴇᴀᴋᴀʙʟᴇ'
+      boots:
+        name: '&aRainbow boots'
+        lore:
+          - '<#8A8A8A>✦ <#CDB4DB>ʀᴀɪɴʙᴏᴡ ᴀʀᴍᴏʀ'
+          - ''
+          - '<#B5EAD7>✔ <#FFD8BE>ᴜɴʙʀᴇᴀᴋᴀʙʟᴇ'
+  rainbow:
+    colors:
+      - '#ff0000'
+      - '#ffff00'
+      - '#00ff00'
+      - '#00ffff'
+      - '#0000ff'
+      - '#ff00ff'
+    amount-of-colors: 6
+    interval: 2
+    smooth-loop: true
+    items:
+      helmet:
+        name: '&#ff0000R&#ff7f00a&#ffff00i&#00ff00n&#0000ffb&#8b00ffo&#ff00ffw &fHelmet'
+        lore:
+          - '<#8A8A8A>✦ <#CDB4DB>ꜱʜɪꜰᴛꜱ ᴛʜʀᴏᴜɢʜ ᴇᴠᴇʀʏ ᴄᴏʟᴏʀ'
+          - ''
+          - '<#B5EAD7>✔ <#FFD8BE>ᴜɴʙʀᴇᴀᴋᴀʙʟᴇ'
+      chestplate:
+        name: '&#ff0000R&#ff7f00a&#ffff00i&#00ff00n&#0000ffb&#8b00ffo&#ff00ffw &fChestplate'
+        lore:
+          - '<#8A8A8A>✦ <#CDB4DB>ꜱʜɪꜰᴛꜱ ᴛʜʀᴏᴜɢʜ ᴇᴠᴇʀʏ ᴄᴏʟᴏʀ'
+          - ''
+          - '<#B5EAD7>✔ <#FFD8BE>ᴜɴʙʀᴇᴀᴋᴀʙʟᴇ'
+      leggings:
+        name: '&#ff0000R&#ff7f00a&#ffff00i&#00ff00n&#0000ffb&#8b00ffo&#ff00ffw &fLeggings'
+        lore:
+          - '<#8A8A8A>✦ <#CDB4DB>ꜱʜɪꜰᴛꜱ ᴛʜʀᴏᴜɢʜ ᴇᴠᴇʀʏ ᴄᴏʟᴏʀ'
+          - ''
+          - '<#B5EAD7>✔ <#FFD8BE>ᴜɴʙʀᴇᴀᴋᴀʙʟᴇ'
+      boots:
+        name: '&#ff0000R&#ff7f00a&#ffff00i&#00ff00n&#0000ffb&#8b00ffo&#ff00ffw &fBoots'
+        lore:
+          - '<#8A8A8A>✦ <#CDB4DB>ꜱʜɪꜰᴛꜱ ᴛʜʀᴏᴜɢʜ ᴇᴠᴇʀʏ ᴄᴏʟᴏʀ'
+          - ''
+          - '<#B5EAD7>✔ <#FFD8BE>ᴜɴʙʀᴇᴀᴋᴀʙʟᴇ'
+
+# Messages use MiniMessage: <#FFC8DD> colors, <bold>, <gradient:#FFB5A7:#FFC8DD>, <st> strikethrough...
+# Placeholders: {prefix}, {patterns}, {pattern}, {hats}, {hat}, {player}, {usage}, {material}, {count}
+#
+# Palette: peach #FFD8BE text | pink #FFC8DD names/commands | light pink #FFE5EC values
+#          mint #B5EAD7 success | soft red #FF9AA2 errors | lilac #CDB4DB accents | grey #8A8A8A bullets
+messages:
+  prefix: '<gradient:#FFB5A7:#FFC8DD><bold>✦ ᴋɪᴡɪ</bold></gradient> <#8A8A8A>•'
+  reloaded: '{prefix} <#B5EAD7>✔ ʀᴇʟᴏᴀᴅᴇᴅ <#FFD8BE>ᴡᴀʀᴅʀᴏʙᴇ ᴀɴᴅ ʜᴀᴛꜱ.'
+  no-permission: '{prefix} <#FF9AA2>✘ ʏᴏᴜ ᴅᴏɴ''ᴛ ʜᴀᴠᴇ ᴘᴇʀᴍɪꜱꜱɪᴏɴ ꜰᴏʀ ᴛʜᴀᴛ.'
+  invalid-player: '{prefix} <#FF9AA2>✘ ᴘʟᴀʏᴇʀ ɴᴏᴛ ꜰᴏᴜɴᴅ ᴏʀ ɴᴏᴛ ᴏɴʟɪɴᴇ.'
+  players-only: '{prefix} <#FF9AA2>✘ ᴏɴʟʏ ᴘʟᴀʏᴇʀꜱ ᴄᴀɴ ᴅᴏ ᴛʜᴀᴛ.'
+  usage: '{prefix} <#FFD8BE>ᴜꜱᴀɢᴇ <#8A8A8A>— <#FFC8DD>{usage}'
+
+  # Rainbow armor
+  pattern-list: '{prefix} <#FFD8BE>ʀᴀɪɴʙᴏᴡ ᴘᴀᴛᴛᴇʀɴꜱ <#8A8A8A>• {patterns}'
+  invalid-pattern: '{prefix} <#FF9AA2>✘ ᴜɴᴋɴᴏᴡɴ ᴘᴀᴛᴛᴇʀɴ. <#FFD8BE>ᴀᴠᴀɪʟᴀʙʟᴇ <#8A8A8A>• {patterns}'
+  invalid-piece: '{prefix} <#FF9AA2>✘ ᴜꜱᴇ <#FFC8DD>helmet<#8A8A8A>, <#FFC8DD>chestplate<#8A8A8A>, <#FFC8DD>leggings<#8A8A8A>, <#FFC8DD>boots <#FF9AA2>ᴏʀ <#FFC8DD>all<#FF9AA2>.'
+  given: '{prefix} <#B5EAD7>✔ ɢᴀᴠᴇ <#FFE5EC>{pattern} <#B5EAD7>ʀᴀɪɴʙᴏᴡ ᴀʀᴍᴏʀ ᴛᴏ <#FFC8DD>{player}<#B5EAD7>.'
+  received: '{prefix} <#B5EAD7>✦ ʏᴏᴜ ʀᴇᴄᴇɪᴠᴇᴅ <#FFE5EC>{pattern} <#B5EAD7>ʀᴀɪɴʙᴏᴡ ᴀʀᴍᴏʀ!'
+
+  # Hats
+  hat-list: '{prefix} <#FFD8BE>ʜᴀᴛꜱ <#8A8A8A>({count}) • {hats}'
+  invalid-hat: '{prefix} <#FF9AA2>✘ ᴜɴᴋɴᴏᴡɴ ʜᴀᴛ. <#FFD8BE>ᴜꜱᴇ <#FFC8DD>/hats list<#FFD8BE>.'
+  invalid-material: '{prefix} <#FF9AA2>✘ <#FFE5EC>{material} <#FF9AA2>ɪꜱ ɴᴏᴛ ᴀɴ ɪᴛᴇᴍ.'
+  hat-given: '{prefix} <#B5EAD7>✔ ɢᴀᴠᴇ ᴛʜᴇ <#FFE5EC>{hat} <#B5EAD7>ʜᴀᴛ ᴛᴏ <#FFC8DD>{player}<#B5EAD7>.'
+  hat-received: '{prefix} <#B5EAD7>✦ ʏᴏᴜ ʀᴇᴄᴇɪᴠᴇᴅ ᴛʜᴇ <#FFE5EC>{hat} <#B5EAD7>ʜᴀᴛ! <#8A8A8A>• <#FFD8BE>ʀɪɢʜᴛ-ᴄʟɪᴄᴋ ᴛᴏ ᴡᴇᴀʀ ɪᴛ.'
+  hat-created: '{prefix} <#B5EAD7>✔ ᴄʀᴇᴀᴛᴇᴅ ʜᴀᴛ <#FFE5EC>{hat}<#B5EAD7>. <#8A8A8A>• <#FFD8BE>ɢɪᴠᴇ ɪᴛ ᴡɪᴛʜ <#FFC8DD>/hats give {hat}'
+  hat-deleted: '{prefix} <#B5EAD7>✔ ᴅᴇʟᴇᴛᴇᴅ ʜᴀᴛ <#FFE5EC>{hat}<#B5EAD7>.'
+  hat-upgraded: '{prefix} <#B5EAD7>✔ ʏᴏᴜʀ ʜᴀᴛ ᴡᴀꜱ ᴜᴘᴅᴀᴛᴇᴅ. <#FFD8BE>ʀɪɢʜᴛ-ᴄʟɪᴄᴋ ᴀɢᴀɪɴ ᴛᴏ ᴡᴇᴀʀ ɪᴛ.'
+  save-failed: '{prefix} <#FF9AA2>✘ ᴄᴏᴜʟᴅ ɴᴏᴛ ꜱᴀᴠᴇ ʜᴀᴛꜱ.ʏᴍʟ, ᴄʜᴇᴄᴋ ᴛʜᴇ ᴄᴏɴꜱᴏʟᴇ.'
+
+  help-hats:
+    - '<#8A8A8A><st>━━━━━━━━━━━━━━━━━━━━━━━━</st>'
+    - '<gradient:#FFB5A7:#FFC8DD><bold>✦ ʜᴀᴛꜱ</bold></gradient> <#CDB4DB>ʜᴇʟᴘ'
+    - '<#8A8A8A>• <#FFC8DD>/hats give \<hat> [player] [amount] <#8A8A8A>— <#FFD8BE>ɢɪᴠᴇ ᴀ ʜᴀᴛ'
+    - '<#8A8A8A>• <#FFC8DD>/hats create \<material> [name] <#8A8A8A>— <#FFD8BE>✎ ᴍᴀᴋᴇ ᴀ ɴᴇᴡ ʜᴀᴛ'
+    - '<#8A8A8A>• <#FFC8DD>/hats delete \<hat> <#8A8A8A>— <#FFD8BE>ʀᴇᴍᴏᴠᴇ ᴀ ʜᴀᴛ'
+    - '<#8A8A8A>• <#FFC8DD>/hats list <#8A8A8A>— <#FFD8BE>ꜱʜᴏᴡ ᴀʟʟ ʜᴀᴛꜱ'
+    - '<#8A8A8A>• <#FFC8DD>/hats inspect <#8A8A8A>— <#FFD8BE>ᴄʜᴇᴄᴋ ᴛʜᴇ ɪᴛᴇᴍ ɪɴ ʏᴏᴜʀ ʜᴀɴᴅ'
+    - '<#8A8A8A>• <#FFC8DD>/hats reload <#8A8A8A>— <#FFD8BE>ʀᴇʟᴏᴀᴅ ᴛʜᴇ ᴄᴏɴꜰɪɢ'
+    - '<#8A8A8A><st>━━━━━━━━━━━━━━━━━━━━━━━━</st>'
+  help-rainbow:
+    - '<#8A8A8A><st>━━━━━━━━━━━━━━━━━━━━━━━━</st>'
+    - '<gradient:#FFB5A7:#FFC8DD><bold>✦ ʀᴀɪɴʙᴏᴡ ᴀʀᴍᴏʀ</bold></gradient> <#CDB4DB>ʜᴇʟᴘ'
+    - '<#8A8A8A>• <#FFC8DD>/rainbow give \<pattern> [player] [piece] <#8A8A8A>— <#FFD8BE>ɢɪᴠᴇ ʀᴀɪɴʙᴏᴡ ᴀʀᴍᴏʀ'
+    - '<#8A8A8A>• <#FFC8DD>/rainbow list <#8A8A8A>— <#FFD8BE>ꜱʜᴏᴡ ᴀʟʟ ᴘᴀᴛᴛᴇʀɴꜱ'
+    - '<#8A8A8A>• <#FFC8DD>/rainbow reload <#8A8A8A>— <#FFD8BE>ʀᴇʟᴏᴀᴅ ᴛʜᴇ ᴄᴏɴꜰɪɢ'
+    - '<#8A8A8A><st>━━━━━━━━━━━━━━━━━━━━━━━━</st>'

@@ -7,8 +7,8 @@ plugins {
     id("com.diffplug.spotless") version "8.9.0"
 }
 
-group = "se.filledev"
-version = "2.0.9"
+group = "me.dtbh"
+version = "5.0.0"
 
 java {
     toolchain {
@@ -33,11 +33,10 @@ tasks.named<ShadowJar>("shadowJar") {
     archiveClassifier.set("")
 
     // Relocate libs that are not exposed in the API module
-    val basePackage = "se.filledev.procosmetics.libs"
+    val basePackage = "me.dtbh.kiwicosmetics.libs"
 
     val relocations = mapOf(
-        "dev.dejvokep.boostedyaml" to "boostedyaml",
-        "org.bstats" to "bstats"
+        "dev.dejvokep.boostedyaml" to "boostedyaml"
     )
     relocations.forEach { (from, to) -> relocate(from, "$basePackage.$to") }
 }

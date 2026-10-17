@@ -1,46 +1,133 @@
-name: ProCosmetics
+name: KiwiCosmetics
 version: @VERSION@
-author: FilleDev
-main: se.filledev.procosmetics.ProCosmeticsPlugin
+author: dtbh
+authors: [ dtbh, FilleDev ]
+description: Particles, trails, gadgets, hats and rainbow armor. Based on ProCosmetics by FilleDev.
+main: me.dtbh.kiwicosmetics.KiwiCosmeticsPlugin
 load: POSTWORLD
-softdepend: [ CMI, Essentials, MVdWPlaceholderAPI, Multiverse-Core, PremiumVanish, PlaceholderAPI, PlayerPoints, PlotSquared, SuperVanish, Vault, WorldEdit, WorldGuard ]
+softdepend: [ CMI, Essentials, Multiverse-Core, PremiumVanish, PlaceholderAPI, PlotSquared, SuperVanish, WorldEdit, WorldGuard ]
 api-version: 1.21
+
 commands:
-  procosmetics:
-    description: ProCosmetics Command
-    usage: /procosmetics
-    permission: procosmetics.command
-    aliases:
-      - "pc"
-      - "proc"
   cosmetics:
     description: Opens the cosmetics menu.
-    usage: /cosmetics
-    permission: procosmetics.command.cosmetics
+    usage: /cosmetics [category]
+    permission: kiwicosmetics.command.cosmetics
+    aliases: [ cosmetic, cos, kiwi ]
   equip:
     description: Equips a cosmetic.
-    usage: /equip
-    permission: procosmetics.command.equip
+    usage: /equip <category> <cosmetic>
+    permission: kiwicosmetics.command.equip
   unequip:
     description: Unequips a cosmetic.
-    usage: /unequip <type>
-    permission: procosmetics.command.unequip
+    usage: /unequip <category>
+    permission: kiwicosmetics.command.unequip
   unequipall:
-    description: Unequips your cosmetics.
+    description: Unequips all your cosmetics.
     usage: /unequipall
-    permission: procosmetics.command.unequipall
-  toggleselfview:
-    description: Toggles the self view
-    usage: /toggleselfview <type>
-    permission: procosmetics.command.toggleselfview
+    permission: kiwicosmetics.command.unequipall
+  kiwicosmetics:
+    description: KiwiCosmetics admin commands.
+    usage: /kiwicosmetics
+    permission: kiwicosmetics.command
+    aliases: [ kc, kcos ]
+  rainbow:
+    description: Rainbow armor commands.
+    usage: /<command> <give|list|reload>
+    aliases: [ kwr ]
+  hats:
+    description: Hat commands.
+    usage: /<command> <give|create|delete|list|inspect|reload>
+    aliases: [ kwhats, cosmetichats ]
 
+permissions:
+  # Player commands
+  kiwicosmetics.command.cosmetics:
+    description: Open the cosmetics menu with /cosmetics.
+    default: true
+  kiwicosmetics.command.equip:
+    description: Equip your own cosmetics with /equip.
+    default: true
+  kiwicosmetics.command.unequip:
+    description: Unequip your own cosmetics with /unequip.
+    default: true
+  kiwicosmetics.command.unequipall:
+    description: Unequip all your cosmetics with /unequipall.
+    default: true
 
+  # Cosmetics are only unlocked with permissions:
+  #   kiwicosmetics.cosmetic.*                      every cosmetic
+  #   kiwicosmetics.cosmetic.<category>.*           a whole category, e.g. kiwicosmetics.cosmetic.trails.*
+  #   kiwicosmetics.cosmetic.<category>.<cosmetic>  one cosmetic, e.g. kiwicosmetics.cosmetic.particle_effects.angel_wings
+  # /kiwicosmetics permission <category> lists them all.
+  kiwicosmetics.cosmetic.*:
+    description: Unlocks every cosmetic.
+    default: op
 
+  # Admin
+  kiwicosmetics.admin:
+    description: Every KiwiCosmetics admin command.
+    default: op
+    children:
+      kiwicosmetics.command: true
+      kiwicosmetics.command.equip.other: true
+      kiwicosmetics.command.unequip.other: true
+      kiwicosmetics.command.unequip.all-players: true
+      kiwicosmetics.command.menu: true
+      kiwicosmetics.command.permission: true
+      kiwicosmetics.command.reload: true
+      kiwicosmetics.command.item: true
+      kiwicosmetics.command.structure: true
+      kiwi.*: true
 
-
-
-
-
-
-
-
+  # Hats and rainbow armor (same nodes as the old KiwiCosmetics plugin)
+  kiwi.*:
+    description: Access to every hat and rainbow armor command.
+    default: op
+    children:
+      kiwi.rainbow.*: true
+      kiwi.hats.*: true
+  kiwi.rainbow.*:
+    description: Access to every rainbow armor command.
+    default: op
+    children:
+      kiwi.rainbow.give: true
+      kiwi.rainbow.list: true
+      kiwi.rainbow.reload: true
+  kiwi.rainbow.give:
+    description: Give rainbow armor to yourself or another player.
+    default: op
+  kiwi.rainbow.list:
+    description: List the rainbow patterns.
+    default: op
+  kiwi.rainbow.reload:
+    description: Reload wardrobe.yml and hats.yml.
+    default: op
+  kiwi.hats.*:
+    description: Access to every hat command.
+    default: op
+    children:
+      kiwi.hats.give: true
+      kiwi.hats.create: true
+      kiwi.hats.delete: true
+      kiwi.hats.list: true
+      kiwi.hats.inspect: true
+      kiwi.hats.reload: true
+  kiwi.hats.give:
+    description: Give hats to yourself or another player.
+    default: op
+  kiwi.hats.create:
+    description: Create a new hat from any item (/hats create <material> [name]).
+    default: op
+  kiwi.hats.delete:
+    description: Delete a hat from hats.yml.
+    default: op
+  kiwi.hats.list:
+    description: List the hats.
+    default: op
+  kiwi.hats.inspect:
+    description: Show how the held item is tagged (to check old ExecutableItems hats).
+    default: op
+  kiwi.hats.reload:
+    description: Reload wardrobe.yml and hats.yml.
+    default: op

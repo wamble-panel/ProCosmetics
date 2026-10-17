@@ -1,11 +1,6 @@
 plugins {
     id("java-library")
-    id("signing")
-    id("com.vanniktech.maven.publish") version "0.37.0"
 }
-
-group = "se.filledev"
-version = "2.0.1"
 
 tasks.withType<JavaCompile>().configureEach {
     options.encoding = "UTF-8"
@@ -28,60 +23,4 @@ dependencies {
 
     // NoteBlockAPI
     compileOnly("com.github.FilleDev:NoteBlockAPI:1.7.0")
-}
-
-publishing {
-    repositories {
-        maven {
-            name = "reposilite"
-            url = uri("https://repo.filledev.se/releases")
-
-            credentials {
-                username = providers.gradleProperty("reposiliteUsername").get()
-                password = providers.gradleProperty("reposiliteToken").get()
-            }
-        }
-    }
-}
-
-mavenPublishing {
-    //publishToMavenCentral()
-
-    signAllPublications()
-
-    coordinates(
-        groupId = "se.filledev",
-        artifactId = "procosmetics-api",
-        version = version.toString()
-    )
-
-    pom {
-        name.set("ProCosmetics API")
-        description.set("Public API for the ProCosmetics Minecraft plugin.")
-        url.set("https://github.com/FilleDev/ProCosmetics")
-
-        licenses {
-            license {
-                name.set("GNU General Public License v3.0")
-                url.set("https://www.gnu.org/licenses/gpl-3.0.en.html")
-            }
-        }
-
-        developers {
-            developer {
-                id.set("filledev")
-                name.set("FilleDev")
-            }
-        }
-
-        scm {
-            url.set("https://github.com/FilleDev/ProCosmetics")
-            connection.set("scm:git:https://github.com/FilleDev/ProCosmetics.git")
-            developerConnection.set("scm:git:ssh://git@github.com:FilleDev/ProCosmetics.git")
-        }
-    }
-}
-
-signing {
-    useGpgCmd()
 }

@@ -21,7 +21,6 @@ dependencies {
     // Runtime libraries (will be shaded)
     implementation("dev.dejvokep:boosted-yaml:1.3.7")
     implementation("com.github.FilleDev:NoteBlockAPI:1.7.0")
-    implementation("org.bstats:bstats-bukkit:3.2.1")
 
     implementation("net.kyori:adventure-api:4.26.1")
     implementation("net.kyori:adventure-text-minimessage:4.26.1")
