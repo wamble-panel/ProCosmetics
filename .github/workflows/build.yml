@@ -3,7 +3,6 @@ name: Build ProCosmetics
 on:
   workflow_dispatch:
   push:
-    branches: [master]
 
 jobs:
   build:
