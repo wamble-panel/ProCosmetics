@@ -20,14 +20,19 @@ package me.dtbh.kiwicosmetics.listener;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import me.dtbh.kiwicosmetics.util.MetadataUtil;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason;
 
 public class CreatureSpawnListener implements Listener {
 
-    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
+    /**
+     * Lets the plugin's own cosmetic mobs spawn where mob spawning is denied (e.g. WorldGuard regions),
+     * without touching mobs spawned by other plugins.
+     */
+    @EventHandler(priority = EventPriority.HIGHEST)
     public void onCreatureSpawn(CreatureSpawnEvent event) {
-        if (event.getSpawnReason() == SpawnReason.CUSTOM) {
+        if (event.getSpawnReason() == SpawnReason.CUSTOM && MetadataUtil.isCustomEntity(event.getEntity())) {
             event.setCancelled(false);
         }
     }

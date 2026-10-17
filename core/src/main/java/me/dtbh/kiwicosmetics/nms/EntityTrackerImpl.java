@@ -317,6 +317,8 @@ public class EntityTrackerImpl extends AbstractRunnable implements EntityTracker
         // Check all online players
         for (Player player : PLUGIN.getServer().getOnlinePlayers()) {
             if (!player.isValid()) {
+                // Dead: respawning clears the client's entities, so send them again once alive
+                viewers.remove(player);
                 continue;
             }
             player.getLocation(reusableLocation);

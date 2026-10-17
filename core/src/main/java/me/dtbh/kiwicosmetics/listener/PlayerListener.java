@@ -22,6 +22,7 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.Monster;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerBedEnterEvent;
 import org.bukkit.event.player.PlayerGameModeChangeEvent;
@@ -73,7 +74,8 @@ public class PlayerListener implements Listener {
         }
     }
 
-    @EventHandler
+    // Low priority so other plugins can still deny the bed afterwards
+    @EventHandler(priority = EventPriority.LOW)
     public void onBedEnter(PlayerBedEnterEvent event) {
         if (event.getBedEnterResult() == PlayerBedEnterEvent.BedEnterResult.NOT_SAFE) {
             Player player = event.getPlayer();

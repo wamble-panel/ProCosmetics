@@ -33,12 +33,14 @@ import org.jetbrains.annotations.Nullable;
 import me.dtbh.kiwicosmetics.api.cosmetic.CosmeticContext;
 import me.dtbh.kiwicosmetics.api.cosmetic.gadget.GadgetBehavior;
 import me.dtbh.kiwicosmetics.api.cosmetic.gadget.GadgetType;
+import me.dtbh.kiwicosmetics.api.user.User;
 import me.dtbh.kiwicosmetics.util.MetadataUtil;
 
 public class WitherMissile implements GadgetBehavior, Listener {
 
     private WitherSkull witherSkull;
     private Location location;
+    private User user;
 
     @Override
     public void onEquip(CosmeticContext<GadgetType> context) {
@@ -48,6 +50,7 @@ public class WitherMissile implements GadgetBehavior, Listener {
     public InteractionResult onInteract(CosmeticContext<GadgetType> context, Action action, @Nullable Block clickedBlock, @Nullable Vector clickedPosition) {
         despawn();
 
+        user = context.getUser();
         Player player = context.getPlayer();
         location = player.getEyeLocation();
 
@@ -117,10 +120,18 @@ public class WitherMissile implements GadgetBehavior, Listener {
     public void onSkullHit(ProjectileHitEvent event) {
         if (event.getEntity() == witherSkull) {
             event.setCancelled(true);
+            explode();
         }
     }
 
     private void explode() {
+        if (witherSkull == null) {
+            return;
+        }
+        // The rider is dropped wherever the missile ends, often high up
+        if (user != null) {
+            user.setFallDamageProtection(10);
+        }
         location.getWorld().playSound(location, Sound.ENTITY_WITHER_BREAK_BLOCK, 0.5f, 1.0f);
         location.getWorld().spawnParticle(Particle.EXPLOSION, location, 1, 0.1d, 0.1d, 0.1d, 0.1d);
         despawn();

@@ -107,6 +107,7 @@ public class HotTub implements GadgetBehavior, Listener {
         bubbles = false;
         center = null;
         shower = null;
+        buttonLocation = null;
         waterLocations.clear();
     }
 

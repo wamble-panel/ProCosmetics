@@ -24,6 +24,7 @@ import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;
 import net.kyori.adventure.title.Title;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
+import org.bukkit.metadata.MetadataValue;
 import org.jetbrains.annotations.Nullable;
 import me.dtbh.kiwicosmetics.api.KiwiCosmetics;
 import me.dtbh.kiwicosmetics.api.cosmetic.Cosmetic;
@@ -196,6 +197,12 @@ public class UserImpl implements User {
 
     @Override
     public void equipSavedCosmetics(boolean silent) {
+        Player player = getPlayer();
+
+        // Vanished staff would give themselves away with particles, balloons and music
+        if (player != null && isVanished(player)) {
+            return;
+        }
         // We want to make a copy of the list as some cosmetics onEquip can unequip other categories
         for (Cosmetic<?, ?> cosmeticCategory : List.copyOf(cosmetics.values())) {
             if (!cosmeticCategory.isEquipped()) {
@@ -245,6 +252,15 @@ public class UserImpl implements User {
     @Override
     public void setCooldown(GadgetType gadget, double time) {
         gadgetCooldowns.put(gadget, (long) (System.currentTimeMillis() + time * 1000.0d));
+    }
+
+    private static boolean isVanished(Player player) {
+        for (MetadataValue value : player.getMetadata("vanished")) {
+            if (value.asBoolean()) {
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override

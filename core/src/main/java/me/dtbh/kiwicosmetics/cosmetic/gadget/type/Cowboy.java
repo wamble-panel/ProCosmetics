@@ -45,11 +45,15 @@ public class Cowboy implements GadgetBehavior, Listener {
 
     private static final KiwiCosmeticsPlugin PLUGIN = KiwiCosmeticsPlugin.getPlugin();
 
+    private static final double MAX_DISTANCE_SQUARED = 5.0d * 5.0d;
+
     private Entity armorStand;
     private UUID lastClicked;
+    private Player owner;
 
     @Override
     public void onEquip(CosmeticContext<GadgetType> context) {
+        owner = context.getPlayer();
     }
 
     @Override
@@ -59,6 +63,12 @@ public class Cowboy implements GadgetBehavior, Listener {
 
         if (lastClicked != null) {
             clickedPlayer = context.getPlugin().getJavaPlugin().getServer().getPlayer(lastClicked);
+        }
+
+        // Only a player standing right next to you, otherwise this works as a teleport
+        if (clickedPlayer != null && (clickedPlayer.getWorld() != player.getWorld()
+                || clickedPlayer.getLocation().distanceSquared(player.getLocation()) > MAX_DISTANCE_SQUARED)) {
+            clickedPlayer = null;
         }
 
         if (clickedPlayer == null) {
@@ -110,7 +120,7 @@ public class Cowboy implements GadgetBehavior, Listener {
 
     @EventHandler
     public void onClickedPlayer(PlayerInteractEntityEvent event) {
-        if (event.getRightClicked() instanceof Player player) {
+        if (event.getPlayer() == owner && event.getRightClicked() instanceof Player player) {
             lastClicked = player.getUniqueId();
         }
     }

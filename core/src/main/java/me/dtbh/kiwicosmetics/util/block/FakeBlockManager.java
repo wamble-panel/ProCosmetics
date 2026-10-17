@@ -110,6 +110,10 @@ public class FakeBlockManager {
      * @return true if the fake block was set
      */
     public boolean setFakeBlock(Block block, BlockData blockData, boolean overwrite, long durationTicks) {
+        // Real gadget structure blocks are protected; faking them would strip that protection on restore
+        if (MetadataUtil.isCustomBlock(block) && !trackedBlocks.containsKey(block)) {
+            return false;
+        }
         if (!overwrite && isFakeBlock(block)) {
             return false;
         }

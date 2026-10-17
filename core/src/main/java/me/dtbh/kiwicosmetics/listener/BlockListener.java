@@ -20,6 +20,12 @@ package me.dtbh.kiwicosmetics.listener;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.block.BlockBurnEvent;
+import org.bukkit.event.block.BlockExplodeEvent;
+import org.bukkit.event.block.BlockPistonExtendEvent;
+import org.bukkit.event.block.BlockPistonRetractEvent;
+import org.bukkit.event.entity.EntityChangeBlockEvent;
+import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.event.block.LeavesDecayEvent;
 import me.dtbh.kiwicosmetics.util.MetadataUtil;
 
@@ -34,6 +40,47 @@ public class BlockListener implements Listener {
 
     @EventHandler(ignoreCancelled = true)
     public void onLeavesDecay(LeavesDecayEvent event) {
+        if (MetadataUtil.isCustomBlock(event.getBlock())) {
+            event.setCancelled(true);
+        }
+    }
+
+    // Gadget structures (trampoline, merry-go-round, hot tub...) are real blocks: keep explosions,
+    // pistons, fire and mobs away from them so they can't be dropped or moved somewhere unprotected.
+
+    @EventHandler(ignoreCancelled = true)
+    public void onEntityExplode(EntityExplodeEvent event) {
+        event.blockList().removeIf(MetadataUtil::isCustomBlock);
+    }
+
+    @EventHandler(ignoreCancelled = true)
+    public void onBlockExplode(BlockExplodeEvent event) {
+        event.blockList().removeIf(MetadataUtil::isCustomBlock);
+    }
+
+    @EventHandler(ignoreCancelled = true)
+    public void onPistonExtend(BlockPistonExtendEvent event) {
+        if (event.getBlocks().stream().anyMatch(MetadataUtil::isCustomBlock)) {
+            event.setCancelled(true);
+        }
+    }
+
+    @EventHandler(ignoreCancelled = true)
+    public void onPistonRetract(BlockPistonRetractEvent event) {
+        if (event.getBlocks().stream().anyMatch(MetadataUtil::isCustomBlock)) {
+            event.setCancelled(true);
+        }
+    }
+
+    @EventHandler(ignoreCancelled = true)
+    public void onBurn(BlockBurnEvent event) {
+        if (MetadataUtil.isCustomBlock(event.getBlock())) {
+            event.setCancelled(true);
+        }
+    }
+
+    @EventHandler(ignoreCancelled = true)
+    public void onEntityChangeBlock(EntityChangeBlockEvent event) {
         if (MetadataUtil.isCustomBlock(event.getBlock())) {
             event.setCancelled(true);
         }

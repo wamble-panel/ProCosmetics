@@ -113,8 +113,20 @@ public class EtherealPearl implements GadgetBehavior, Listener {
             Location playerLocation = player.getLocation();
             location.setPitch(playerLocation.getPitch());
             location.setYaw(playerLocation.getYaw());
-            player.teleport(location);
 
+            // Hitting a ceiling would put the player inside it, look for room below instead
+            boolean safe = false;
+
+            for (int i = 0; i < 4 && !safe; i++) {
+                safe = location.getBlock().isPassable() && location.getBlock().getRelative(0, 1, 0).isPassable();
+
+                if (!safe) {
+                    location.subtract(0.0d, 1.0d, 0.0d);
+                }
+            }
+            if (safe) {
+                player.teleport(location);
+            }
             event.setCancelled(true);
         }
     }

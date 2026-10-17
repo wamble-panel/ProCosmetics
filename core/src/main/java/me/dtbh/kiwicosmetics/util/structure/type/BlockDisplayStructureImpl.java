@@ -54,7 +54,7 @@ public class BlockDisplayStructureImpl extends StructureImpl<NMSEntity> implemen
 
         for (Map.Entry<Vector, BlockData> entry : data.getPlacement().entrySet()) {
             Vector vector = MathUtil.rotateAroundAxisY(entry.getKey().clone(), angle);
-            BlockData blockData = entry.getValue();
+            BlockData blockData = entry.getValue().clone(); // Rotating must not change the shared template
             NMSEntity nmsFallingBlock = PLUGIN.getNMSManager().createEntity(location.getWorld(), EntityType.BLOCK_DISPLAY, tracker);
 
             rotate(blockData, location.getYaw());

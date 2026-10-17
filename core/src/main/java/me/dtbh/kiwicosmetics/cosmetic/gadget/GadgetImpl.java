@@ -29,7 +29,9 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.inventory.InventoryAction;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.player.PlayerArmorStandManipulateEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
+import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerSwapHandItemsEvent;
@@ -45,7 +47,7 @@ import me.dtbh.kiwicosmetics.api.event.PlayerPreUseGadgetEvent;
 import me.dtbh.kiwicosmetics.api.user.User;
 import me.dtbh.kiwicosmetics.api.util.item.ItemBuilder;
 import me.dtbh.kiwicosmetics.cosmetic.CosmeticImpl;
-import me.dtbh.kiwicosmetics.cosmetic.gadget.type.GrapplingHook;
+import me.dtbh.kiwicosmetics.util.InventoryUtil;
 import me.dtbh.kiwicosmetics.util.item.ItemBuilderImpl;
 import me.dtbh.kiwicosmetics.util.item.ItemIdentifier;
 
@@ -135,12 +137,30 @@ public class GadgetImpl extends CosmeticImpl<GadgetType, GadgetBehavior> impleme
                     Placeholder.unparsed("cooldown_duration", formattedCooldown)
             ));
         }
+        checkGadgetItem();
         behavior.onUpdate(this);
     }
 
     @Override
     public void onUnequip() {
-        player.getInventory().setItem(GADGET_SLOT, null);
+        // Only remove the gadget item itself, never whatever else ended up in the slot
+        InventoryUtil.remove(player.getInventory(), GADGET_ID);
+    }
+
+    /**
+     * The gadget item can be moved out of its slot (pick block, armor stands...). Remove such
+     * copies so they can't be kept as real items, and put the gadget back once the slot is free.
+     */
+    private void checkGadgetItem() {
+        if (GADGET_ID.is(player.getInventory().getItem(GADGET_SLOT))) {
+            return;
+        }
+        InventoryUtil.remove(player.getInventory(), GADGET_ID);
+        ItemStack inSlot = player.getInventory().getItem(GADGET_SLOT);
+
+        if (inSlot == null || inSlot.getType().isAir()) {
+            setGadgetItemInInventory();
+        }
     }
 
     private boolean canUse() {
@@ -184,11 +204,6 @@ public class GadgetImpl extends CosmeticImpl<GadgetType, GadgetBehavior> impleme
                     ));
                 }
             }, cosmeticType.getCooldownTicks() + 1L);
-
-            // We cannot set cooldown for GrapplingHook (fishing rod) because it won't throw the hook then (ugly workaround right now)
-            if (!(behavior instanceof GrapplingHook)) {
-                player.setCooldown(cosmeticType.getItemStack().getType(), (int) cosmeticType.getCooldownTicks());
-            }
         }
     }
 
@@ -260,6 +275,20 @@ public class GadgetImpl extends CosmeticImpl<GadgetType, GadgetBehavior> impleme
     @EventHandler(ignoreCancelled = true)
     public void onPlayerInteractEntity(PlayerInteractEntityEvent event) {
         if (event.getPlayer() == player && GADGET_ID.is(player.getInventory().getItemInMainHand())) {
+            event.setCancelled(true);
+        }
+    }
+
+    @EventHandler(ignoreCancelled = true)
+    public void onPlayerInteractAtEntity(PlayerInteractAtEntityEvent event) {
+        if (event.getPlayer() == player && GADGET_ID.is(player.getInventory().getItemInMainHand())) {
+            event.setCancelled(true);
+        }
+    }
+
+    @EventHandler(ignoreCancelled = true)
+    public void onArmorStandManipulate(PlayerArmorStandManipulateEvent event) {
+        if (event.getPlayer() == player && (GADGET_ID.is(event.getPlayerItem()) || GADGET_ID.is(event.getArmorStandItem()))) {
             event.setCancelled(true);
         }
     }

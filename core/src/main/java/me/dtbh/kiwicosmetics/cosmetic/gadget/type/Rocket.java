@@ -70,7 +70,8 @@ public class Rocket implements GadgetBehavior {
         structure.spawn(center, seatEntity, HEIGHT_OFFSET);
         seat = context.getPlugin().getNMSManager().entityToNMSEntity(seatEntity);
 
-        context.getUser().setFallDamageProtection((int) (context.getType().getDuration() + 6));
+        // The flight takes 12 seconds (launch at tick 100, explosion at tick 240)
+        context.getUser().setFallDamageProtection(240 / 20 + 6);
 
         speed = 0.0d;
         tick = 0;
@@ -106,6 +107,7 @@ public class Rocket implements GadgetBehavior {
                 world.playSound(seatLocation, Sound.BLOCK_ANVIL_LAND, 0.4f, 0.0f);
             } else if (tick == 240) {
                 explode(context, seatLocation);
+                return;
             }
             seatLocation.add(0.0d, Y_COLLISION_CHECK, 0.0d);
             Material topMaterial = seatLocation.getBlock().getType();
@@ -134,6 +136,8 @@ public class Rocket implements GadgetBehavior {
     }
 
     private void explode(CosmeticContext<GadgetType> context, Location location) {
+        // The rider drops from high up, protect them until they land
+        context.getUser().setFallDamageProtection(15);
         onUnequip(context);
         location.getWorld().playSound(location, Sound.ENTITY_GENERIC_EXPLODE, 1.0f, 0.0f);
         location.getWorld().spawnParticle(Particle.EXPLOSION_EMITTER, location, 0);

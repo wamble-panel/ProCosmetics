@@ -33,6 +33,7 @@ import me.dtbh.kiwicosmetics.api.cosmetic.Cosmetic;
 import me.dtbh.kiwicosmetics.api.cosmetic.registry.CosmeticCategory;
 import me.dtbh.kiwicosmetics.api.user.User;
 
+import java.util.List;
 import java.util.Set;
 
 public class CosmeticFlagHandler extends Handler {
@@ -105,6 +106,17 @@ public class CosmeticFlagHandler extends Handler {
 
             if (blocked) {
                 user.sendMessage(user.translate("cosmetic.unequip.region"));
+            }
+        }
+
+        // Left a restricted region: put back what was taken off (world_guard.restore_cosmetics)
+        if (!exited.isEmpty() && PLUGIN.getConfigManager().getMainConfig().getBoolean("world_guard.restore_cosmetics")) {
+            for (Cosmetic<?, ?> cosmetic : List.copyOf(user.getCosmetics().values())) {
+                CosmeticCategory<?, ?, ?> category = cosmetic.getType().getCategory();
+
+                if (!cosmetic.isEquipped() && (categoryValue == null || !categoryValue.contains(category))) {
+                    cosmetic.equip(true, false);
+                }
             }
         }
         return true;

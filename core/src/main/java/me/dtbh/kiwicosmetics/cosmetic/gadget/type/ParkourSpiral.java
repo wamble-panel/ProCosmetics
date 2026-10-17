@@ -31,6 +31,7 @@ import me.dtbh.kiwicosmetics.api.cosmetic.gadget.GadgetType;
 import me.dtbh.kiwicosmetics.util.FastMathUtil;
 import me.dtbh.kiwicosmetics.util.LocationUtil;
 import me.dtbh.kiwicosmetics.util.MathUtil;
+import me.dtbh.kiwicosmetics.util.MetadataUtil;
 import me.dtbh.kiwicosmetics.util.material.Materials;
 
 import java.util.ArrayList;
@@ -93,6 +94,7 @@ public class ParkourSpiral implements GadgetBehavior {
 
         for (Block block : blocksToRemove) {
             block.setType(Material.AIR);
+            MetadataUtil.removeCustomBlock(block);
         }
         blocksToRemove.clear();
     }
@@ -147,6 +149,8 @@ public class ParkourSpiral implements GadgetBehavior {
         blocksToRemove.add(block);
 
         block.setType(Materials.CONCRETE.get(i % Materials.CONCRETE.size()));
+        // Protect it, otherwise players can mine the spiral for free concrete
+        MetadataUtil.setCustomBlock(block);
         currentLocation = nextLocation.add(0.0d, 1.0d, 0.0d);
     }
 
@@ -156,6 +160,7 @@ public class ParkourSpiral implements GadgetBehavior {
 
             block.getWorld().playEffect(block.getLocation(), Effect.STEP_SOUND, block.getType());
             block.setType(Material.AIR);
+            MetadataUtil.removeCustomBlock(block);
         }
     }
 

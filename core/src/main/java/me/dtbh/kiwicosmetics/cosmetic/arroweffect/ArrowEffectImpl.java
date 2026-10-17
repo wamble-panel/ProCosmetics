@@ -62,7 +62,7 @@ public class ArrowEffectImpl extends CosmeticImpl<ArrowEffectType, ArrowEffectBe
             projectile = event.getProjectile();
 
             if (!isRunning()) {
-                runTaskTimerAsynchronously(plugin, 2L, 1L);
+                runTaskTimer(plugin, 2L, 1L); // Sync: entities and particles must be touched on the main thread
             }
         }
     }

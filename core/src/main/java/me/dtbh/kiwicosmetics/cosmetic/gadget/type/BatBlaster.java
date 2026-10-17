@@ -93,6 +93,8 @@ public class BatBlaster implements GadgetBehavior {
                     entity.getWorld().playSound(location, Sound.ENTITY_BAT_HURT, 0.3f, 1.0f);
                     entity.remove();
                     iterator.remove();
+                    // This bat is gone, removing it again for a second player would throw
+                    break;
                 }
             }
         }

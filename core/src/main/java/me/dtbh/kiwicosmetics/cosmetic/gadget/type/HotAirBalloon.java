@@ -89,6 +89,11 @@ public class HotAirBalloon implements GadgetBehavior {
         if (speed < MAX_SPEED) {
             speed += ACCELERATION;
         }
+
+        // Stop rising under a ceiling instead of carrying the rider through it
+        if (!seatLocation.clone().add(0.0d, 2.5d + speed, 0.0d).getBlock().isPassable()) {
+            speed = 0.0d;
+        }
         seat.setPositionRotation(seatLocation.add(0.0d, speed, 0.0d));
 
         // Set this to make sure the tracker updates its location and also prevent a spawn-in flicker
