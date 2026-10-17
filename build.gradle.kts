@@ -81,7 +81,7 @@ subprojects {
         maven("https://hub.spigotmc.org/nexus/content/repositories/snapshots/")
 
         // Paper
-        maven("https://papermc.io/repo/maven-public/")
+        maven("https://repo.papermc.io/repository/maven-public/")
     }
     val javaVersion = findProperty("javaVersion")?.toString()?.toIntOrNull() ?: 25
 

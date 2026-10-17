@@ -21,8 +21,10 @@ jobs:
         id: spigot-cache
         uses: actions/cache/restore@v4
         with:
-          path: ~/.m2/repository/org/spigotmc
-          key: spigot-26.1.2-26.2-26.3-v1
+          path: |
+            ~/.m2/repository/org/spigotmc
+            ~/.m2/repository/com/mojang
+          key: spigot-26.1.2-26.2-26.3-v2
 
       - name: Build Spigot 26.1.2 / 26.2 / 26.3 with BuildTools
         if: steps.spigot-cache.outputs.cache-hit != 'true'
@@ -37,25 +39,10 @@ jobs:
         if: steps.spigot-cache.outputs.cache-hit != 'true'
         uses: actions/cache/save@v4
         with:
-          path: ~/.m2/repository/org/spigotmc
-          key: spigot-26.1.2-26.2-26.3-v1
-
-      - name: Dump particle API (temporary)
-        run: |
-          for v in 26.1.2 26.2 26.3; do
-            echo "=== $v ==="
-            api=~/.m2/repository/org/spigotmc/spigot-api/$v-R0.1-SNAPSHOT/spigot-api-$v-R0.1-SNAPSHOT.jar
-            javap -cp "$api" org.bukkit.Particle | grep 'public static final' | sed 's/.*Particle //' | tr '\n' ' '; echo
-            unzip -l "$api" | grep -i particle | awk '{print $4}'
-          done
-          v=26.3
-          srv=$(ls ~/.m2/repository/org/spigotmc/spigot/$v-R0.1-SNAPSHOT/*remapped-mojang.jar | head -1)
-          echo "server jar: $srv"
-          unzip -l "$srv" | grep 'net/minecraft/core/particles/' | awk '{print $4}'
-          api=~/.m2/repository/org/spigotmc/spigot-api/$v-R0.1-SNAPSHOT/spigot-api-$v-R0.1-SNAPSHOT.jar
-          for c in $(unzip -l "$api" | grep -i 'org/bukkit/.*particle.*\.class' | awk '{print $4}' | sed 's/\.class$//; s|/|.|g'); do javap -cp "$api" "$c"; done
-          javap -cp "$api" org.bukkit.Particle
-        continue-on-error: true
+          path: |
+            ~/.m2/repository/org/spigotmc
+            ~/.m2/repository/com/mojang
+          key: spigot-26.1.2-26.2-26.3-v2
 
       - name: Build plugin
         run: |
