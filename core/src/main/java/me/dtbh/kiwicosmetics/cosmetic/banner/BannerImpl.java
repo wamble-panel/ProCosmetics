@@ -28,6 +28,7 @@ import me.dtbh.kiwicosmetics.KiwiCosmeticsPlugin;
 import me.dtbh.kiwicosmetics.api.cosmetic.banner.Banner;
 import me.dtbh.kiwicosmetics.api.cosmetic.banner.BannerBehavior;
 import me.dtbh.kiwicosmetics.api.cosmetic.banner.BannerType;
+import me.dtbh.kiwicosmetics.api.cosmetic.registry.CosmeticCategory;
 import me.dtbh.kiwicosmetics.api.user.User;
 import me.dtbh.kiwicosmetics.api.util.AnimationFrame;
 import me.dtbh.kiwicosmetics.cosmetic.CosmeticImpl;
@@ -48,6 +49,14 @@ public class BannerImpl extends CosmeticImpl<BannerType, BannerBehavior> impleme
 
     @Override
     protected void onEquip() {
+        // Banners and hats both sit on the head, only one of them can be shown
+        CosmeticCategory<?, ?, ?> other = cosmeticType.getCategory() == plugin.getCategoryRegistries().banners()
+                ? plugin.getCategoryRegistries().hats()
+                : plugin.getCategoryRegistries().banners();
+
+        if (other != null) {
+            user.removeCosmetic(other, true, true);
+        }
         nmsEquipment = plugin.getNMSManager().createEquipment(player, true);
 
         player.playSound(player, Sound.ENTITY_HORSE_ARMOR, 0.5f, 1.0f);

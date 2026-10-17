@@ -203,6 +203,13 @@ public class LanguageManagerImpl implements LanguageManager {
         return translation;
     }
 
+    /**
+     * @return true if the key has a translation in the locale or the default locale
+     */
+    public boolean has(String key, String locale) {
+        return translation(key, locale) != null;
+    }
+
     @Override
     public List<String> translateList(String key, String locale) {
         Language.Translation translation = translation(key, locale);

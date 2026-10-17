@@ -19,6 +19,7 @@ package me.dtbh.kiwicosmetics.command.commands.kiwicosmetics;
 
 
 import net.kyori.adventure.text.Component;
+import me.dtbh.kiwicosmetics.menu.MenuStyle;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.command.CommandSender;
 import me.dtbh.kiwicosmetics.KiwiCosmeticsPlugin;
@@ -36,9 +37,8 @@ public class ReloadCommand extends SubCommand<CommandSender> {
     public void onExecute(CommandSender sender, String[] args) {
         long before = System.currentTimeMillis();
         audience(sender).sendMessage(Component.text().append(
-                Component.text("Reloading ", NamedTextColor.YELLOW),
-                Component.text(plugin.getDescription().getName(), NamedTextColor.GOLD),
-                Component.text("...", NamedTextColor.YELLOW)
+                Component.text("✦ ", MenuStyle.PINK),
+                Component.text(MenuStyle.smallCaps("Reloading KiwiCosmetics..."), MenuStyle.PEACH)
         ));
         plugin.onDisable();
         plugin.onLoad();
@@ -47,11 +47,10 @@ public class ReloadCommand extends SubCommand<CommandSender> {
 
         long took = System.currentTimeMillis() - before;
         audience(sender).sendMessage(Component.text().append(
-                Component.text(plugin.getDescription().getName(), NamedTextColor.GREEN),
-                Component.text(" has been reloaded and it took ", NamedTextColor.GREEN),
-                Component.text(took + "ms", NamedTextColor.GOLD),
-                Component.text("! ", NamedTextColor.GREEN),
-                Component.text("If your changes do not take effect, restart the server!", NamedTextColor.YELLOW)
+                Component.text("✔ ", MenuStyle.MINT),
+                Component.text(MenuStyle.smallCaps("Reloaded in "), MenuStyle.PEACH),
+                Component.text(took + "ms", MenuStyle.LIGHT_PINK),
+                Component.text(MenuStyle.smallCaps(". Restart the server if a change doesn't show up."), MenuStyle.GREY)
         ));
     }
 }

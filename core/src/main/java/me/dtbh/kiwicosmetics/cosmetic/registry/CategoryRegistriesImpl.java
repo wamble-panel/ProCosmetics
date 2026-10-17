@@ -67,7 +67,27 @@ import me.dtbh.kiwicosmetics.cosmetic.particleeffect.ParticleEffectTypeImpl;
 import me.dtbh.kiwicosmetics.cosmetic.particleeffect.type.*;
 import me.dtbh.kiwicosmetics.cosmetic.particleeffect.type.Bunny;
 import me.dtbh.kiwicosmetics.cosmetic.particleeffect.type.Confetti;
+import me.dtbh.kiwicosmetics.cosmetic.trail.type.RainbowDustTrail;
+import me.dtbh.kiwicosmetics.cosmetic.trail.type.FlameTrail;
+import me.dtbh.kiwicosmetics.cosmetic.trail.type.SoulFlameTrail;
+import me.dtbh.kiwicosmetics.cosmetic.trail.type.HeartTrail;
+import me.dtbh.kiwicosmetics.cosmetic.trail.type.NoteTrail;
+import me.dtbh.kiwicosmetics.cosmetic.trail.type.CherryBlossomTrail;
+import me.dtbh.kiwicosmetics.cosmetic.trail.type.AutumnLeavesTrail;
+import me.dtbh.kiwicosmetics.cosmetic.trail.type.StarlightTrail;
+import me.dtbh.kiwicosmetics.cosmetic.trail.type.CometTrail;
+import me.dtbh.kiwicosmetics.cosmetic.trail.type.FrostTrail;
+import me.dtbh.kiwicosmetics.cosmetic.trail.type.EnderTrail;
+import me.dtbh.kiwicosmetics.cosmetic.trail.type.SulfurBubbleTrail;
+import me.dtbh.kiwicosmetics.cosmetic.trail.type.FireflyTrail;
+import me.dtbh.kiwicosmetics.cosmetic.trail.type.CopperSparkTrail;
+import me.dtbh.kiwicosmetics.cosmetic.trail.type.ToxicTrail;
 import me.dtbh.kiwicosmetics.menu.CosmeticMenuImpl;
+import me.dtbh.kiwicosmetics.KiwiCosmeticsPlugin;
+import me.dtbh.kiwicosmetics.api.cosmetic.CosmeticRarity;
+import me.dtbh.kiwicosmetics.cosmetic.banner.HatCosmeticType;
+import me.dtbh.kiwicosmetics.wardrobe.GuiHat;
+import me.dtbh.kiwicosmetics.wardrobe.Wardrobe;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -86,8 +106,28 @@ public class CategoryRegistriesImpl implements CategoryRegistries {
         register(new CosmeticCategoryImpl<>(BuiltIn.MINIATURES, MiniatureTypeImpl.BuilderImpl::new, CosmeticMenuImpl::new));
         register(new CosmeticCategoryImpl<>(BuiltIn.MUSIC, MusicTypeImpl.BuilderImpl::new, CosmeticMenuImpl::new));
         register(new CosmeticCategoryImpl<>(BuiltIn.PARTICLE_EFFECTS, ParticleEffectTypeImpl.BuilderImpl::new, CosmeticMenuImpl::new));
+        register(new CosmeticCategoryImpl<>(BuiltIn.TRAILS, ParticleEffectTypeImpl.BuilderImpl::new, CosmeticMenuImpl::new));
+
+        // Hats come from hats.yml, which needs Paper. The category config is hat_cosmetics.yml
+        // because hats.yml itself belongs to the wardrobe.
+        Wardrobe wardrobe = KiwiCosmeticsPlugin.getPlugin().getWardrobe();
+
+        if (wardrobe != null) {
+            register(new CosmeticCategoryImpl<>(BuiltIn.HATS, "hat_cosmetics", BannerTypeImpl.BuilderImpl::new, CosmeticMenuImpl::new));
+            populateHats(wardrobe);
+        }
 
         populateCosmetics();
+    }
+
+    private void populateHats(Wardrobe wardrobe) {
+        CosmeticCategory<BannerType, BannerBehavior, BannerType.Builder> hats = hats();
+        CosmeticRegistry<BannerType, BannerBehavior, BannerType.Builder> registry = hats.getCosmeticRegistry();
+        CosmeticRarity rarity = KiwiCosmeticsPlugin.getPlugin().getCosmeticRarityRegistry().getSafely(hats.getConfig().getString("rarity"));
+
+        for (GuiHat hat : wardrobe.guiHats()) {
+            registry.register(new HatCosmeticType(hat.id(), hats, rarity, hat.item(), hat.name()));
+        }
     }
 
     private void populateCosmetics() {
@@ -155,6 +195,7 @@ public class CategoryRegistriesImpl implements CategoryRegistries {
         gadgets.register(gadgets.builder("flesh_hook").readFromConfig().factory(FleshHook::new).build());
         gadgets.register(gadgets.builder("grappling_hook").readFromConfig().factory(GrapplingHook::new).build());
         gadgets.register(gadgets.builder("hot_tub").readFromConfig().factory(HotTub::new).build());
+        gadgets.register(gadgets.builder("hype_train").readFromConfig().factory(HypeTrain::new).build());
         gadgets.register(gadgets.builder("hot_air_balloon").readFromConfig().factory(HotAirBalloon::new).build());
         gadgets.register(gadgets.builder("melon_launcher").readFromConfig().readFromConfig().readFromConfig().factory(MelonLauncher::new).build());
         gadgets.register(gadgets.builder("merry_go_round").readFromConfig().factory(MerryGoRound::new).build());
@@ -252,6 +293,34 @@ public class CategoryRegistriesImpl implements CategoryRegistries {
         particleEffects.register(particleEffects.builder("umbrella").readFromConfig().factory(Umbrella::new).build());
         particleEffects.register(particleEffects.builder("vampire_wings").readFromConfig().factory(VampireWings::new).repeatDelay(2).build());
         particleEffects.register(particleEffects.builder("yin_and_yang").readFromConfig().factory(YinAndYang::new).build());
+        particleEffects.register(particleEffects.builder("autumn_halo").readFromConfig().factory(AutumnHalo::new).repeatDelay(2).build());
+        particleEffects.register(particleEffects.builder("leaf_vortex").readFromConfig().factory(LeafVortex::new).repeatDelay(1).build());
+        particleEffects.register(particleEffects.builder("geyser_fountain").readFromConfig().factory(GeyserFountain::new).repeatDelay(2).build());
+        particleEffects.register(particleEffects.builder("toxic_aura").readFromConfig().factory(ToxicAura::new).repeatDelay(2).build());
+        particleEffects.register(particleEffects.builder("sulfur_spiral").readFromConfig().factory(SulfurSpiral::new).repeatDelay(1).build());
+        particleEffects.register(particleEffects.builder("firefly_swarm").readFromConfig().factory(FireflySwarm::new).repeatDelay(2).build());
+        particleEffects.register(particleEffects.builder("copper_crown").readFromConfig().factory(CopperCrown::new).repeatDelay(3).build());
+        particleEffects.register(particleEffects.builder("comet_orbit").readFromConfig().factory(CometOrbit::new).repeatDelay(1).build());
+        particleEffects.register(particleEffects.builder("dna_helix").readFromConfig().factory(DnaHelix::new).repeatDelay(2).build());
+        particleEffects.register(particleEffects.builder("aurora_wings").readFromConfig().factory(AuroraWings::new).repeatDelay(2).build());
+        particleEffects.register(particleEffects.builder("blossom_ring").readFromConfig().factory(BlossomRing::new).repeatDelay(2).build());
+
+        CosmeticRegistry<ParticleEffectType, ParticleEffectBehavior, ParticleEffectType.Builder> trailRegistry = trails().getCosmeticRegistry();
+        trailRegistry.register(trailRegistry.builder("rainbow_dust").readFromConfig().factory(RainbowDustTrail::new).repeatDelay(1).build());
+        trailRegistry.register(trailRegistry.builder("flame").readFromConfig().factory(FlameTrail::new).repeatDelay(1).build());
+        trailRegistry.register(trailRegistry.builder("soul_flame").readFromConfig().factory(SoulFlameTrail::new).repeatDelay(1).build());
+        trailRegistry.register(trailRegistry.builder("hearts").readFromConfig().factory(HeartTrail::new).repeatDelay(2).build());
+        trailRegistry.register(trailRegistry.builder("music_notes").readFromConfig().factory(NoteTrail::new).repeatDelay(2).build());
+        trailRegistry.register(trailRegistry.builder("cherry_blossom").readFromConfig().factory(CherryBlossomTrail::new).repeatDelay(2).build());
+        trailRegistry.register(trailRegistry.builder("autumn_leaves").readFromConfig().factory(AutumnLeavesTrail::new).repeatDelay(2).build());
+        trailRegistry.register(trailRegistry.builder("starlight").readFromConfig().factory(StarlightTrail::new).repeatDelay(1).build());
+        trailRegistry.register(trailRegistry.builder("comet").readFromConfig().factory(CometTrail::new).repeatDelay(1).build());
+        trailRegistry.register(trailRegistry.builder("frost").readFromConfig().factory(FrostTrail::new).repeatDelay(1).build());
+        trailRegistry.register(trailRegistry.builder("ender").readFromConfig().factory(EnderTrail::new).repeatDelay(1).build());
+        trailRegistry.register(trailRegistry.builder("sulfur_bubbles").readFromConfig().factory(SulfurBubbleTrail::new).repeatDelay(1).build());
+        trailRegistry.register(trailRegistry.builder("fireflies").readFromConfig().factory(FireflyTrail::new).repeatDelay(2).build());
+        trailRegistry.register(trailRegistry.builder("copper_sparks").readFromConfig().factory(CopperSparkTrail::new).repeatDelay(1).build());
+        trailRegistry.register(trailRegistry.builder("toxic_gas").readFromConfig().factory(ToxicTrail::new).repeatDelay(1).build());
 
 
     }

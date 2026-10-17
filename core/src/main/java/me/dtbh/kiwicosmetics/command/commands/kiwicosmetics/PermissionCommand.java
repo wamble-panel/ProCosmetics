@@ -47,7 +47,7 @@ public class PermissionCommand extends SubCommand<CommandSender> {
         CosmeticCategory<? extends CosmeticType<?, ?>, ?, ?> category = plugin.getCategoryRegistries().getCategoryRaw(parseArgument(args, 1));
 
         if (category == null) {
-            audience(sender).sendMessage(translator.translate("cosmetic.category_not_found"));
+            audience(sender).sendMessage(translator.translate("category.not_found"));
             return;
         }
         TextComponent.Builder builder = Component.text().append(

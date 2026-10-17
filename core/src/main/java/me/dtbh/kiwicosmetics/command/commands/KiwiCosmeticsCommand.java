@@ -19,11 +19,12 @@ package me.dtbh.kiwicosmetics.command.commands;
 
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
-import net.kyori.adventure.text.format.NamedTextColor;
+import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.command.CommandSender;
 import me.dtbh.kiwicosmetics.KiwiCosmeticsPlugin;
 import me.dtbh.kiwicosmetics.command.SimpleCommand;
 import me.dtbh.kiwicosmetics.command.argument.Argument;
+import me.dtbh.kiwicosmetics.menu.MenuStyle;
 import me.dtbh.kiwicosmetics.command.commands.kiwicosmetics.*;
 import me.dtbh.kiwicosmetics.command.commands.kiwicosmetics.EquipCommand;
 import me.dtbh.kiwicosmetics.command.commands.kiwicosmetics.UnequipCommand;
@@ -46,18 +47,23 @@ public class KiwiCosmeticsCommand extends SimpleCommand<CommandSender> {
 
     @Override
     public void onExecute(CommandSender sender, String[] args) {
+        MiniMessage mini = MiniMessage.miniMessage();
         TextComponent.Builder builder = Component.text();
-        builder.append(Component.text(plugin.getDescription().getName() + " Commands", NamedTextColor.AQUA));
+        builder.append(mini.deserialize("<#8A8A8A><st>━━━━━━━━━━━━━━━━━━━━━━━━</st>"), Component.newline(),
+                mini.deserialize("<gradient:#FFB5A7:#FFC8DD><bold>✦ ᴋɪᴡɪᴄᴏꜱᴍᴇᴛɪᴄꜱ</bold></gradient> <#CDB4DB>ʜᴇʟᴘ"));
 
         getSubCommands().forEach(subCommand -> {
-            builder.append(Component.newline(),
-                    Component.text("/pc ", NamedTextColor.YELLOW)
-            );
+            StringBuilder usage = new StringBuilder("/kc");
 
             for (Argument<?> argument : subCommand.getArguments()) {
-                builder.append(Component.text(argument.getType() == null ? argument.getArgument() + " " : "<" + argument.getArgument() + "> ", NamedTextColor.YELLOW));
+                usage.append(' ').append(argument.getType() == null ? argument.getArgument() : "<" + argument.getArgument() + ">");
             }
+            builder.append(Component.newline(), Component.text("• ", MenuStyle.GREY), Component.text(usage.toString(), MenuStyle.PINK));
         });
+        builder.append(Component.newline(), Component.text("• ", MenuStyle.GREY), Component.text("/hats", MenuStyle.PINK),
+                Component.text(" , ", MenuStyle.GREY), Component.text("/rainbow", MenuStyle.PINK),
+                Component.text(" — ", MenuStyle.GREY), Component.text(MenuStyle.smallCaps("hats and rainbow armor"), MenuStyle.PEACH));
+        builder.append(Component.newline(), mini.deserialize("<#8A8A8A><st>━━━━━━━━━━━━━━━━━━━━━━━━</st>"));
         audience(sender).sendMessage(builder);
     }
 }

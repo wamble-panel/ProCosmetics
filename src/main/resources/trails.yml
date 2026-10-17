@@ -1,0 +1,101 @@
+# Trails draw particles behind your feet while you walk, and can be worn together with a particle effect.
+# Enable/disable this entire category.
+# When disabled, players cannot equip any cosmetics from this category as they will NOT be loaded into cache.
+enabled: true
+
+# This feature allows you to temporary pause the trail while holding sneak.
+sneak_to_pause: false
+
+cosmetics:
+  rainbow_dust:
+    enabled: true
+    rarity: "epic"
+    item: "minecraft:redstone"
+    count: 1
+
+  flame:
+    enabled: true
+    rarity: "common"
+    item: "minecraft:blaze_powder"
+    count: 1
+
+  soul_flame:
+    enabled: true
+    rarity: "uncommon"
+    item: "minecraft:soul_torch"
+    count: 1
+
+  hearts:
+    enabled: true
+    rarity: "uncommon"
+    item: "minecraft:red_dye"
+    count: 1
+
+  music_notes:
+    enabled: true
+    rarity: "uncommon"
+    item: "minecraft:note_block"
+    count: 1
+
+  cherry_blossom:
+    enabled: true
+    rarity: "rare"
+    item: "minecraft:cherry_leaves"
+    count: 1
+
+  autumn_leaves:
+    enabled: true
+    rarity: "rare"
+    item: "minecraft:orange_dye"
+    count: 1
+
+  starlight:
+    enabled: true
+    rarity: "epic"
+    item: "minecraft:end_rod"
+    count: 1
+
+  comet:
+    enabled: true
+    rarity: "legendary"
+    item: "minecraft:nether_star[!minecraft:rarity]"
+    count: 1
+
+  frost:
+    enabled: true
+    rarity: "uncommon"
+    item: "minecraft:snowball"
+    count: 1
+
+  ender:
+    enabled: true
+    rarity: "rare"
+    item: "minecraft:ender_pearl"
+    count: 1
+
+  sulfur_bubbles:
+    enabled: true
+    rarity: "rare"
+    item: "minecraft:yellow_dye"
+    count: 1
+
+  fireflies:
+    enabled: true
+    rarity: "epic"
+    item: "minecraft:glow_berries"
+    count: 1
+
+  copper_sparks:
+    enabled: true
+    rarity: "rare"
+    item: "minecraft:copper_torch"
+    count: 1
+
+  toxic_gas:
+    enabled: true
+    rarity: "rare"
+    item: "minecraft:lime_dye"
+    count: 1
+
+# Do not edit this!
+config_version: 1

@@ -34,6 +34,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitTask;
 import me.dtbh.kiwicosmetics.wardrobe.command.HatsCmd;
 import me.dtbh.kiwicosmetics.wardrobe.command.RainbowCmd;
+import me.dtbh.kiwicosmetics.wardrobe.hat.Hat;
 import me.dtbh.kiwicosmetics.wardrobe.hat.HatListener;
 import me.dtbh.kiwicosmetics.wardrobe.hat.HatRegistry;
 import me.dtbh.kiwicosmetics.wardrobe.rainbow.ArmorPiece;
@@ -161,6 +162,22 @@ public final class Wardrobe {
 
     public HatRegistry hats() {
         return hats;
+    }
+
+    /**
+     * @return every wearable hat, for the Hats category of the cosmetics menu
+     */
+    public List<GuiHat> guiHats() {
+        List<GuiHat> result = new ArrayList<>();
+
+        for (String id : hats.ids()) {
+            Hat hat = hats.get(id);
+
+            if (hat != null && hat.wearable()) {
+                result.add(new GuiHat(id, Text.plain(Text.item(hat.name())), hats.create(hat, 1)));
+            }
+        }
+        return result;
     }
 
     public RainbowTask task() {

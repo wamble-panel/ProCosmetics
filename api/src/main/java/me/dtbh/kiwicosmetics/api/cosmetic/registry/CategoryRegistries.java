@@ -134,6 +134,15 @@ public interface CategoryRegistries {
     }
 
     /**
+     * Gets the hats cosmetic category (hats from hats.yml, shown on the head like banners).
+     *
+     * @return the built-in {@code hats} category, or {@code null} if not registered (not running on Paper)
+     */
+    default CosmeticCategory<BannerType, BannerBehavior, BannerType.Builder> hats() {
+        return getCategory(BuiltIn.HATS);
+    }
+
+    /**
      * Gets the death effects cosmetic category.
      *
      * @return the built-in {@code death_effects} category, or {@code null} if not registered
@@ -176,6 +185,15 @@ public interface CategoryRegistries {
      */
     default CosmeticCategory<ParticleEffectType, ParticleEffectBehavior, ParticleEffectType.Builder> particleEffects() {
         return getCategory(BuiltIn.PARTICLE_EFFECTS);
+    }
+
+    /**
+     * Gets the trails cosmetic category. Trails use the particle effect types and behaviors.
+     *
+     * @return the built-in {@code trails} category, or {@code null} if not registered
+     */
+    default CosmeticCategory<ParticleEffectType, ParticleEffectBehavior, ParticleEffectType.Builder> trails() {
+        return getCategory(BuiltIn.TRAILS);
     }
 
     /**
@@ -222,6 +240,16 @@ public interface CategoryRegistries {
          * Built-in key for particle effects.
          */
         String PARTICLE_EFFECTS = "particle_effects";
+
+        /**
+         * Built-in key for trails.
+         */
+        String TRAILS = "trails";
+
+        /**
+         * Built-in key for hats (from hats.yml, Paper only).
+         */
+        String HATS = "hats";
 
     }
 }

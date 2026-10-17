@@ -1,0 +1,14 @@
+# The "Hats" category of the /cosmetics menu (Paper only).
+#
+# Every wearable hat from hats.yml shows up here. Players with the permission
+# kiwicosmetics.cosmetic.hats.<hat id> (or kiwicosmetics.cosmetic.hats.*) can wear it from the menu.
+# Hats from the menu are only visual: the player's real helmet stays where it is, and nothing
+# can be taken off or dropped. Hat items given with /hats give still work as before.
+#
+# After editing hats.yml, restart the server (or /kiwicosmetics reload) to update the menu.
+enabled: true
+
+# Rarity shown in the menu for hats.
+rarity: "rare"
+
+config_version: 1

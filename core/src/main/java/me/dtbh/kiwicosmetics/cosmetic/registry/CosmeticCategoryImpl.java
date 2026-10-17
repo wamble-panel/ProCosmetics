@@ -54,12 +54,22 @@ public class CosmeticCategoryImpl<T extends CosmeticType<T, B>,
     public CosmeticCategoryImpl(String key,
                                 BiFunction<String, CosmeticCategory<T, B, U>, U> builderFactory,
                                 TriFunction<KiwiCosmetics, User, CosmeticCategory<T, B, U>, CosmeticMenuImpl<T>> menuFactory) {
+        this(key, key, builderFactory, menuFactory);
+    }
+
+    /**
+     * @param configName the config file (without .yml) to read, for categories whose key is taken by another file
+     */
+    public CosmeticCategoryImpl(String key,
+                                String configName,
+                                BiFunction<String, CosmeticCategory<T, B, U>, U> builderFactory,
+                                TriFunction<KiwiCosmetics, User, CosmeticCategory<T, B, U>, CosmeticMenuImpl<T>> menuFactory) {
         this.key = key.toLowerCase();
         this.registry = new CosmeticRegistryImpl<>(this, builderFactory);
-        this.config = PLUGIN.getConfigManager().register(key);
+        this.config = PLUGIN.getConfigManager().register(configName);
         this.enabled = config.getBoolean("enabled");
         this.permission = "kiwicosmetics.cosmetic." + key + ".*";
-        this.menuItem = new ItemBuilderImpl(PLUGIN.getConfigManager().getMainConfig(), "menu.main.items." + key);
+        this.menuItem = new ItemBuilderImpl(PLUGIN.getConfigManager().getMainConfig(), "menu.main.categories." + key);
         this.menuFactory = menuFactory;
     }
 

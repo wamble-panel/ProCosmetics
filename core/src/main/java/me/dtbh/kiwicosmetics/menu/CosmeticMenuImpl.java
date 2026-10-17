@@ -1,6 +1,6 @@
 /*
  * This file is part of KiwiCosmetics, a fork of ProCosmetics - https://github.com/FilleDev/ProCosmetics
- * Copyright (C) 2025-2026 FilleDev, dtbh and contributors
+ * Copyright (C) 2026 FilleDev and contributors
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,16 +14,12 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
- */
-package me.dtbh.kiwicosmetics.menu;
+ */package me.dtbh.kiwicosmetics.menu;
 
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
 import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;
-import org.bukkit.Server;
 import org.bukkit.Sound;
-import org.bukkit.command.CommandSender;
 import org.bukkit.event.inventory.InventoryAction;
 import org.bukkit.inventory.ItemStack;
 import me.dtbh.kiwicosmetics.api.KiwiCosmetics;
@@ -34,82 +30,69 @@ import me.dtbh.kiwicosmetics.api.cosmetic.registry.CosmeticCategory;
 import me.dtbh.kiwicosmetics.api.menu.ClickableItem;
 import me.dtbh.kiwicosmetics.api.menu.CosmeticMenu;
 import me.dtbh.kiwicosmetics.api.user.User;
+import me.dtbh.kiwicosmetics.locale.LanguageManagerImpl;
 import me.dtbh.kiwicosmetics.util.item.ItemBuilderImpl;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
+/**
+ * One page per category: a header, the cosmetics in the middle and a bottom bar with
+ * back, page, unequip and sort buttons. The layout is shared by all categories (config.yml menu.category).
+ */
 public class CosmeticMenuImpl<T extends CosmeticType<T, ?>> extends PaginatedMenu<CosmeticMenuImpl<T>.CosmeticPaginatedItem> implements CosmeticMenu<T> {
 
+    private static final String PATH = "menu.category.";
+
     protected final CosmeticCategory<T, ?, ?> category;
-    private final ItemBuilderImpl nextPageItem;
-    private final ItemBuilderImpl previousPageItem;
-    private ItemBuilderImpl goBackItem;
-    private ItemBuilderImpl lockedItem;
-    private ItemBuilderImpl sortingItem;
-    private Sorting sorting;
+    private final Config config;
+    private final String categoryName;
+    private Sorting sorting = Sorting.UNLOCKED;
 
     public CosmeticMenuImpl(KiwiCosmetics plugin, User user, CosmeticCategory<T, ?, ?> category) {
         super(plugin, user,
-                user.translate("menu." + category.getKey() + ".title"),
-                category.getConfig().getInt("menu.rows"),
-                1 // Default padding
+                user.translate("menu.category.title", Placeholder.unparsed("name", user.translateRaw("category." + category.getKey() + ".name"))),
+                plugin.getConfigManager().getMainConfig().getInt(PATH + "rows"),
+                1
         );
         this.category = category;
+        this.config = plugin.getConfigManager().getMainConfig();
+        this.categoryName = user.translateRaw("category." + category.getKey() + ".name");
 
-        Config config = category.getConfig();
+        ItemBuilderImpl pageItem = new ItemBuilderImpl(config, PATH + "next_page");
+        setNextPageSlot(pageItem.getSlot());
+        setNextPageItemStack(pageInfo -> pageItem
+                .setDisplayName(user.translate("menu.category.next_page.name"))
+                .setLore(user.translateList("menu.category.next_page.desc", pageResolvers(pageInfo.getCurrentPage() + 1, pageInfo.getPageCount())))
+                .getItemStack());
 
-        // Set up next page item
-        nextPageItem = new ItemBuilderImpl(config, "menu.items.next_page");
-        setNextPageSlot(nextPageItem.getSlot());
-        setNextPageItemStack(pageInfo ->
-                nextPageItem.setDisplayName(user.translate("menu." + category.getKey() + ".next_page.name"))
-                        .setLore(user.translateList(
-                                "menu." + category.getKey() + ".next_page.desc",
-                                Placeholder.unparsed("page", String.valueOf(page + 1)),
-                                Placeholder.unparsed("pages", String.valueOf(pageInfo.getPageCount()))
-                        ))
-                        .getItemStack()
-        );
-
-        // Set up previous page item
-        previousPageItem = new ItemBuilderImpl(config, "menu.items.previous_page");
-        setPreviousPageSlot(previousPageItem.getSlot());
-        setPreviousPageItemStack(pageInfo ->
-                previousPageItem.setDisplayName(user.translate("menu." + category.getKey() + ".previous_page.name"))
-                        .setLore(user.translateList(
-                                "menu." + category.getKey() + ".previous_page.desc",
-                                Placeholder.unparsed("page", String.valueOf(page - 1)),
-                                Placeholder.unparsed("pages", String.valueOf(pageInfo.getPageCount()))
-                        )).getItemStack()
-        );
-
-        if (config.getBoolean("menu.items.go_back.enabled")) {
-            this.goBackItem = new ItemBuilderImpl(category.getConfig(), "menu.items.go_back");
-        }
-
-        if (config.getBoolean("menu.items.sorting.enabled")) {
-            this.sortingItem = new ItemBuilderImpl(category.getConfig(), "menu.items.sorting");
-        }
-
-        if (config.getBoolean("menu.items.locked_cosmetic.enabled")) {
-            this.lockedItem = new ItemBuilderImpl(category.getConfig(), "menu.items.locked_cosmetic");
-        }
+        ItemBuilderImpl previousItem = new ItemBuilderImpl(config, PATH + "previous_page");
+        setPreviousPageSlot(previousItem.getSlot());
+        setPreviousPageItemStack(pageInfo -> previousItem
+                .setDisplayName(user.translate("menu.category.previous_page.name"))
+                .setLore(user.translateList("menu.category.previous_page.desc", pageResolvers(pageInfo.getCurrentPage() - 1, pageInfo.getPageCount())))
+                .getItemStack());
 
         populateCosmetics();
-        setSorting(Sorting.get(0));
+        setSorting(sorting);
+    }
+
+    private static TagResolver pageResolvers(int page, int pages) {
+        return TagResolver.resolver(
+                Placeholder.unparsed("page", String.valueOf(page)),
+                Placeholder.unparsed("pages", String.valueOf(pages))
+        );
     }
 
     private void populateCosmetics() {
         @SuppressWarnings("unchecked")
         Cosmetic<T, ?> equippedCosmetic = (Cosmetic<T, ?>) user.getCosmetic(category);
-        T equippedType = equippedCosmetic != null ? equippedCosmetic.getType() : null;
+        T equippedType = equippedCosmetic != null && equippedCosmetic.isEquipped() ? equippedCosmetic.getType() : null;
 
         for (T cosmeticType : category.getCosmeticRegistry().getEnabledTypes()) {
-            boolean isLocked = !cosmeticType.hasPermission(player);
-            boolean isEquipped = cosmeticType == equippedType && equippedCosmetic != null && equippedCosmetic.isEquipped();
-
-            addPaginatedItem(new CosmeticPaginatedItem(cosmeticType, isLocked, isEquipped));
+            boolean locked = !cosmeticType.hasPermission(player);
+            addPaginatedItem(new CosmeticPaginatedItem(cosmeticType, locked, cosmeticType == equippedType));
         }
     }
 
@@ -117,53 +100,86 @@ public class CosmeticMenuImpl<T extends CosmeticType<T, ?>> extends PaginatedMen
     protected void addNavigationItems() {
         super.addNavigationItems();
 
-        // Add sorting button
-        if (sortingItem != null) {
-            setItem(sortingItem.getSlot(), getSortingItem(), event -> {
-                if (event.getAction() != InventoryAction.NOTHING) {
-                    setSorting(event.isLeftClick() ? sorting.next() : sorting.previous());
-                    playClickSound();
-                }
+        // Header: category name and how many cosmetics are unlocked
+        int unlocked = category.getUnlockedCosmetics(player);
+        int total = category.getCosmeticRegistry().getEnabledTypes().size();
+        ItemBuilderImpl header = ItemBuilderImpl.of(category.getMenuItem().getItemStack());
+        header.setSlot(config.getInt(PATH + "header_slot"));
+        header.setDisplayName(user.translate("menu.main.category.name", Placeholder.unparsed("name", categoryName)));
+        List<Component> headerLore = new ArrayList<>(user.translateList("category." + category.getKey() + ".desc"));
+        headerLore.addAll(user.translateList("menu.category.header.desc",
+                Placeholder.unparsed("unlocked", String.valueOf(unlocked)),
+                Placeholder.unparsed("total", String.valueOf(total)),
+                Placeholder.unparsed("percent", MenuStyle.percent(unlocked, total)),
+                Placeholder.component("bar", MenuStyle.progressBar(unlocked, total))
+        ));
+        header.setLore(headerLore);
+        setItem(header.getSlot(), header.hide().getItemStack(), event -> {
+        });
+
+        // Back to the main menu, or close when opened directly
+        ItemBuilderImpl back = new ItemBuilderImpl(config, PATH + "back");
+        boolean hasPrevious = getPreviousMenu() != null;
+        back.setDisplayName(user.translate(hasPrevious ? "menu.category.back.name" : "menu.close.name"));
+        back.setLore(user.translateList(hasPrevious ? "menu.category.back.desc" : "menu.close.desc"));
+        setItem(back.getSlot(), back.getItemStack(), event -> {
+            playClickSound();
+
+            if (getPreviousMenu() != null) {
+                getPreviousMenu().open();
+            } else {
+                player.closeInventory();
+            }
+        });
+
+        // Unequip the current cosmetic of this category
+        Cosmetic<?, ?> equipped = user.getCosmetic(category);
+
+        if (equipped != null && equipped.isEquipped()) {
+            ItemBuilderImpl unequip = new ItemBuilderImpl(config, PATH + "unequip");
+            unequip.setDisplayName(user.translate("menu.category.unequip.name"));
+            unequip.setLore(user.translateList("menu.category.unequip.desc",
+                    Placeholder.unparsed("cosmetic", MenuStyle.smallCaps(equipped.getType().getName(user)))));
+            setItem(unequip.getSlot(), unequip.getItemStack(), event -> {
+                user.removeCosmetic(category, false, true);
+                player.playSound(player, Sound.ITEM_ARMOR_EQUIP_LEATHER, 0.5f, 0.8f);
+                player.closeInventory();
             });
         }
 
-        // Add go back button
-        if (goBackItem != null) {
-            String path = "menu.items.go_back.on_click.";
-            String command = category.getConfig().getString(path + "command")
-                    .replace("<player>", player.getName())
-                    .replace("<player_name>", player.getName())
-                    .replace("<player_uuid>", player.getUniqueId().toString());
+        // Sorting
+        ItemBuilderImpl sort = new ItemBuilderImpl(config, PATH + "sort");
+        sort.setDisplayName(user.translate("menu.category.sort.name"));
+        List<Component> sortLore = new ArrayList<>();
 
-            goBackItem.setDisplayName(user.translate("menu." + category.getKey() + ".go_back.name"));
-            goBackItem.setLore(user.translateList(
-                    "menu." + category.getKey() + ".go_back.desc",
-                    Placeholder.component("menu", getPreviousMenu() == null ? Component.empty() : getPreviousMenu().getTitle())
-            ));
-
-            if (command.isEmpty()) {
-                setItem(goBackItem.getSlot(), goBackItem.getItemStack(), event -> {
-                    if (getPreviousMenu() != null) {
-                        getPreviousMenu().open();
-                    }
-                    playClickSound();
-                });
-            } else {
-                boolean playerExecutor = category.getConfig().getBoolean(path + "execute_as_player");
-                Server server = plugin.getJavaPlugin().getServer();
-                CommandSender commandSender = playerExecutor ? player : server.getConsoleSender();
-
-                setItem(goBackItem.getSlot(), goBackItem.getItemStack(), event -> {
-                    server.dispatchCommand(commandSender, command);
-                    playClickSound();
-                });
-            }
+        for (Sorting s : Sorting.VALUES) {
+            sortLore.add(user.translate(s == sorting ? "menu.category.sort.selected" : "menu.category.sort.option",
+                    Placeholder.unparsed("option", user.translateRaw("menu.category.sorting." + s.getKey()))));
         }
+        sortLore.addAll(user.translateList("menu.category.sort.desc"));
+        sort.setLore(sortLore);
+        setItem(sort.getSlot(), sort.getItemStack(), event -> {
+            if (event.getAction() != InventoryAction.NOTHING) {
+                setSorting(event.isRightClick() ? sorting.previous() : sorting.next());
+                playClickSound();
+            }
+        });
+
+        drawBorder();
     }
 
-    @Override
-    protected void addCustomItems() {
-        // Override in subclasses to add custom items
+    private void drawBorder() {
+        ItemStack border = new ItemBuilderImpl(config, "menu.border").getItemStack();
+
+        for (int slot = 0; slot < getSize(); slot++) {
+            int row = slot / 9;
+            int column = slot % 9;
+            boolean edge = row == 0 || row == rows - 1 || column == 0 || column == 8;
+
+            if (edge && inventory.getItem(slot) == null) {
+                inventory.setItem(slot, border);
+            }
+        }
     }
 
     public void setSorting(Sorting sorting) {
@@ -175,23 +191,6 @@ public class CosmeticMenuImpl<T extends CosmeticType<T, ?>> extends PaginatedMen
         }
     }
 
-    private ItemStack getSortingItem() {
-        sortingItem.setDisplayName(user.translate("menu." + category.getKey() + ".sort.name"));
-        sortingItem.setLore(null);
-
-        for (Sorting s : Sorting.VALUES) {
-            if (this.sorting == s) {
-                sortingItem.addLore(Component.text("⏵ ", NamedTextColor.GREEN)
-                        .append(user.translate("menu." + category.getKey() + ".sorting." + s.getKey())));
-            } else {
-                sortingItem.addLore(Component.text("  ", NamedTextColor.GRAY)
-                        .append(user.translate("menu." + category.getKey() + ".sorting." + s.getKey())));
-            }
-        }
-        sortingItem.addLore(user.translateList("menu." + category.getKey() + ".sort.desc"));
-        return sortingItem.getItemStack();
-    }
-
     @Override
     public void open() {
         this.page = 1;
@@ -200,14 +199,18 @@ public class CosmeticMenuImpl<T extends CosmeticType<T, ?>> extends PaginatedMen
 
     @Override
     public ItemStack getFillEmptySlotsItem() {
-        if (!category.getConfig().getBoolean("menu.items.fill_empty_slots.enabled")) {
+        if (!config.hasKey("menu.filler.item")) {
             return null;
         }
-        return new ItemBuilderImpl(category.getConfig(), "menu.items.fill_empty_slots").getItemStack();
+        return new ItemBuilderImpl(config, "menu.filler").getItemStack();
     }
 
     public CosmeticCategory<T, ?, ?> getCategory() {
         return category;
+    }
+
+    private boolean hasTranslation(String key) {
+        return ((LanguageManagerImpl) plugin.getLanguageManager()).has(key, user.getLocale());
     }
 
     public class CosmeticPaginatedItem extends PaginatedItem {
@@ -225,62 +228,33 @@ public class CosmeticMenuImpl<T extends CosmeticType<T, ?>> extends PaginatedMen
 
         @Override
         public ItemStack getItemStack() {
-            ItemStack cosmeticItem = cosmeticType.getItemStack();
-            TagResolver tagResolver = cosmeticType.getResolvers(user);
-            Component name = user.translate(
-                    "menu." + category.getKey() + "." + cosmeticType.getKey() + ".name",
-                    Placeholder.unparsed("name", cosmeticType.getName(user)),
-                    tagResolver
+            TagResolver resolvers = TagResolver.resolver(
+                    cosmeticType.getResolvers(user),
+                    Placeholder.unparsed("name", MenuStyle.smallCaps(cosmeticType.getName(user)))
             );
-            List<Component> lore = user.translateList(
-                    "menu." + category.getKey() + "." + cosmeticType.getKey() + ".desc",
-                    Placeholder.unparsed("name", cosmeticType.getName(user)),
-                    tagResolver
-            );
-            ItemBuilderImpl itemBuilder = ItemBuilderImpl.of(cosmeticItem);
+            String descKey = "menu." + category.getKey() + "." + cosmeticType.getKey() + ".desc";
 
-            if (equipped) {
-                itemBuilder.setDisplayName(user.translate(
-                                "menu." + category.getKey() + ".equipped.name",
-                                Placeholder.component("name", name),
-                                tagResolver
-                        ))
-                        .setLore(lore)
-                        .addLore(user.translateList(
-                                "menu." + category.getKey() + ".equipped.desc",
-                                tagResolver
-                        ))
-                        .setGlintOverride(true);
-            } else if (!locked) {
-                itemBuilder.setDisplayName(user.translate(
-                                "menu." + category.getKey() + ".unequipped.name",
-                                Placeholder.component("name", name),
-                                tagResolver
-                        ))
-                        .setLore(lore)
-                        .addLore(user.translateList(
-                                "menu." + category.getKey() + ".unequipped.desc",
-                                tagResolver
-                        ));
-            } else {
-                if (lockedItem != null) {
-                    itemBuilder = ItemBuilderImpl.of(lockedItem.getItemStack());
-                }
-                String path = "locked";
-
-                itemBuilder.setDisplayName(user.translate(
-                                "menu." + category.getKey() + "." + path + ".name",
-                                Placeholder.component("name", name),
-                                tagResolver
-                        ))
-                        .setLore(lore)
-                        .addLore(user.translateList(
-                                "menu." + category.getKey() + "." + path + ".desc",
-                                tagResolver
-                        ));
+            if (!hasTranslation(descKey)) {
+                descKey = "menu." + category.getKey() + ".default.desc";
             }
+            List<Component> lore = new ArrayList<>();
 
-            return itemBuilder.getItemStack();
+            if (hasTranslation(descKey)) {
+                lore.addAll(user.translateList(descKey, resolvers));
+            }
+            lore.addAll(user.translateList("menu.cosmetic.info", resolvers));
+            String state = equipped ? "equipped" : locked ? "locked" : "unlocked";
+            lore.addAll(user.translateList("menu.cosmetic." + state, resolvers));
+
+            ItemBuilderImpl itemBuilder = ItemBuilderImpl.of(cosmeticType.getItemStack());
+
+            if (locked && config.hasKey(PATH + "locked.item")) {
+                itemBuilder = new ItemBuilderImpl(config, PATH + "locked");
+            }
+            itemBuilder.setDisplayName(user.translate("menu.cosmetic." + state + ".name", resolvers))
+                    .setLore(lore)
+                    .setGlintOverride(equipped);
+            return itemBuilder.hide().getItemStack();
         }
 
         @Override
@@ -296,9 +270,11 @@ public class CosmeticMenuImpl<T extends CosmeticType<T, ?>> extends PaginatedMen
                     cosmeticType.equip(user, false, true);
                     player.playSound(player, Sound.ITEM_ARMOR_EQUIP_LEATHER, 0.5f, 0.8f);
                 };
-            } else {
-                return event -> playDenySound();
             }
+            return event -> {
+                playDenySound();
+                user.sendMessage(user.translate("cosmetic.locked", Placeholder.unparsed("cosmetic", MenuStyle.smallCaps(cosmeticType.getName(user)))));
+            };
         }
 
         public T getCosmeticType() {
@@ -315,9 +291,9 @@ public class CosmeticMenuImpl<T extends CosmeticType<T, ?>> extends PaginatedMen
     }
 
     public enum Sorting {
-        ALPHABET("alphabetical"),
         UNLOCKED("unlocked"),
-        RARITY("rarity");
+        RARITY("rarity"),
+        ALPHABET("alphabetical");
 
         public static final List<Sorting> VALUES = List.of(values());
 
@@ -353,10 +329,6 @@ public class CosmeticMenuImpl<T extends CosmeticType<T, ?>> extends PaginatedMen
 
         public Sorting previous() {
             return VALUES.get((VALUES.size() + ordinal() - 1) % VALUES.size());
-        }
-
-        public static Sorting get(int index) {
-            return VALUES.get(index % VALUES.size());
         }
     }
 }
