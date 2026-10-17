@@ -91,7 +91,7 @@ public abstract class MenuImpl implements Menu {
         }
         int actualSlot = getActualSlot(slot);
 
-        if (actualSlot > inventory.getSize()) {
+        if (actualSlot < 0 || actualSlot >= inventory.getSize()) {
             ItemMeta itemMeta = itemStack.getItemMeta();
             String itemName = itemMeta != null && itemMeta.hasDisplayName()
                     ? ChatColor.stripColor(itemMeta.getDisplayName())

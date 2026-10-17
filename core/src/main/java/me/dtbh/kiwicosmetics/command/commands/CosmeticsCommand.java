@@ -14,7 +14,8 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
- */package me.dtbh.kiwicosmetics.command.commands;
+ */
+package me.dtbh.kiwicosmetics.command.commands;
 
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;

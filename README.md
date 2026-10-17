@@ -1,51 +1,69 @@
-# ProCosmetics
+# KiwiCosmetics
 
-ProCosmetics is a cosmetics plugin for Minecraft servers that helps you monetize in an EULA-friendly way and make
-your server more fun with engaging cosmetic features. It gives players many visual options and customization choices,
-and works entirely without requiring a resource pack. Perfect for hub and lobby servers, ProCosmetics can also be set up
-to work with survival and other server types. The plugin includes arrow effects, balloons, banners, death effects,
-emotes, gadgets, miniatures, morphs, mounts, music, particle effects, pets, and statuses, giving players endless ways to
-express themselves and stand out on your server.
+Cosmetics for Minecraft servers (Spigot & Paper **26.1+**, Java 25): particles, trails, gadgets, hats,
+rainbow armor, balloons, banners, miniatures, arrow & death effects and music, all in one plugin with a
+pastel, small-caps menu.
 
-ProCosmetics currently supports Spigot & Paper 26.1 and newer, and is maintained to ensure compatibility with each new
-release. To keep the codebase fresh and take advantage of the newest features, we may drop support for older versions
-when necessary.
+KiwiCosmetics is a fork of [ProCosmetics](https://github.com/FilleDev/ProCosmetics) by FilleDev (GPLv3),
+merged with the hats and rainbow armor of the old KiwiCosmetics plugin.
 
-[![bStats](https://bstats.org/signatures/bukkit/ProCosmetics.svg)](https://bstats.org/plugin/bukkit/ProCosmetics)  
-*Figure: Shows real-time concurrent player counts across servers running the plugin. More detailed statistics and charts
-are available on [bStats](https://bstats.org/plugin/bukkit/ProCosmetics/6408).*
+## Highlights
 
-## Documentation
+- **Permission only.** No coins, no shop, no treasure chests: a cosmetic is unlocked when the player has its permission.
+- **/cosmetics** opens the menu, **/cosmetics &lt;category&gt;** opens a category directly (`particles`, `trails`, `hats`, ...).
+- **Trails** that follow you while you walk, and **new particle shapes** using the 26.2/26.3 particles
+  (poplar leaves, geysers, sulfur bubbles, noxious gas, fireflies, copper fire, trails). On older versions they fall back to similar particles.
+- **Hype Train** gadget, like on Hypixel: ride the locomotive, other players right-click the train to hop on,
+  carriages follow your exact path and a boss bar shows the hype.
+- **Hats & rainbow armor** (Paper): `/hats` and `/rainbow` work exactly like before, and every hat can also be worn
+  from the menu (visual only, the real helmet stays put).
+- No database: equipped cosmetics are remembered on the player (persistent data container).
 
-Full documentation is available on our [Wiki](https://github.com/FilleDev/ProCosmetics/wiki).
+Removed compared to ProCosmetics: pets, morphs, mounts, emotes, statuses, coins/economy, gadget ammo, treasure chests,
+SQL/Mongo/Redis storage and the hotbar menu item.
 
-For support, join our [Discord server](https://discord.gg/AdNgUPvjx4).
+## Permissions
 
-## Official Builds
+| Permission | Default | What |
+|---|---|---|
+| `kiwicosmetics.cosmetic.*` | op | every cosmetic |
+| `kiwicosmetics.cosmetic.<category>.*` | - | a whole category, e.g. `kiwicosmetics.cosmetic.trails.*` |
+| `kiwicosmetics.cosmetic.<category>.<cosmetic>` | - | one cosmetic, e.g. `kiwicosmetics.cosmetic.particle_effects.angel_wings` |
+| `kiwicosmetics.command.cosmetics` / `equip` / `unequip` / `unequipall` | everyone | player commands |
+| `kiwicosmetics.admin` | op | all `/kiwicosmetics` (`/kc`) commands, plus `kiwi.*` |
+| `kiwi.hats.*`, `kiwi.rainbow.*` | op | `/hats` and `/rainbow` (same nodes as before) |
 
-Official and stable releases can be found on:
-[SpigotMC](https://www.spigotmc.org).
+`/kc permission <category>` lists every permission of a category (click to copy).
 
-## How to compile
+Categories: `particle_effects`, `trails`, `gadgets`, `hats`, `balloons`, `banners`, `miniatures`, `arrow_effects`, `death_effects`, `music`.
 
-1. ### Set up Spigot dependencies
-   Use [BuildTools](https://www.spigotmc.org/wiki/buildtools/#wikiPage) to create a Spigot jar for every
-   Minecraft version the plugin currently supports. Alternatively, run
-   `bash install.sh` to put all dependencies on your local Gradle cache.
+## Updating from the old KiwiCosmetics (hats + rainbow armor)
 
-2. ### Build the plugin
-   Build the project by executing the following tasks: `clean`, `build`. The jar file will be built in
-   `build/libs/ProCosmetics.jar`.
+Replace the old jar with this one. On first start the old `config.yml` (rainbow patterns + messages) is moved to
+`wardrobe.yml`, `hats.yml` stays as it is, and handed-out hats and rainbow armor keep working.
+
+## Files
+
+| File | What |
+|---|---|
+| `config.yml` | worlds, WorldGuard, menu layout |
+| `<category>.yml` | enable/disable cosmetics, their menu item and rarity |
+| `hats.yml`, `wardrobe.yml` | hats, rainbow patterns, hat/rainbow messages |
+| `hat_cosmetics.yml` | the Hats category of the menu |
+| `rarities.yml` | rarity names and colors |
+| `lang/en_US.json` | every message and menu text (MiniMessage) |
+
+Palette: peach `#FFD8BE` text, pink `#FFC8DD` names, light pink `#FFE5EC` values, mint `#B5EAD7` success,
+soft red `#FF9AA2` errors, lilac `#CDB4DB` accents, sky `#A2D2FF` hints, grey `#8A8A8A` details.
+
+## Building
+
+1. Install the Spigot dependencies with `bash install.sh` (needs Java 25), or use [BuildTools](https://www.spigotmc.org/wiki/buildtools/)
+   with `--remapped` for 26.1.2, 26.2 and 26.3.
+2. Run `./gradlew clean build`. The jar is `build/libs/KiwiCosmetics-<version>.jar`.
+
+Every push also builds the jar on GitHub Actions (download it from the run's *Artifacts*).
 
 ## License
 
-This project is licensed under the GNU General Public License v3.0. See [LICENSE](LICENSE) for full details.
-
-## Localisation
-
-Help translate ProCosmetics into more languages by joining
-our [Crowdin project](https://crowdin.com/project/procosmetics/invite?h=9e296fc3ef36b7a48b2f44ea9bddb3d12819377).
-Community contributions are always welcome and help make the plugin accessible to players around the world.
-
-If you find any translation issues or have suggestions for improving existing translations, feel free to contribute
-through Crowdin.
+GNU General Public License v3.0, see [LICENSE](LICENSE). Based on ProCosmetics, Copyright (C) FilleDev and contributors.

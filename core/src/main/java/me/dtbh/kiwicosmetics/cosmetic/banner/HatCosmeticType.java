@@ -14,7 +14,8 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
- */package me.dtbh.kiwicosmetics.cosmetic.banner;
+ */
+package me.dtbh.kiwicosmetics.cosmetic.banner;
 
 import org.bukkit.inventory.ItemStack;
 import me.dtbh.kiwicosmetics.api.cosmetic.CosmeticRarity;
