@@ -91,7 +91,9 @@ public abstract class CosmeticImpl<T extends CosmeticType<T, B>,
         CosmeticCategory<T, B, ?> category = cosmeticType.getCategory();
 
         if (plugin.getWorldGuardManager() != null && !plugin.getWorldGuardManager().isCosmeticAllow(player, category)) {
-            user.sendMessage(user.translate("cosmetic.equip.deny.region"));
+            if (!silent) {
+                user.sendMessage(user.translate("cosmetic.equip.deny.region"));
+            }
             return;
         }
         if (!canEquip()) {
@@ -121,7 +123,7 @@ public abstract class CosmeticImpl<T extends CosmeticType<T, B>,
         pluginManager.callEvent(new PlayerEquipCosmeticEvent(plugin, user, player, cosmeticType));
 
         if (saveToDatabase) {
-            plugin.getDatabase().saveEquippedCosmeticAsync(user, cosmeticType);
+            plugin.getUserManager().getStorage().saveEquipped(player, cosmeticType);
         }
     }
 
@@ -157,8 +159,8 @@ public abstract class CosmeticImpl<T extends CosmeticType<T, B>,
         plugin.getServer().getPluginManager().callEvent(new PlayerUnequipCosmeticEvent(plugin, player, cosmeticType));
         equipped = false;
 
-        if (saveToDatabase) {
-            plugin.getDatabase().removeEquippedCosmeticAsync(user, cosmeticType.getCategory());
+        if (saveToDatabase && player.isOnline()) {
+            plugin.getUserManager().getStorage().removeEquipped(player, cosmeticType.getCategory());
         }
     }
 

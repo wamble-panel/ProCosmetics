@@ -42,15 +42,12 @@ public class BalloonTypeImpl extends CosmeticTypeImpl<BalloonType, BalloonBehavi
                            CosmeticCategory<BalloonType, BalloonBehavior, ?> category,
                            Supplier<BalloonBehavior> behaviorFactory,
                            boolean enabled,
-                           boolean purchasable,
-                           int cost,
                            CosmeticRarity rarity,
                            ItemStack itemStack,
-                           List<String> treasureChests,
                            EntityType entityType,
                            boolean baby,
                            double scale) {
-        super(key, category, behaviorFactory, enabled, purchasable, cost, rarity, itemStack, treasureChests);
+        super(key, category, behaviorFactory, enabled, rarity, itemStack);
         this.entityType = entityType;
         this.baby = baby;
         this.scale = scale;
@@ -129,11 +126,8 @@ public class BalloonTypeImpl extends CosmeticTypeImpl<BalloonType, BalloonBehavi
                     category,
                     factory,
                     enabled,
-                    purchasable,
-                    cost,
                     rarity,
                     itemStack,
-                    treasureChests,
                     entityType,
                     baby,
                     scale

@@ -38,13 +38,10 @@ public class ParticleEffectTypeImpl extends CosmeticTypeImpl<ParticleEffectType,
                                   CosmeticCategory<ParticleEffectType, ParticleEffectBehavior, ?> category,
                                   Supplier<ParticleEffectBehavior> behaviorFactory,
                                   boolean enabled,
-                                  boolean purchasable,
-                                  int cost,
                                   CosmeticRarity rarity,
                                   ItemStack itemStack,
-                                  List<String> treasureChests,
                                   int repeatDelay) {
-        super(key, category, behaviorFactory, enabled, purchasable, cost, rarity, itemStack, treasureChests);
+        super(key, category, behaviorFactory, enabled, rarity, itemStack);
         this.repeatDelay = repeatDelay;
     }
 
@@ -83,11 +80,8 @@ public class ParticleEffectTypeImpl extends CosmeticTypeImpl<ParticleEffectType,
                     category,
                     factory,
                     enabled,
-                    purchasable,
-                    cost,
                     rarity,
                     itemStack,
-                    treasureChests,
                     repeatDelay
             );
         }

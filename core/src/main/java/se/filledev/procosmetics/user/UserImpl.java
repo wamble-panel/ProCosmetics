@@ -28,13 +28,8 @@ import org.jetbrains.annotations.Nullable;
 import se.filledev.procosmetics.api.ProCosmetics;
 import se.filledev.procosmetics.api.cosmetic.Cosmetic;
 import se.filledev.procosmetics.api.cosmetic.gadget.GadgetType;
-import se.filledev.procosmetics.api.cosmetic.morph.Morph;
 import se.filledev.procosmetics.api.cosmetic.registry.CosmeticCategory;
-import se.filledev.procosmetics.api.cosmetic.status.Status;
 import se.filledev.procosmetics.api.locale.Translatable;
-import se.filledev.procosmetics.api.nms.NMSEntity;
-import se.filledev.procosmetics.api.treasure.TreasureChest;
-import se.filledev.procosmetics.api.treasure.TreasureChestPlatform;
 import se.filledev.procosmetics.api.user.User;
 
 import java.util.HashMap;
@@ -45,28 +40,20 @@ import java.util.UUID;
 public class UserImpl implements User {
 
     private final ProCosmetics plugin;
-    private final int databaseId;
     private final UUID uuid;
     private final String name;
     private String locale;
     private boolean moving;
     private final Location lastLocation = new Location(null, 0.0d, 0.0d, 0.0d, 0.0f, 0.0f);
-    private int coins;
-    private boolean selfViewMorph;
-    private boolean selfViewStatus;
 
     private long fallDamageProtection;
 
     private final Map<CosmeticCategory<?, ?, ?>, Cosmetic<?, ?>> cosmetics = new HashMap<>();
-    private final Map<TreasureChest, Integer> treasureChests = new HashMap<>();
-    private TreasureChestPlatform currentPlatform;
 
     private final Map<GadgetType, Long> gadgetCooldowns = new HashMap<>();
-    private final Map<GadgetType, Integer> ammo = new HashMap<>();
 
-    public UserImpl(ProCosmetics plugin, int databaseId, UUID uuid, String name) {
+    public UserImpl(ProCosmetics plugin, UUID uuid, String name) {
         this.plugin = plugin;
-        this.databaseId = databaseId;
         this.uuid = uuid;
         this.name = name;
         this.locale = plugin.getLanguageManager().getLocale();
@@ -143,11 +130,6 @@ public class UserImpl implements User {
     }
 
     @Override
-    public int getDatabaseId() {
-        return databaseId;
-    }
-
-    @Override
     public UUID getUniqueId() {
         return uuid;
     }
@@ -180,72 +162,6 @@ public class UserImpl implements User {
         lastLocation.setZ(location.getZ());
         lastLocation.setYaw(location.getYaw());
         lastLocation.setPitch(location.getPitch());
-    }
-
-    @Override
-    public int getCoins() {
-        return coins;
-    }
-
-    @Override
-    public void setCoins(int coins) {
-        this.coins = coins;
-    }
-
-    @Override
-    public boolean hasSelfViewMorph() {
-        return selfViewMorph;
-    }
-
-    public void setSelfViewMorph(boolean visible, boolean update) {
-        if (hasSelfViewMorph() == visible) {
-            return;
-        }
-        selfViewMorph = visible;
-
-        if (update) {
-            Morph morph = (Morph) getCosmetic(plugin.getCategoryRegistries().morphs());
-            Player player = getPlayer();
-
-            if (player != null && morph != null && morph.isEquipped()) {
-                NMSEntity nmsEntity = morph.getNMSEntity();
-
-                if (visible) {
-                    nmsEntity.removeCollision(player);
-                    nmsEntity.getTracker().removeAntiViewer(player);
-                } else {
-                    nmsEntity.getTracker().addAntiViewer(player);
-                    nmsEntity.addCollision(player);
-                }
-            }
-        }
-    }
-
-    @Override
-    public boolean hasSelfViewStatus() {
-        return selfViewStatus;
-    }
-
-    public void setSelfViewStatus(boolean visible, boolean update) {
-        if (hasSelfViewStatus() == visible) {
-            return;
-        }
-        selfViewStatus = visible;
-
-        if (update) {
-            Status status = (Status) getCosmetic(plugin.getCategoryRegistries().statuses());
-            Player player = getPlayer();
-
-            if (player != null && status != null && status.isEquipped()) {
-                NMSEntity nmsEntity = status.getNMSEntity();
-
-                if (visible) {
-                    nmsEntity.getTracker().removeAntiViewer(player);
-                } else {
-                    nmsEntity.getTracker().addAntiViewer(player);
-                }
-            }
-        }
     }
 
     @Override
@@ -317,41 +233,6 @@ public class UserImpl implements User {
     }
 
     @Override
-    public boolean isOpeningTreasure() {
-        return currentPlatform != null;
-    }
-
-    @Override
-    public TreasureChestPlatform getCurrentPlatform() {
-        return currentPlatform;
-    }
-
-    @Override
-    public void setCurrentPlatform(TreasureChestPlatform platform) {
-        currentPlatform = platform;
-    }
-
-    @Override
-    public boolean hasTreasureChests(TreasureChest treasureChest, int amount) {
-        return getTreasureChests(treasureChest) >= amount;
-    }
-
-    @Override
-    public int getTreasureChests(TreasureChest treasureChest) {
-        return treasureChests.getOrDefault(treasureChest, 0);
-    }
-
-    @Override
-    public void setTreasureChests(TreasureChest treasureChest, int amount) {
-        treasureChests.put(treasureChest, amount);
-    }
-
-    @Override
-    public Map<TreasureChest, Integer> getTreasureChests() {
-        return treasureChests;
-    }
-
-    @Override
     public boolean hasCooldown(GadgetType gadget) {
         return getCooldown(gadget) > System.currentTimeMillis();
     }
@@ -367,27 +248,7 @@ public class UserImpl implements User {
     }
 
     @Override
-    public boolean hasAmmo(GadgetType gadget, int amount) {
-        return getAmmo(gadget) >= amount;
-    }
-
-    @Override
-    public int getAmmo(GadgetType gadget) {
-        return ammo.getOrDefault(gadget, 0);
-    }
-
-    @Override
-    public void setAmmo(GadgetType gadget, int amount) {
-        ammo.put(gadget, amount);
-    }
-
-    @Override
-    public Map<GadgetType, Integer> getAmmo() {
-        return ammo;
-    }
-
-    @Override
     public String toString() {
-        return getDebugName();
+        return name + " (" + uuid + ")";
     }
 }

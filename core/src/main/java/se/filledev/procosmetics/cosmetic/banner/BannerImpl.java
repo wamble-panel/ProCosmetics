@@ -31,8 +31,8 @@ import se.filledev.procosmetics.api.cosmetic.banner.BannerType;
 import se.filledev.procosmetics.api.user.User;
 import se.filledev.procosmetics.api.util.AnimationFrame;
 import se.filledev.procosmetics.cosmetic.CosmeticImpl;
-import se.filledev.procosmetics.cosmetic.emote.animation.AnimationController;
-import se.filledev.procosmetics.cosmetic.emote.animation.AnimationListener;
+import se.filledev.procosmetics.util.animation.AnimationController;
+import se.filledev.procosmetics.util.animation.AnimationListener;
 import se.filledev.procosmetics.nms.AbstractNMSEquipment;
 
 import java.util.List;
@@ -48,9 +48,6 @@ public class BannerImpl extends CosmeticImpl<BannerType, BannerBehavior> impleme
 
     @Override
     protected void onEquip() {
-        user.removeCosmetic(plugin.getCategoryRegistries().emotes(), false, true);
-        user.removeCosmetic(plugin.getCategoryRegistries().morphs(), false, true);
-
         nmsEquipment = plugin.getNMSManager().createEquipment(player, true);
 
         player.playSound(player, Sound.ENTITY_HORSE_ARMOR, 0.5f, 1.0f);

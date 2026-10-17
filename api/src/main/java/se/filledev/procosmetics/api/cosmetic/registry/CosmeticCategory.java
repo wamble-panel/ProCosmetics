@@ -70,16 +70,6 @@ public interface CosmeticCategory<T extends CosmeticType<T, B>,
     String getPermission();
 
     /**
-     * Gets the permission required to <b>purchase</b> all cosmetics within this category.
-     * <p>
-     * Players with this permission can purchase any cosmetic in the category,
-     * even if individual purchase permissions are normally required.
-     *
-     * @return the purchase permission string, or {@code null} if not required
-     */
-    String getPurchasePermission();
-
-    /**
      * Gets the {@link ItemBuilder} representing this category in menus.
      *
      * @return the {@link ItemBuilder} representing this category in menus
@@ -154,14 +144,6 @@ public interface CosmeticCategory<T extends CosmeticType<T, B>,
          * @return this builder instance
          */
         Builder permission(String permission);
-
-        /**
-         * Sets the permission required to <b>purchase</b> all cosmetics in this category.
-         *
-         * @param permission the purchase permission
-         * @return this builder instance
-         */
-        Builder purchasePermission(String permission);
 
         /**
          * Sets the item used to represent this category in menus.

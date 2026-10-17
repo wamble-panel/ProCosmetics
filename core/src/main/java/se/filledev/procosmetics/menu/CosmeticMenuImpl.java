@@ -34,7 +34,6 @@ import se.filledev.procosmetics.api.cosmetic.registry.CosmeticCategory;
 import se.filledev.procosmetics.api.menu.ClickableItem;
 import se.filledev.procosmetics.api.menu.CosmeticMenu;
 import se.filledev.procosmetics.api.user.User;
-import se.filledev.procosmetics.menu.menus.purchase.CosmeticPurchaseMenu;
 import se.filledev.procosmetics.util.item.ItemBuilderImpl;
 
 import java.util.Comparator;
@@ -267,15 +266,7 @@ public class CosmeticMenuImpl<T extends CosmeticType<T, ?>> extends PaginatedMen
                 if (lockedItem != null) {
                     itemBuilder = ItemBuilderImpl.of(lockedItem.getItemStack());
                 }
-                String path;
-
-                if (!cosmeticType.isPurchasable()) {
-                    path = "purchase_disabled";
-                } else if (cosmeticType.hasPurchasePermission(player)) {
-                    path = "purchasable";
-                } else {
-                    path = "purchase_no_permission";
-                }
+                String path = "locked";
 
                 itemBuilder.setDisplayName(user.translate(
                                 "menu." + category.getKey() + "." + path + ".name",
@@ -306,14 +297,7 @@ public class CosmeticMenuImpl<T extends CosmeticType<T, ?>> extends PaginatedMen
                     player.playSound(player, Sound.ITEM_ARMOR_EQUIP_LEATHER, 0.5f, 0.8f);
                 };
             } else {
-                return event -> {
-                    if (cosmeticType.isPurchasable() && cosmeticType.hasPurchasePermission(player)) {
-                        new CosmeticPurchaseMenu(plugin, user, cosmeticType).open();
-                        playClickSound();
-                    } else {
-                        playDenySound();
-                    }
-                };
+                return event -> playDenySound();
             }
         }
 
@@ -333,8 +317,7 @@ public class CosmeticMenuImpl<T extends CosmeticType<T, ?>> extends PaginatedMen
     public enum Sorting {
         ALPHABET("alphabetical"),
         UNLOCKED("unlocked"),
-        RARITY("rarity"),
-        COST("cost");
+        RARITY("rarity");
 
         public static final List<Sorting> VALUES = List.of(values());
 
@@ -359,10 +342,6 @@ public class CosmeticMenuImpl<T extends CosmeticType<T, ?>> extends PaginatedMen
                         .thenComparing(item -> item.getName(), String.CASE_INSENSITIVE_ORDER);
                 case RARITY -> Comparator
                         .comparing((CosmeticMenuImpl<T>.CosmeticPaginatedItem item) -> item.getCosmeticType().getRarity())
-                        .reversed()
-                        .thenComparing(item -> item.getName(), String.CASE_INSENSITIVE_ORDER);
-                case COST -> Comparator
-                        .<CosmeticMenuImpl<T>.CosmeticPaginatedItem>comparingInt(item -> item.getCosmeticType().getCost())
                         .reversed()
                         .thenComparing(item -> item.getName(), String.CASE_INSENSITIVE_ORDER);
             };

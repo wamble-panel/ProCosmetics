@@ -21,14 +21,10 @@ import org.bukkit.plugin.java.JavaPlugin;
 import se.filledev.procosmetics.api.config.ConfigManager;
 import se.filledev.procosmetics.api.cosmetic.registry.CategoryRegistries;
 import se.filledev.procosmetics.api.cosmetic.registry.CosmeticRarityRegistry;
-import se.filledev.procosmetics.api.economy.EconomyManager;
 import se.filledev.procosmetics.api.locale.LanguageManager;
 import se.filledev.procosmetics.api.menu.MenuManager;
 import se.filledev.procosmetics.api.nms.NMSManager;
 import se.filledev.procosmetics.api.platform.PlatformAdapter;
-import se.filledev.procosmetics.api.storage.Database;
-import se.filledev.procosmetics.api.treasure.TreasureChestManager;
-import se.filledev.procosmetics.api.treasure.animation.TreasureChestAnimationRegistry;
 import se.filledev.procosmetics.api.user.UserManager;
 
 import java.util.concurrent.Executor;
@@ -78,13 +74,6 @@ public interface ProCosmetics {
     MenuManager getMenuManager();
 
     /**
-     * Gets the database instance for data persistence operations.
-     *
-     * @return the database instance
-     */
-    Database getDatabase();
-
-    /**
      * Gets the NMS manager for version-specific entity operations.
      *
      * @return the nMS manager
@@ -104,27 +93,6 @@ public interface ProCosmetics {
      * @return the category registries
      */
     CategoryRegistries getCategoryRegistries();
-
-    /**
-     * Gets the animation registry for treasure chests.
-     *
-     * @return the treasure chest animation registry
-     */
-    TreasureChestAnimationRegistry getTreasureChestAnimationRegistry();
-
-    /**
-     * Gets the treasure chest manager for loot operations.
-     *
-     * @return the treasure chest manager
-     */
-    TreasureChestManager getTreasureChestManager();
-
-    /**
-     * Gets the economy manager for handling currency operations.
-     *
-     * @return the economy manager
-     */
-    EconomyManager getEconomyManager();
 
     /**
      * Gets the platform adapter for handling platform-specific operations.

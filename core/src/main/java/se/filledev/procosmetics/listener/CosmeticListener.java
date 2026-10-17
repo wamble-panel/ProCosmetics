@@ -29,12 +29,10 @@ import se.filledev.procosmetics.api.cosmetic.Cosmetic;
 import se.filledev.procosmetics.api.cosmetic.balloon.Balloon;
 import se.filledev.procosmetics.api.cosmetic.gadget.Gadget;
 import se.filledev.procosmetics.api.cosmetic.miniature.Miniature;
-import se.filledev.procosmetics.api.cosmetic.morph.Morph;
-import se.filledev.procosmetics.api.cosmetic.mount.Mount;
-import se.filledev.procosmetics.api.cosmetic.pet.Pet;
 import se.filledev.procosmetics.api.cosmetic.registry.CosmeticCategory;
-import se.filledev.procosmetics.api.cosmetic.status.Status;
 import se.filledev.procosmetics.api.user.User;
+
+import java.util.List;
 
 public class CosmeticListener implements Listener {
 
@@ -51,7 +49,8 @@ public class CosmeticListener implements Listener {
         User user = plugin.getUserManager().getConnected(event.getEntity());
 
         if (user != null) {
-            for (Cosmetic<?, ?> cosmetic : user.getCosmetics().values()) {
+            // Copy, removing music below modifies the map
+            for (Cosmetic<?, ?> cosmetic : List.copyOf(user.getCosmetics().values())) {
                 CosmeticCategory<?, ?, ?> category = cosmetic.getType().getCategory();
 
                 if (category.equals(plugin.getCategoryRegistries().arrowEffects())
@@ -87,10 +86,6 @@ public class CosmeticListener implements Listener {
         Balloon balloon = (Balloon) user.getCosmetic(plugin.getCategoryRegistries().balloons());
         Gadget gadget = (Gadget) user.getCosmetic(plugin.getCategoryRegistries().gadgets());
         Miniature miniature = (Miniature) user.getCosmetic(plugin.getCategoryRegistries().miniatures());
-        Mount mount = (Mount) user.getCosmetic(plugin.getCategoryRegistries().mounts());
-        Morph morph = (Morph) user.getCosmetic(plugin.getCategoryRegistries().morphs());
-        Pet pet = (Pet) user.getCosmetic(plugin.getCategoryRegistries().pets());
-        Status status = (Status) user.getCosmetic(plugin.getCategoryRegistries().statuses());
 
         if (balloon != null && balloon.isEquipped()) {
             balloon.getTracker().respawnAt(to);
@@ -102,22 +97,6 @@ public class CosmeticListener implements Listener {
 
         if (miniature != null && miniature.isEquipped()) {
             miniature.getNMSEntity().getTracker().respawnAt(to);
-        }
-
-        if (mount != null && mount.isEquipped()) {
-            mount.spawn(to);
-        }
-
-        if (morph != null && morph.isEquipped() && user.hasSelfViewMorph()) {
-            morph.getNMSEntity().getTracker().respawnAt(to);
-        }
-
-        if (pet != null && pet.isEquipped()) {
-            pet.spawn(to);
-        }
-
-        if (status != null && status.isEquipped() && user.hasSelfViewStatus()) {
-            status.getNMSEntity().getTracker().respawnAt(to);
         }
     }
 }

@@ -79,7 +79,6 @@ public class BalloonImpl extends CosmeticImpl<BalloonType, BalloonBehavior> impl
 
     @Override
     protected void onEquip() {
-        user.removeCosmetic(plugin.getCategoryRegistries().morphs(), false, true);
         updateLocation();
         LocationUtil.copy(targetLocation, location);
 

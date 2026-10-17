@@ -28,24 +28,14 @@ import se.filledev.procosmetics.api.cosmetic.banner.BannerBehavior;
 import se.filledev.procosmetics.api.cosmetic.banner.BannerType;
 import se.filledev.procosmetics.api.cosmetic.deatheffect.DeathEffectBehavior;
 import se.filledev.procosmetics.api.cosmetic.deatheffect.DeathEffectType;
-import se.filledev.procosmetics.api.cosmetic.emote.EmoteBehavior;
-import se.filledev.procosmetics.api.cosmetic.emote.EmoteType;
 import se.filledev.procosmetics.api.cosmetic.gadget.GadgetBehavior;
 import se.filledev.procosmetics.api.cosmetic.gadget.GadgetType;
 import se.filledev.procosmetics.api.cosmetic.miniature.MiniatureBehavior;
 import se.filledev.procosmetics.api.cosmetic.miniature.MiniatureType;
-import se.filledev.procosmetics.api.cosmetic.morph.MorphBehavior;
-import se.filledev.procosmetics.api.cosmetic.morph.MorphType;
-import se.filledev.procosmetics.api.cosmetic.mount.MountBehavior;
-import se.filledev.procosmetics.api.cosmetic.mount.MountType;
 import se.filledev.procosmetics.api.cosmetic.music.MusicBehavior;
 import se.filledev.procosmetics.api.cosmetic.music.MusicType;
 import se.filledev.procosmetics.api.cosmetic.particleeffect.ParticleEffectBehavior;
 import se.filledev.procosmetics.api.cosmetic.particleeffect.ParticleEffectType;
-import se.filledev.procosmetics.api.cosmetic.pet.PetBehavior;
-import se.filledev.procosmetics.api.cosmetic.pet.PetType;
-import se.filledev.procosmetics.api.cosmetic.status.StatusBehavior;
-import se.filledev.procosmetics.api.cosmetic.status.StatusType;
 
 import java.util.Collection;
 
@@ -153,15 +143,6 @@ public interface CategoryRegistries {
     }
 
     /**
-     * Gets the emotes cosmetic category.
-     *
-     * @return the built-in {@code emotes} category, or {@code null} if not registered
-     */
-    default CosmeticCategory<EmoteType, EmoteBehavior, EmoteType.Builder> emotes() {
-        return getCategory(BuiltIn.EMOTES);
-    }
-
-    /**
      * Gets the gadgets cosmetic category.
      *
      * @return the built-in {@code gadgets} category, or {@code null} if not registered
@@ -180,24 +161,6 @@ public interface CategoryRegistries {
     }
 
     /**
-     * Gets the morphs cosmetic category.
-     *
-     * @return the built-in {@code morphs} category, or {@code null} if not registered
-     */
-    default CosmeticCategory<MorphType, MorphBehavior, MorphType.Builder> morphs() {
-        return getCategory(BuiltIn.MORPHS);
-    }
-
-    /**
-     * Gets the mounts cosmetic category.
-     *
-     * @return the built-in {@code mounts} category, or {@code null} if not registered
-     */
-    default CosmeticCategory<MountType, MountBehavior, MountType.Builder> mounts() {
-        return getCategory(BuiltIn.MOUNTS);
-    }
-
-    /**
      * Gets the music cosmetic category.
      *
      * @return the built-in {@code music} category, or {@code null} if not registered
@@ -213,24 +176,6 @@ public interface CategoryRegistries {
      */
     default CosmeticCategory<ParticleEffectType, ParticleEffectBehavior, ParticleEffectType.Builder> particleEffects() {
         return getCategory(BuiltIn.PARTICLE_EFFECTS);
-    }
-
-    /**
-     * Gets the pets cosmetic category.
-     *
-     * @return the built-in {@code pets} category, or {@code null} if not registered
-     */
-    default CosmeticCategory<PetType, PetBehavior, PetType.Builder> pets() {
-        return getCategory(BuiltIn.PETS);
-    }
-
-    /**
-     * Gets the statuses cosmetic category.
-     *
-     * @return the built-in {@code statuses} category, or {@code null} if not registered
-     */
-    default CosmeticCategory<StatusType, StatusBehavior, StatusType.Builder> statuses() {
-        return getCategory(BuiltIn.STATUSES);
     }
 
     /**
@@ -259,11 +204,6 @@ public interface CategoryRegistries {
         String DEATH_EFFECTS = "death_effects";
 
         /**
-         * Built-in key for emotes.
-         */
-        String EMOTES = "emotes";
-
-        /**
          * Built-in key for gadgets.
          */
         String GADGETS = "gadgets";
@@ -272,16 +212,6 @@ public interface CategoryRegistries {
          * Built-in key for miniatures.
          */
         String MINIATURES = "miniatures";
-
-        /**
-         * Built-in key for morphs.
-         */
-        String MORPHS = "morphs";
-
-        /**
-         * Built-in key for mounts.
-         */
-        String MOUNTS = "mounts";
 
         /**
          * Built-in key for music cosmetics.
@@ -293,14 +223,5 @@ public interface CategoryRegistries {
          */
         String PARTICLE_EFFECTS = "particle_effects";
 
-        /**
-         * Built-in key for pets.
-         */
-        String PETS = "pets";
-
-        /**
-         * Built-in key for statuses.
-         */
-        String STATUSES = "statuses";
     }
 }

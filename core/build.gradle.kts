@@ -4,7 +4,6 @@ repositories {
     maven("https://repo.extendedclip.com/content/repositories/placeholderapi/")
     maven("https://maven.enginehub.org/repo/")
     maven("https://ci.ender.zone/plugin/repository/everything/")
-    maven("https://repo.rosewooddev.io/repository/public/")
     maven("https://maven.enginehub.org/repo/") // WorldGuard
     maven("https://jitpack.io") // SuperVanish
 }
@@ -22,11 +21,7 @@ dependencies {
     // Runtime libraries (will be shaded)
     implementation("dev.dejvokep:boosted-yaml:1.3.7")
     implementation("com.github.FilleDev:NoteBlockAPI:1.7.0")
-    implementation("org.mongodb:mongodb-driver-sync:5.8.0")
-    implementation("com.zaxxer:HikariCP:7.1.0")
-    implementation("redis.clients:jedis:7.5.2")
     implementation("org.bstats:bstats-bukkit:3.2.1")
-    compileOnly("org.xerial:sqlite-jdbc:3.53.2.0") // Included in Spigot
 
     implementation("net.kyori:adventure-api:4.26.1")
     implementation("net.kyori:adventure-text-minimessage:4.26.1")
@@ -37,7 +32,6 @@ dependencies {
 
     // Plugin hooks
     compileOnly("me.clip:placeholderapi:2.12.2")
-    compileOnly("com.github.MilkBowl:VaultAPI:1.7.1")
     compileOnly("net.essentialsx:EssentialsX:2.21.2")
     {
         exclude(group = "io.papermc.paper")
@@ -48,6 +42,5 @@ dependencies {
         exclude(group = "com.google.code.gson")
     }
     compileOnly("com.github.Zrips:CMI-API:9.8.6.4")
-    compileOnly("org.black_ixx:playerpoints:3.3.3")
     compileOnly("com.github.LeonMangler:SuperVanish:6.2.19")
 }

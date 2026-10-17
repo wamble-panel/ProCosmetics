@@ -44,14 +44,11 @@ public class BannerTypeImpl extends CosmeticTypeImpl<BannerType, BannerBehavior>
                           CosmeticCategory<BannerType, BannerBehavior, ?> category,
                           Supplier<BannerBehavior> behaviorFactory,
                           boolean enabled,
-                          boolean purchasable,
-                          int cost,
                           CosmeticRarity rarity,
                           ItemStack itemStack,
-                          List<String> treasureChests,
                           long tickInterval,
                           List<AnimationFrame> frames) {
-        super(key, category, behaviorFactory, enabled, purchasable, cost, rarity, itemStack, treasureChests);
+        super(key, category, behaviorFactory, enabled, rarity, itemStack);
         this.tickInterval = tickInterval;
         this.frames = frames;
     }
@@ -135,11 +132,8 @@ public class BannerTypeImpl extends CosmeticTypeImpl<BannerType, BannerBehavior>
                     category,
                     factory,
                     enabled,
-                    purchasable,
-                    cost,
                     rarity,
                     itemStack,
-                    treasureChests,
                     tickInterval,
                     frames
             );

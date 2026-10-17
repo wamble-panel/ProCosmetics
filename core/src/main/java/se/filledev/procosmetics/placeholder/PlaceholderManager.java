@@ -52,10 +52,7 @@ public class PlaceholderManager {
         for (PlaceholderResolver placeholder : resolvers) {
             text = placeholder.resolve(player, text);
         }
-        text = text.replace("<coins>", String.valueOf(plugin.getEconomyManager().getEconomyProvider().getCoins(plugin.getUserManager().getConnected(player))))
-                .replace("<ping>", String.valueOf(player.getPing()));
-
-        return text;
+        return text.replace("<ping>", String.valueOf(player.getPing()));
     }
 
     public List<String> resolve(Player player, List<String> text) {

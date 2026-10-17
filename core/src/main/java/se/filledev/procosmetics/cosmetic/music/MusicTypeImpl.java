@@ -43,13 +43,10 @@ public class MusicTypeImpl extends CosmeticTypeImpl<MusicType, MusicBehavior> im
                          CosmeticCategory<MusicType, MusicBehavior, ?> category,
                          Supplier<MusicBehavior> behaviorFactory,
                          boolean enabled,
-                         boolean purchasable,
-                         int cost,
                          CosmeticRarity rarity,
                          ItemStack itemStack,
-                         List<String> treasureChests,
                          Song song) {
-        super(key, category, behaviorFactory, enabled, purchasable, cost, rarity, itemStack, treasureChests);
+        super(key, category, behaviorFactory, enabled, rarity, itemStack);
         this.song = song;
     }
 
@@ -106,11 +103,8 @@ public class MusicTypeImpl extends CosmeticTypeImpl<MusicType, MusicBehavior> im
                     category,
                     factory,
                     enabled,
-                    purchasable,
-                    cost,
                     rarity,
                     itemStack,
-                    treasureChests,
                     song
             );
         }

@@ -23,7 +23,6 @@ import org.bukkit.entity.Player;
 import se.filledev.procosmetics.ProCosmeticsPlugin;
 import se.filledev.procosmetics.api.cosmetic.Cosmetic;
 import se.filledev.procosmetics.api.cosmetic.registry.CosmeticCategory;
-import se.filledev.procosmetics.api.treasure.TreasureChest;
 import se.filledev.procosmetics.api.user.User;
 
 import javax.annotation.Nonnull;
@@ -39,17 +38,7 @@ public class PlaceholderAPIExpansion extends PlaceholderExpansion {
 
     @Override
     public String onRequest(OfflinePlayer offlinePlayer, String identifier) {
-        if (identifier.equals("coins")) {
-            if (offlinePlayer == null) {
-                return "0";
-            }
-            User user = plugin.getUserManager().getConnected(offlinePlayer.getUniqueId());
-
-            if (user == null) {
-                return "0";
-            }
-            return String.valueOf(plugin.getEconomyManager().getEconomyProvider().getCoins(user));
-        } else if (identifier.contains("equipped_")) {
+        if (identifier.startsWith("equipped_")) {
             for (CosmeticCategory<?, ?, ?> category : plugin.getCategoryRegistries().getCategories()) {
                 if (identifier.equals("equipped_" + category.getKey())) {
                     if (offlinePlayer == null) {
@@ -62,13 +51,13 @@ public class PlaceholderAPIExpansion extends PlaceholderExpansion {
                     }
                     Cosmetic<?, ?> cosmetic = user.getCosmetic(category);
 
-                    if (cosmetic == null) {
+                    if (cosmetic == null || !cosmetic.isEquipped()) {
                         return "None";
                     }
                     return cosmetic.getType().getName(plugin.getLanguageManager());
                 }
             }
-        } else if (identifier.contains("unlocked_")) {
+        } else if (identifier.startsWith("unlocked_")) {
             for (CosmeticCategory<?, ?, ?> category : plugin.getCategoryRegistries().getCategories()) {
                 if (identifier.equals("unlocked_" + category.getKey())) {
                     int total = category.getCosmeticRegistry().getEnabledTypes().size();
@@ -84,22 +73,9 @@ public class PlaceholderAPIExpansion extends PlaceholderExpansion {
                     return category.getUnlockedCosmetics(player) + "/" + total;
                 }
             }
-        } else if (identifier.contains("treasures_")) {
-            for (TreasureChest treasureChest : plugin.getTreasureChestManager().getTreasureChests()) {
-                if (identifier.equals("treasures_" + treasureChest.getKey())) {
-                    if (offlinePlayer == null) {
-                        return "0";
-                    }
-                    User user = plugin.getUserManager().getConnected(offlinePlayer.getUniqueId());
-
-                    if (user == null) {
-                        return "0";
-                    }
-                    return String.valueOf(user.getTreasureChests(treasureChest));
-                }
-            }
         }
-        return identifier;
+        // Unknown placeholder, let PlaceholderAPI leave it untouched
+        return null;
     }
 
     @Override

@@ -36,12 +36,9 @@ public class DeathEffectTypeImpl extends CosmeticTypeImpl<DeathEffectType, Death
                                CosmeticCategory<DeathEffectType, DeathEffectBehavior, ?> category,
                                Supplier<DeathEffectBehavior> behaviorFactory,
                                boolean enabled,
-                               boolean purchasable,
-                               int cost,
                                CosmeticRarity rarity,
-                               ItemStack itemStack,
-                               List<String> treasureChests) {
-        super(key, category, behaviorFactory, enabled, purchasable, cost, rarity, itemStack, treasureChests);
+                               ItemStack itemStack) {
+        super(key, category, behaviorFactory, enabled, rarity, itemStack);
     }
 
     @Override
@@ -66,11 +63,8 @@ public class DeathEffectTypeImpl extends CosmeticTypeImpl<DeathEffectType, Death
                     category,
                     factory,
                     enabled,
-                    purchasable,
-                    cost,
                     rarity,
-                    itemStack,
-                    treasureChests
+                    itemStack
             );
         }
     }

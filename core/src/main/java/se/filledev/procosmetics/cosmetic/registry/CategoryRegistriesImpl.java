@@ -29,27 +29,17 @@ import se.filledev.procosmetics.api.cosmetic.banner.BannerBehavior;
 import se.filledev.procosmetics.api.cosmetic.banner.BannerType;
 import se.filledev.procosmetics.api.cosmetic.deatheffect.DeathEffectBehavior;
 import se.filledev.procosmetics.api.cosmetic.deatheffect.DeathEffectType;
-import se.filledev.procosmetics.api.cosmetic.emote.EmoteBehavior;
-import se.filledev.procosmetics.api.cosmetic.emote.EmoteType;
 import se.filledev.procosmetics.api.cosmetic.gadget.GadgetBehavior;
 import se.filledev.procosmetics.api.cosmetic.gadget.GadgetType;
 import se.filledev.procosmetics.api.cosmetic.miniature.MiniatureBehavior;
 import se.filledev.procosmetics.api.cosmetic.miniature.MiniatureType;
-import se.filledev.procosmetics.api.cosmetic.morph.MorphBehavior;
-import se.filledev.procosmetics.api.cosmetic.morph.MorphType;
-import se.filledev.procosmetics.api.cosmetic.mount.MountBehavior;
-import se.filledev.procosmetics.api.cosmetic.mount.MountType;
 import se.filledev.procosmetics.api.cosmetic.music.MusicBehavior;
 import se.filledev.procosmetics.api.cosmetic.music.MusicType;
 import se.filledev.procosmetics.api.cosmetic.particleeffect.ParticleEffectBehavior;
 import se.filledev.procosmetics.api.cosmetic.particleeffect.ParticleEffectType;
-import se.filledev.procosmetics.api.cosmetic.pet.PetBehavior;
-import se.filledev.procosmetics.api.cosmetic.pet.PetType;
 import se.filledev.procosmetics.api.cosmetic.registry.CategoryRegistries;
 import se.filledev.procosmetics.api.cosmetic.registry.CosmeticCategory;
 import se.filledev.procosmetics.api.cosmetic.registry.CosmeticRegistry;
-import se.filledev.procosmetics.api.cosmetic.status.StatusBehavior;
-import se.filledev.procosmetics.api.cosmetic.status.StatusType;
 import se.filledev.procosmetics.cosmetic.arroweffect.ArrowEffectTypeImpl;
 import se.filledev.procosmetics.cosmetic.arroweffect.type.*;
 import se.filledev.procosmetics.cosmetic.balloon.BalloonTypeImpl;
@@ -58,11 +48,6 @@ import se.filledev.procosmetics.cosmetic.banner.BannerTypeImpl;
 import se.filledev.procosmetics.cosmetic.banner.type.DefaultBanner;
 import se.filledev.procosmetics.cosmetic.deatheffect.DeathEffectTypeImpl;
 import se.filledev.procosmetics.cosmetic.deatheffect.type.*;
-import se.filledev.procosmetics.cosmetic.emote.EmoteTypeImpl;
-import se.filledev.procosmetics.cosmetic.emote.type.DefaultEmote;
-import se.filledev.procosmetics.cosmetic.emote.type.Rage;
-import se.filledev.procosmetics.cosmetic.emote.type.Sad;
-import se.filledev.procosmetics.cosmetic.emote.type.Wink;
 import se.filledev.procosmetics.cosmetic.gadget.GadgetTypeImpl;
 import se.filledev.procosmetics.cosmetic.gadget.type.*;
 import se.filledev.procosmetics.cosmetic.miniature.MiniatureTypeImpl;
@@ -76,27 +61,13 @@ import se.filledev.procosmetics.cosmetic.miniature.type.Skeleton;
 import se.filledev.procosmetics.cosmetic.miniature.type.Spider;
 import se.filledev.procosmetics.cosmetic.miniature.type.Witch;
 import se.filledev.procosmetics.cosmetic.miniature.type.Zombie;
-import se.filledev.procosmetics.cosmetic.morph.MorphTypeImpl;
-import se.filledev.procosmetics.cosmetic.morph.type.*;
-import se.filledev.procosmetics.cosmetic.morph.type.Slime;
-import se.filledev.procosmetics.cosmetic.morph.type.Villager;
-import se.filledev.procosmetics.cosmetic.mount.MountTypeImpl;
-import se.filledev.procosmetics.cosmetic.mount.type.*;
-import se.filledev.procosmetics.cosmetic.mount.type.CaveSpider;
 import se.filledev.procosmetics.cosmetic.music.MusicTypeImpl;
 import se.filledev.procosmetics.cosmetic.music.type.DefaultMusic;
 import se.filledev.procosmetics.cosmetic.particleeffect.ParticleEffectTypeImpl;
 import se.filledev.procosmetics.cosmetic.particleeffect.type.*;
 import se.filledev.procosmetics.cosmetic.particleeffect.type.Bunny;
 import se.filledev.procosmetics.cosmetic.particleeffect.type.Confetti;
-import se.filledev.procosmetics.cosmetic.pet.PetTypeImpl;
-import se.filledev.procosmetics.cosmetic.pet.type.*;
-import se.filledev.procosmetics.cosmetic.pet.type.SantaClaus;
-import se.filledev.procosmetics.cosmetic.status.StatusTypeImpl;
-import se.filledev.procosmetics.cosmetic.status.type.DefaultStatus;
 import se.filledev.procosmetics.menu.CosmeticMenuImpl;
-import se.filledev.procosmetics.menu.menus.MorphMenu;
-import se.filledev.procosmetics.menu.menus.StatusMenu;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -111,15 +82,10 @@ public class CategoryRegistriesImpl implements CategoryRegistries {
         register(new CosmeticCategoryImpl<>(BuiltIn.BALLOONS, BalloonTypeImpl.BuilderImpl::new, CosmeticMenuImpl::new));
         register(new CosmeticCategoryImpl<>(BuiltIn.BANNERS, BannerTypeImpl.BuilderImpl::new, CosmeticMenuImpl::new));
         register(new CosmeticCategoryImpl<>(BuiltIn.DEATH_EFFECTS, DeathEffectTypeImpl.BuilderImpl::new, CosmeticMenuImpl::new));
-        register(new CosmeticCategoryImpl<>(BuiltIn.EMOTES, EmoteTypeImpl.BuilderImpl::new, CosmeticMenuImpl::new));
         register(new CosmeticCategoryImpl<>(BuiltIn.GADGETS, GadgetTypeImpl.BuilderImpl::new, CosmeticMenuImpl::new));
         register(new CosmeticCategoryImpl<>(BuiltIn.MINIATURES, MiniatureTypeImpl.BuilderImpl::new, CosmeticMenuImpl::new));
-        register(new CosmeticCategoryImpl<>(BuiltIn.MORPHS, MorphTypeImpl.BuilderImpl::new, MorphMenu::new));
-        register(new CosmeticCategoryImpl<>(BuiltIn.MOUNTS, MountTypeImpl.BuilderImpl::new, CosmeticMenuImpl::new));
         register(new CosmeticCategoryImpl<>(BuiltIn.MUSIC, MusicTypeImpl.BuilderImpl::new, CosmeticMenuImpl::new));
         register(new CosmeticCategoryImpl<>(BuiltIn.PARTICLE_EFFECTS, ParticleEffectTypeImpl.BuilderImpl::new, CosmeticMenuImpl::new));
-        register(new CosmeticCategoryImpl<>(BuiltIn.PETS, PetTypeImpl.BuilderImpl::new, CosmeticMenuImpl::new));
-        register(new CosmeticCategoryImpl<>(BuiltIn.STATUSES, StatusTypeImpl.BuilderImpl::new, StatusMenu::new));
 
         populateCosmetics();
     }
@@ -171,23 +137,12 @@ public class CategoryRegistriesImpl implements CategoryRegistries {
         deathEffects.register(deathEffects.builder("sparkly_death").readFromConfig().factory(SparklyDeath::new).build());
         deathEffects.register(deathEffects.builder("shadow_death").readFromConfig().factory(ShadowDeath::new).build());
 
-        CosmeticRegistry<EmoteType, EmoteBehavior, EmoteType.Builder> emotes = emotes().getCosmeticRegistry();
-        emotes.register(emotes.builder("in_love").readFromConfig().factory(se.filledev.procosmetics.cosmetic.emote.type.InLove::new).build());
-        emotes.register(emotes.builder("rage").readFromConfig().factory(Rage::new).build());
-        emotes.register(emotes.builder("sad").readFromConfig().factory(Sad::new).build());
-        emotes.register(emotes.builder("wink").readFromConfig().factory(Wink::new).build());
-        for (String key : emotes().getConfig().getSectionKeys("cosmetics")) {
-            if (!emotes.isRegistered(key)) {
-                emotes.register(emotes.builder(key).readFromConfig().factory(DefaultEmote::new).build());
-            }
-        }
 
         CosmeticRegistry<GadgetType, GadgetBehavior, GadgetType.Builder> gadgets = gadgets().getCosmeticRegistry();
         gadgets.register(gadgets.builder("bat_blaster").readFromConfig().factory(BatBlaster::new).build());
         gadgets.register(gadgets.builder("detonator").readFromConfig().factory(Detonator::new).build());
         gadgets.register(gadgets.builder("cannon").readFromConfig().factory(Cannon::new).build());
         gadgets.register(gadgets.builder("chicken_parachute").readFromConfig().factory(ChickenParachute::new).build());
-        gadgets.register(gadgets.builder("coin_party_bomb").readFromConfig().factory(CoinPartyBomb::new).build());
         gadgets.register(gadgets.builder("confetti").readFromConfig().factory(se.filledev.procosmetics.cosmetic.gadget.type.Confetti::new).build());
         gadgets.register(gadgets.builder("connect_four").readFromConfig().factory(ConnectFour::new).build());
         gadgets.register(gadgets.builder("cowboy").readFromConfig().factory(Cowboy::new).build());
@@ -251,53 +206,7 @@ public class CategoryRegistriesImpl implements CategoryRegistries {
         miniatures.register(miniatures.builder("zebra").readFromConfig().factory(Zebra::new).build());
         miniatures.register(miniatures.builder("zombie").readFromConfig().factory(Zombie::new).build());
 
-        CosmeticRegistry<MorphType, MorphBehavior, MorphType.Builder> morphs = morphs().getCosmeticRegistry();
-        morphs.register(morphs.builder("bat").entityType(EntityType.BAT).readFromConfig().factory(Bat::new).build());
-        morphs.register(morphs.builder("blaze").entityType(EntityType.BLAZE).readFromConfig().factory(Blaze::new).build());
-        morphs.register(morphs.builder("block").entityType(EntityType.BLOCK_DISPLAY).readFromConfig().factory(Block::new).build());
-        morphs.register(morphs.builder("bunny").entityType(EntityType.RABBIT).readFromConfig().readFromConfig().factory(se.filledev.procosmetics.cosmetic.morph.type.Bunny::new).build());
-        morphs.register(morphs.builder("cat").entityType(EntityType.CAT).readFromConfig().factory(Cat::new).build());
-        morphs.register(morphs.builder("cave_spider").entityType(EntityType.CAVE_SPIDER).readFromConfig().factory(se.filledev.procosmetics.cosmetic.morph.type.CaveSpider::new).build());
-        morphs.register(morphs.builder("chicken").entityType(EntityType.CHICKEN).readFromConfig().factory(se.filledev.procosmetics.cosmetic.morph.type.Chicken::new).build());
-        morphs.register(morphs.builder("cow").entityType(EntityType.COW).readFromConfig().factory(se.filledev.procosmetics.cosmetic.morph.type.Cow::new).build());
-        morphs.register(morphs.builder("creeper").entityType(EntityType.CREEPER).readFromConfig().factory(Creeper::new).build());
-        morphs.register(morphs.builder("dog").entityType(EntityType.WOLF).readFromConfig().factory(Dog::new).build());
-        morphs.register(morphs.builder("donkey").entityType(EntityType.DONKEY).readFromConfig().factory(Donkey::new).build());
-        morphs.register(morphs.builder("elder_guardian").entityType(EntityType.ELDER_GUARDIAN).readFromConfig().factory(ElderGuardian::new).build());
-        morphs.register(morphs.builder("enderman").entityType(EntityType.ENDERMAN).readFromConfig().factory(se.filledev.procosmetics.cosmetic.morph.type.Enderman::new).build());
-        morphs.register(morphs.builder("iron_golem").entityType(EntityType.IRON_GOLEM).readFromConfig().factory(se.filledev.procosmetics.cosmetic.morph.type.IronGolem::new).build());
-        morphs.register(morphs.builder("magma_cube").entityType(EntityType.MAGMA_CUBE).readFromConfig().factory(MagmaCube::new).build());
-        morphs.register(morphs.builder("mushroom_cow").entityType(EntityType.MOOSHROOM).readFromConfig().factory(MushroomCow::new).build());
-        morphs.register(morphs.builder("olaf").entityType(EntityType.SNOW_GOLEM).readFromConfig().factory(Olaf::new).build());
-        morphs.register(morphs.builder("pig").entityType(EntityType.PIG).readFromConfig().factory(Pig::new).build());
-        morphs.register(morphs.builder("piglin").entityType(EntityType.PIGLIN).readFromConfig().factory(Piglin::new).build());
-        morphs.register(morphs.builder("sheep").entityType(EntityType.SHEEP).readFromConfig().factory(se.filledev.procosmetics.cosmetic.morph.type.Sheep::new).build());
-        morphs.register(morphs.builder("skeleton").entityType(EntityType.SKELETON).readFromConfig().factory(se.filledev.procosmetics.cosmetic.morph.type.Skeleton::new).build());
-        morphs.register(morphs.builder("slime").entityType(EntityType.SLIME).readFromConfig().factory(Slime::new).build());
-        morphs.register(morphs.builder("spider").entityType(EntityType.SPIDER).readFromConfig().factory(se.filledev.procosmetics.cosmetic.morph.type.Spider::new).build());
-        morphs.register(morphs.builder("squid").entityType(EntityType.SQUID).readFromConfig().factory(Squid::new).build());
-        morphs.register(morphs.builder("villager").entityType(EntityType.VILLAGER).readFromConfig().factory(Villager::new).build());
-        morphs.register(morphs.builder("witch").entityType(EntityType.WITCH).readFromConfig().factory(se.filledev.procosmetics.cosmetic.morph.type.Witch::new).build());
-        morphs.register(morphs.builder("wither").entityType(EntityType.WITHER).readFromConfig().factory(Wither::new).build());
-        morphs.register(morphs.builder("zombie").entityType(EntityType.ZOMBIE).readFromConfig().factory(se.filledev.procosmetics.cosmetic.morph.type.Zombie::new).build());
 
-        CosmeticRegistry<MountType, MountBehavior, MountType.Builder> mounts = mounts().getCosmeticRegistry();
-        mounts.register(mounts.builder("baby_reindeer").entityType(EntityType.HORSE).readFromConfig().factory(BabyReindeer::new).build());
-        mounts.register(mounts.builder("cave_spider").entityType(EntityType.CAVE_SPIDER).readFromConfig().factory(CaveSpider::new).build());
-        mounts.register(mounts.builder("clumsy_mule").entityType(EntityType.MULE).readFromConfig().readFromConfig().factory(ClumsyMule::new).build());
-        mounts.register(mounts.builder("crazy_chicken").entityType(EntityType.CHICKEN).readFromConfig().factory(CrazyChicken::new).build());
-        mounts.register(mounts.builder("decrepit_warhorse").entityType(EntityType.ZOMBIE_HORSE).readFromConfig().factory(DecrepitWarhorse::new).build());
-        mounts.register(mounts.builder("ethereal_dragon").entityType(EntityType.ENDER_DRAGON).readFromConfig().factory(EtherealDragon::new).build());
-        mounts.register(mounts.builder("frosty_snowman").entityType(EntityType.SNOW_GOLEM).readFromConfig().factory(FrostySnowman::new).build());
-        mounts.register(mounts.builder("glacial_steed").entityType(EntityType.HORSE).readFromConfig().factory(GlacialSteed::new).build());
-        mounts.register(mounts.builder("hype_train").entityType(EntityType.BLOCK_DISPLAY).readFromConfig().factory(HypeTrain::new).build());
-        mounts.register(mounts.builder("infernal_horror").entityType(EntityType.SKELETON_HORSE).readFromConfig().factory(InfernalHorror::new).build());
-        mounts.register(mounts.builder("lovely_sheep").entityType(EntityType.SHEEP).readFromConfig().factory(LovelySheep::new).build());
-        mounts.register(mounts.builder("molten_snake").entityType(EntityType.MAGMA_CUBE).readFromConfig().factory(MoltenSnake::new).build());
-        mounts.register(mounts.builder("pirate_ship").entityType(EntityType.OAK_BOAT).readFromConfig().factory(PirateShip::new).build());
-        mounts.register(mounts.builder("rudolf").entityType(EntityType.HORSE).readFromConfig().factory(Rudolf::new).build());
-        mounts.register(mounts.builder("slime").entityType(EntityType.SLIME).readFromConfig().factory(se.filledev.procosmetics.cosmetic.mount.type.Slime::new).build());
-        mounts.register(mounts.builder("unicorn").entityType(EntityType.HORSE).readFromConfig().factory(Unicorn::new).build());
 
         CosmeticRegistry<MusicType, MusicBehavior, MusicType.Builder> music = music().getCosmeticRegistry();
         for (String key : music().getConfig().getSectionKeys("cosmetics")) {
@@ -344,24 +253,7 @@ public class CategoryRegistriesImpl implements CategoryRegistries {
         particleEffects.register(particleEffects.builder("vampire_wings").readFromConfig().factory(VampireWings::new).repeatDelay(2).build());
         particleEffects.register(particleEffects.builder("yin_and_yang").readFromConfig().factory(YinAndYang::new).build());
 
-        CosmeticRegistry<PetType, PetBehavior, PetType.Builder> pets = pets().getCosmeticRegistry();
-        pets.register(pets.builder("body_guard").readFromConfig().factory(BodyGuard::new).build());
-        pets.register(pets.builder("colorful_lamb").readFromConfig().factory(ColorfulLamb::new).build());
-        pets.register(pets.builder("elf").readFromConfig().factory(Elf::new).build());
-        pets.register(pets.builder("santa_claus").readFromConfig().factory(SantaClaus::new).build());
-        pets.register(pets.builder("villager").readFromConfig().factory(se.filledev.procosmetics.cosmetic.pet.type.Villager::new).build());
-        for (String key : pets().getConfig().getSectionKeys("cosmetics")) {
-            if (!pets.isRegistered(key)) {
-                pets.register(pets.builder(key).readFromConfig().factory(DefaultPet::new).build());
-            }
-        }
 
-        CosmeticRegistry<StatusType, StatusBehavior, StatusType.Builder> statuses = statuses().getCosmeticRegistry();
-        for (String key : statuses().getConfig().getSectionKeys("cosmetics")) {
-            if (!statuses.isRegistered(key)) {
-                statuses.register(statuses.builder(key).readFromConfig().factory(DefaultStatus::new).build());
-            }
-        }
     }
 
     @Override

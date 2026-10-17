@@ -55,28 +55,6 @@ public class MainMenu extends MenuImpl {
             );
         }
 
-        if (config.getBoolean("menu.main.items.coins.enabled")) {
-            int coins = plugin.getEconomyManager().getEconomyProvider().getCoins(user);
-
-            ItemBuilder itemBuilder = new ItemBuilderImpl(config, "menu.main.items.coins");
-            itemBuilder.setDisplayName(user.translate(
-                    "menu.main.coins.name",
-                    Placeholder.unparsed("coins", String.valueOf(coins)),
-                    Placeholder.unparsed("currency", user.translateRaw("generic.currency"))
-            ));
-            itemBuilder.setLore(user.translateList(
-                    "menu.main.coins.desc",
-                    Placeholder.unparsed("coins", String.valueOf(coins)),
-                    Placeholder.unparsed("currency", user.translateRaw("generic.currency"))
-            ));
-
-            setItem(itemBuilder.getSlot(), itemBuilder.getItemStack(), event -> {
-                user.sendMessage(user.translate("menu.main.coins.click_prompt"));
-                player.playSound(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 0.5f, 0.0f);
-                player.closeInventory();
-            });
-        }
-
         for (CosmeticCategory<?, ?, ?> category : plugin.getCategoryRegistries().getCategories()) {
             // Check if category is disabled or the item
             if (!category.isEnabled() || !config.getBoolean("menu.main.items." + category.getKey() + ".enabled")) {
@@ -90,7 +68,7 @@ public class MainMenu extends MenuImpl {
                     "menu.main." + category.getKey() + ".desc",
                     Placeholder.unparsed("unlocked_count", String.valueOf(unlocked)),
                     Placeholder.unparsed("total_count", String.valueOf(amount)),
-                    Placeholder.unparsed("unlocked_percent", String.format("%.1f%%", (unlocked * 100.0) / amount))
+                    Placeholder.unparsed("unlocked_percent", String.format("%.1f%%", amount == 0 ? 0.0d : (unlocked * 100.0) / amount))
             ));
 
             setItem(menuItem.getSlot(), menuItem.getItemStack(), event -> {

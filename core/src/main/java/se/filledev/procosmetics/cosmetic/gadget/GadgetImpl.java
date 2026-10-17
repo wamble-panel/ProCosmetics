@@ -33,6 +33,7 @@ import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerSwapHandItemsEvent;
+import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 import org.jetbrains.annotations.Nullable;
@@ -45,7 +46,6 @@ import se.filledev.procosmetics.api.user.User;
 import se.filledev.procosmetics.api.util.item.ItemBuilder;
 import se.filledev.procosmetics.cosmetic.CosmeticImpl;
 import se.filledev.procosmetics.cosmetic.gadget.type.GrapplingHook;
-import se.filledev.procosmetics.menu.menus.purchase.AmmoPurchaseMenu;
 import se.filledev.procosmetics.util.item.ItemBuilderImpl;
 import se.filledev.procosmetics.util.item.ItemIdentifier;
 
@@ -147,13 +147,6 @@ public class GadgetImpl extends CosmeticImpl<GadgetType, GadgetBehavior> impleme
         if (user.hasCooldown(cosmeticType)) {
             return false;
         }
-
-        if (!cosmeticType.hasInfinityAmmo() && user.getAmmo(cosmeticType) <= 0) {
-            if (cosmeticType.hasPurchasableAmmo()) {
-                new AmmoPurchaseMenu(plugin, user, cosmeticType).open();
-            }
-            return false;
-        }
         Location location = player.getLocation();
 
         if (behavior.requiresGroundOnUse()) {
@@ -179,13 +172,8 @@ public class GadgetImpl extends CosmeticImpl<GadgetType, GadgetBehavior> impleme
         return true;
     }
 
-    private void consume(boolean consumeAmmo, boolean applyCooldown) {
-        if (consumeAmmo && !cosmeticType.hasInfinityAmmo()) {
-            user.setAmmo(cosmeticType, user.getAmmo(cosmeticType) - 1);
-            // TODO: Look into a better solution
-            plugin.getDatabase().removeGadgetAmmoAsync(user, cosmeticType, 1);
-        }
-        if (applyCooldown && cosmeticType.getCooldown() > 0.0d) {
+    private void applyCooldown() {
+        if (cosmeticType.getCooldown() > 0.0d) {
             user.setCooldown(cosmeticType, cosmeticType.getCooldown());
 
             plugin.getServer().getScheduler().runTaskLater(plugin, () -> {
@@ -207,8 +195,8 @@ public class GadgetImpl extends CosmeticImpl<GadgetType, GadgetBehavior> impleme
     private GadgetBehavior.InteractionResult onUse(Action action, @Nullable Block clickedBlock, @Nullable Vector clickedPosition) {
         GadgetBehavior.InteractionResult result = behavior.onInteract(this, action, clickedBlock, clickedPosition);
 
-        if (result.shouldConsumeAmmo() || result.shouldApplyCooldown()) {
-            consume(result.shouldConsumeAmmo(), result.shouldApplyCooldown());
+        if (result.shouldApplyCooldown()) {
+            applyCooldown();
             setGadgetItemInInventory();
         }
         return result;
@@ -216,7 +204,8 @@ public class GadgetImpl extends CosmeticImpl<GadgetType, GadgetBehavior> impleme
 
     @EventHandler
     public void onItemInteract(PlayerInteractEvent event) {
-        if (event.getAction() == Action.PHYSICAL || event.getPlayer() != player) {
+        // The event fires once per hand, only handle the main hand so gadgets don't trigger twice
+        if (event.getAction() == Action.PHYSICAL || event.getPlayer() != player || event.getHand() != EquipmentSlot.HAND) {
             return;
         }
         if (GADGET_ID.is(player.getInventory().getItemInMainHand())) {
@@ -241,8 +230,7 @@ public class GadgetImpl extends CosmeticImpl<GadgetType, GadgetBehavior> impleme
         return GADGET_ID.apply(new ItemBuilderImpl(cosmeticType.getItemStack())
                 .setDisplayName(user.translate(
                         "item.gadget.name",
-                        Placeholder.unparsed("name", cosmeticType.getName(user)),
-                        Placeholder.unparsed("ammo", (!cosmeticType.hasInfinityAmmo() ? String.valueOf(user.getAmmo(cosmeticType)) : ""))))
+                        Placeholder.unparsed("name", cosmeticType.getName(user))))
                 .setLore(user.translateList("item.gadget.desc")));
     }
 

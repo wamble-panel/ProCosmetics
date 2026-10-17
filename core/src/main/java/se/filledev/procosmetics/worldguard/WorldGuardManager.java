@@ -99,7 +99,7 @@ public class WorldGuardManager {
                 }
 
                 if (queryFlag(player, Flags.ENTRY) == StateFlag.State.DENY
-                        || !isCosmeticAllow(player, plugin.getCategoryRegistries().mounts())) {
+                        || !isCosmeticAllow(player, plugin.getCategoryRegistries().gadgets())) {
                     vehicle.eject();
                 }
             }

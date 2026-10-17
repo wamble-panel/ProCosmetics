@@ -31,9 +31,6 @@ import se.filledev.procosmetics.api.config.Config;
 import se.filledev.procosmetics.api.cosmetic.registry.CategoryRegistries;
 import se.filledev.procosmetics.api.cosmetic.registry.CosmeticRarityRegistry;
 import se.filledev.procosmetics.api.platform.PlatformAdapter;
-import se.filledev.procosmetics.api.storage.Database;
-import se.filledev.procosmetics.api.treasure.TreasureChestPlatform;
-import se.filledev.procosmetics.api.treasure.animation.TreasureChestAnimationRegistry;
 import se.filledev.procosmetics.api.user.User;
 import se.filledev.procosmetics.command.CommandBase;
 import se.filledev.procosmetics.command.SimpleCommand;
@@ -41,7 +38,6 @@ import se.filledev.procosmetics.command.commands.*;
 import se.filledev.procosmetics.config.ConfigManagerImpl;
 import se.filledev.procosmetics.cosmetic.registry.CategoryRegistriesImpl;
 import se.filledev.procosmetics.cosmetic.registry.CosmeticRarityRegistryImpl;
-import se.filledev.procosmetics.economy.EconomyManagerImpl;
 import se.filledev.procosmetics.listener.*;
 import se.filledev.procosmetics.listener.hook.cmi.CMIVanishListener;
 import se.filledev.procosmetics.listener.hook.essentials.EssentialsVanishListener;
@@ -52,10 +48,6 @@ import se.filledev.procosmetics.nms.NMSManagerImpl;
 import se.filledev.procosmetics.placeholder.PlaceholderManager;
 import se.filledev.procosmetics.platform.PaperAdapter;
 import se.filledev.procosmetics.platform.SpigotAdapter;
-import se.filledev.procosmetics.redis.RedisManager;
-import se.filledev.procosmetics.storage.DatabaseTypeProvider;
-import se.filledev.procosmetics.treasure.TreasureChestManagerImpl;
-import se.filledev.procosmetics.treasure.animation.TreasureChestAnimationRegistryImpl;
 import se.filledev.procosmetics.user.UserManagerImpl;
 import se.filledev.procosmetics.util.LogUtil;
 import se.filledev.procosmetics.util.ResourceExporter;
@@ -85,16 +77,11 @@ public class ProCosmeticsPlugin extends JavaPlugin implements ProCosmetics {
     private CosmeticRarityRegistryImpl cosmeticRarityRegistry;
     private CategoryRegistriesImpl categoryRegistries;
     private UserManagerImpl userManager;
-    private TreasureChestAnimationRegistry treasureChestAnimationRegistry;
-    private TreasureChestManagerImpl treasureChestManager;
     private MenuManagerImpl menuManager;
     private FakeBlockManager fakeBlockManager;
-    private EconomyManagerImpl economyManager;
     private PlaceholderManager placeholderManager;
     private CommandBase commandBase;
     private PlatformAdapter platformAdapter;
-    private RedisManager redisManager;
-    private Database database;
     private WorldGuardManager worldGuardManager;
 
     @Override
@@ -118,17 +105,12 @@ public class ProCosmeticsPlugin extends JavaPlugin implements ProCosmetics {
         cosmeticRarityRegistry = new CosmeticRarityRegistryImpl(this);
         categoryRegistries = new CategoryRegistriesImpl(this);
         userManager = new UserManagerImpl(this);
-        treasureChestAnimationRegistry = new TreasureChestAnimationRegistryImpl();
-        treasureChestManager = new TreasureChestManagerImpl(this);
         menuManager = new MenuManagerImpl(this);
         fakeBlockManager = new FakeBlockManager(this);
-        economyManager = new EconomyManagerImpl(this);
         placeholderManager = new PlaceholderManager(this);
         commandBase = new CommandBase(this);
 
         initializePlatformAdapter();
-        initializeRedis();
-        initializeDatabase();
         initializeMetrics();
         preHookPlugins();
     }
@@ -141,8 +123,6 @@ public class ProCosmeticsPlugin extends JavaPlugin implements ProCosmetics {
             registerCommands(new UnsupportedCommand(this));
             return;
         }
-        economyManager.hookPlugin();
-
         registerListeners();
         registerCommands();
         hookPlugins();
@@ -151,9 +131,6 @@ public class ProCosmeticsPlugin extends JavaPlugin implements ProCosmetics {
         NoteBlockAPI.init(this);
 
         userManager.loadOnlinePlayers();
-        if (redisManager != null) {
-            redisManager.registerChannels();
-        }
         ProCosmeticsProvider.register(this);
 
         logger.info("Initialized!");
@@ -161,11 +138,10 @@ public class ProCosmeticsPlugin extends JavaPlugin implements ProCosmetics {
 
     private void registerListeners() {
         userManager.registerListeners();
-        treasureChestManager.registerListeners();
         menuManager.registerListeners();
 
         registerListeners(new BlockListener(),
-                new CosmeticItemListener(this),
+                new WorldListener(this),
                 new CosmeticListener(this),
                 new CreatureSpawnListener(),
                 new EntityListener(),
@@ -181,17 +157,8 @@ public class ProCosmeticsPlugin extends JavaPlugin implements ProCosmetics {
             LogUtil.printUnsupported();
             return;
         }
-        if (redisManager != null) {
-            redisManager.shutdown();
-        }
-
         for (User user : userManager.getAllConnected()) {
             user.clearAllCosmetics(true, false);
-        }
-        database.shutdown();
-
-        for (TreasureChestPlatform platform : treasureChestManager.getPlatforms()) {
-            platform.hideDisplay();
         }
         fakeBlockManager.shutdown();
         HandlerList.unregisterAll(this);
@@ -211,16 +178,6 @@ public class ProCosmeticsPlugin extends JavaPlugin implements ProCosmetics {
         platformAdapter = paper ? new PaperAdapter() : new SpigotAdapter();
     }
 
-    private void initializeRedis() {
-        if (configManager.getMainConfig().getBoolean("redis.enabled")) {
-            redisManager = new RedisManager(this);
-        }
-    }
-
-    private void initializeDatabase() {
-        database = DatabaseTypeProvider.createDatabase(plugin, configManager.getMainConfig().getString("storage.type"));
-    }
-
     private void registerCommands() {
         commandBase.getCommands().clear();
 
@@ -228,7 +185,6 @@ public class ProCosmeticsPlugin extends JavaPlugin implements ProCosmetics {
                 new EquipCommand(this),
                 new UnequipCommand(this),
                 new UnequipAllCommand(this),
-                new ToggleSelfViewCommand(this),
                 new ProCosmeticsCommand(this)
         );
     }
@@ -272,8 +228,6 @@ public class ProCosmeticsPlugin extends JavaPlugin implements ProCosmetics {
 
         if (config.getBoolean("settings.enable_metrics")) {
             Metrics metrics = new Metrics(this, 6408);
-            metrics.addCustomChart(new SimplePie("database", () -> database.getType()));
-            metrics.addCustomChart(new SimplePie("economy", () -> economyManager.getType().getName()));
             metrics.addCustomChart(new SimplePie("world-guard", () -> worldGuardManager != null ? "Yes" : "No"));
         }
     }
@@ -362,18 +316,8 @@ public class ProCosmeticsPlugin extends JavaPlugin implements ProCosmetics {
     }
 
     @Override
-    public TreasureChestAnimationRegistry getTreasureChestAnimationRegistry() {
-        return treasureChestAnimationRegistry;
-    }
-
-    @Override
     public UserManagerImpl getUserManager() {
         return userManager;
-    }
-
-    @Override
-    public TreasureChestManagerImpl getTreasureChestManager() {
-        return treasureChestManager;
     }
 
     @Override
@@ -383,11 +327,6 @@ public class ProCosmeticsPlugin extends JavaPlugin implements ProCosmetics {
 
     public FakeBlockManager getFakeBlockManager() {
         return fakeBlockManager;
-    }
-
-    @Override
-    public EconomyManagerImpl getEconomyManager() {
-        return economyManager;
     }
 
     @Override
@@ -401,15 +340,6 @@ public class ProCosmeticsPlugin extends JavaPlugin implements ProCosmetics {
 
     public CommandBase getCommandBase() {
         return commandBase;
-    }
-
-    public RedisManager getRedisManager() {
-        return redisManager;
-    }
-
-    @Override
-    public Database getDatabase() {
-        return database;
     }
 
     public WorldGuardManager getWorldGuardManager() {

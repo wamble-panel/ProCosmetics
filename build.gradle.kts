@@ -37,9 +37,6 @@ tasks.named<ShadowJar>("shadowJar") {
 
     val relocations = mapOf(
         "dev.dejvokep.boostedyaml" to "boostedyaml",
-        "com.zaxxer.hikari" to "hikari",
-        "com.mongodb" to "mongodb",
-        "redis.clients" to "jedis",
         "org.bstats" to "bstats"
     )
     relocations.forEach { (from, to) -> relocate(from, "$basePackage.$to") }

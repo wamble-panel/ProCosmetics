@@ -27,70 +27,20 @@ import se.filledev.procosmetics.command.argument.Argument;
 import se.filledev.procosmetics.command.commands.procosmetics.*;
 import se.filledev.procosmetics.command.commands.procosmetics.EquipCommand;
 import se.filledev.procosmetics.command.commands.procosmetics.UnequipCommand;
-import se.filledev.procosmetics.command.commands.procosmetics.add.AddAmmoCommand;
-import se.filledev.procosmetics.command.commands.procosmetics.add.AddCoinsCommand;
-import se.filledev.procosmetics.command.commands.procosmetics.add.AddCosmeticCommand;
-import se.filledev.procosmetics.command.commands.procosmetics.add.AddTreasureChestCommand;
-import se.filledev.procosmetics.command.commands.procosmetics.addall.AddAllAmmoCommand;
-import se.filledev.procosmetics.command.commands.procosmetics.addall.AddAllCoinsCommand;
-import se.filledev.procosmetics.command.commands.procosmetics.addall.AddAllCosmeticCommand;
-import se.filledev.procosmetics.command.commands.procosmetics.addall.AddAllTreasureChestCommand;
-import se.filledev.procosmetics.command.commands.procosmetics.get.GetAmmoCommand;
-import se.filledev.procosmetics.command.commands.procosmetics.get.GetCoinsCommand;
-import se.filledev.procosmetics.command.commands.procosmetics.get.GetTreasureChestCommand;
-import se.filledev.procosmetics.command.commands.procosmetics.platform.CreateCommand;
-import se.filledev.procosmetics.command.commands.procosmetics.platform.DeleteCommand;
-import se.filledev.procosmetics.command.commands.procosmetics.platform.ListCommand;
-import se.filledev.procosmetics.command.commands.procosmetics.platform.TeleportCommand;
-import se.filledev.procosmetics.command.commands.procosmetics.remove.RemoveAmmoCommand;
-import se.filledev.procosmetics.command.commands.procosmetics.remove.RemoveCoinsCommand;
-import se.filledev.procosmetics.command.commands.procosmetics.remove.RemoveTreasureChestCommand;
-import se.filledev.procosmetics.command.commands.procosmetics.set.SetAmmoCommand;
-import se.filledev.procosmetics.command.commands.procosmetics.set.SetCoinsCommand;
-import se.filledev.procosmetics.command.commands.procosmetics.set.SetTreasureChestCommand;
 
 public class ProCosmeticsCommand extends SimpleCommand<CommandSender> {
 
     public ProCosmeticsCommand(ProCosmeticsPlugin plugin) {
         super(plugin, "procosmetics", "procosmetics.command");
         setSubCommands(
-                new AddAmmoCommand(plugin),
-                new AddCoinsCommand(plugin),
-                new AddCosmeticCommand(plugin),
-                new AddTreasureChestCommand(plugin),
-
-                new GetAmmoCommand(plugin),
-                new GetCoinsCommand(plugin),
-                new GetTreasureChestCommand(plugin),
-
-                new AddAllAmmoCommand(plugin),
-                new AddAllCoinsCommand(plugin),
-                new AddAllCosmeticCommand(plugin),
-                new AddAllTreasureChestCommand(plugin),
-
-                new SetAmmoCommand(plugin),
-                new SetCoinsCommand(plugin),
-                new SetTreasureChestCommand(plugin),
-
-                new RemoveAmmoCommand(plugin),
-                new RemoveCoinsCommand(plugin),
-                new RemoveTreasureChestCommand(plugin),
-
                 new EquipCommand(plugin),
-                new InfoCommand(plugin),
                 new ItemCommand(plugin),
                 new MenuCommand(plugin),
                 new PermissionCommand(plugin),
                 new ReloadCommand(plugin),
                 new StructureCommand(plugin),
                 new UnequipAllPlayersCommand(plugin),
-                new UnequipCommand(plugin),
-
-                // Treasure Chest Platform
-                new CreateCommand(plugin),
-                new DeleteCommand(plugin),
-                new ListCommand(plugin),
-                new TeleportCommand(plugin)
+                new UnequipCommand(plugin)
         );
     }
 

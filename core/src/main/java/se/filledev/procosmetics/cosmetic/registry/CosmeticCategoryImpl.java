@@ -48,7 +48,6 @@ public class CosmeticCategoryImpl<T extends CosmeticType<T, B>,
     private final Config config;
     private final boolean enabled;
     private final String permission;
-    private final String purchasePermission;
     private final ItemBuilderImpl menuItem;
     private final TriFunction<ProCosmetics, User, CosmeticCategory<T, B, U>, CosmeticMenuImpl<T>> menuFactory;
 
@@ -60,7 +59,6 @@ public class CosmeticCategoryImpl<T extends CosmeticType<T, B>,
         this.config = PLUGIN.getConfigManager().register(key);
         this.enabled = config.getBoolean("enabled");
         this.permission = "procosmetics.cosmetic." + key + ".*";
-        this.purchasePermission = "procosmetics.purchase." + key + ".*";
         this.menuItem = new ItemBuilderImpl(PLUGIN.getConfigManager().getMainConfig(), "menu.main.items." + key);
         this.menuFactory = menuFactory;
     }
@@ -88,11 +86,6 @@ public class CosmeticCategoryImpl<T extends CosmeticType<T, B>,
     @Override
     public String getPermission() {
         return permission;
-    }
-
-    @Override
-    public String getPurchasePermission() {
-        return purchasePermission;
     }
 
     @Override

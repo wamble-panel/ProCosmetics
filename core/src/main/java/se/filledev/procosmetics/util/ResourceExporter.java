@@ -32,7 +32,6 @@ public class ResourceExporter {
 
     private static final Set<String> EXPORT_DIRECTORIES = Set.of(
             "songs/",
-            "data/",
             "structures/",
             "lang/"
     );

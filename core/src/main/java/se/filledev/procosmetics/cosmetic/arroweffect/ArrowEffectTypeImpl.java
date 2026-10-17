@@ -36,12 +36,9 @@ public class ArrowEffectTypeImpl extends CosmeticTypeImpl<ArrowEffectType, Arrow
                                CosmeticCategory<ArrowEffectType, ArrowEffectBehavior, ?> category,
                                Supplier<ArrowEffectBehavior> behaviorFactory,
                                boolean enabled,
-                               boolean purchasable,
-                               int cost,
                                CosmeticRarity rarity,
-                               ItemStack itemStack,
-                               List<String> treasureChests) {
-        super(key, category, behaviorFactory, enabled, purchasable, cost, rarity, itemStack, treasureChests);
+                               ItemStack itemStack) {
+        super(key, category, behaviorFactory, enabled, rarity, itemStack);
     }
 
     @Override
@@ -66,11 +63,8 @@ public class ArrowEffectTypeImpl extends CosmeticTypeImpl<ArrowEffectType, Arrow
                     category,
                     factory,
                     enabled,
-                    purchasable,
-                    cost,
                     rarity,
-                    itemStack,
-                    treasureChests
+                    itemStack
             );
         }
     }

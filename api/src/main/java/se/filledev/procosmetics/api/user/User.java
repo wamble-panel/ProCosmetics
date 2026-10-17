@@ -27,8 +27,6 @@ import se.filledev.procosmetics.api.cosmetic.Cosmetic;
 import se.filledev.procosmetics.api.cosmetic.gadget.GadgetType;
 import se.filledev.procosmetics.api.cosmetic.registry.CosmeticCategory;
 import se.filledev.procosmetics.api.locale.Translator;
-import se.filledev.procosmetics.api.treasure.TreasureChest;
-import se.filledev.procosmetics.api.treasure.TreasureChestPlatform;
 
 import java.util.Map;
 import java.util.UUID;
@@ -68,13 +66,6 @@ public interface User extends Translator {
      * @param component the message to send
      */
     void sendMessage(Component component);
-
-    /**
-     * Gets the database ID of this user.
-     *
-     * @return the database ID
-     */
-    int getDatabaseId();
 
     /**
      * Gets the unique Minecraft UUID of this player.
@@ -128,52 +119,6 @@ public interface User extends Translator {
      */
     @ApiStatus.Internal
     void setLastLocation(Location location);
-
-    /**
-     * Gets the number of coins the player currently has.
-     *
-     * @return the player’s coin balance
-     */
-    @ApiStatus.Internal
-    int getCoins();
-
-    /**
-     * Sets the player’s coin balance.
-     *
-     * @param coins the new balance
-     */
-    @ApiStatus.Internal
-    void setCoins(int coins);
-
-    /**
-     * Checks whether the player can see their own morph.
-     *
-     * @return {@code true} if self-view for morphs is enabled
-     */
-    boolean hasSelfViewMorph();
-
-    /**
-     * Sets whether the player can see their own morph.
-     *
-     * @param visible {@code true} to show the morph
-     * @param update  {@code true} to immediately update the visual state
-     */
-    void setSelfViewMorph(boolean visible, boolean update);
-
-    /**
-     * Checks whether the player can see their own status.
-     *
-     * @return {@code true} if self-view for statuses is enabled
-     */
-    boolean hasSelfViewStatus();
-
-    /**
-     * Sets whether the player can see their own status.
-     *
-     * @param visible {@code true} to show the status
-     * @param update  {@code true} to immediately update the visual state
-     */
-    void setSelfViewStatus(boolean visible, boolean update);
 
     /**
      * Checks if the player currently has fall damage protection.
@@ -265,63 +210,6 @@ public interface User extends Translator {
     void clearAllCosmetics(boolean silent, boolean saveToDatabase);
 
     /**
-     * Checks whether the player is currently opening a treasure chest.
-     *
-     * @return {@code true} if the player is in a treasure-opening session
-     */
-    boolean isOpeningTreasure();
-
-    /**
-     * Gets the treasure platform currently assigned to this user.
-     *
-     * @return the current {@link TreasureChestPlatform}, or {@code null} if none
-     */
-    @Nullable
-    TreasureChestPlatform getCurrentPlatform();
-
-    /**
-     * Sets the current treasure platform assigned to this user.
-     *
-     * @param platform the treasure platform to assign
-     */
-    @ApiStatus.Internal
-    void setCurrentPlatform(TreasureChestPlatform platform);
-
-    /**
-     * Checks whether the player has at least the specified number of a given treasure chest.
-     *
-     * @param treasureChest the treasure chest type
-     * @param amount        the required amount
-     * @return {@code true} if the player has enough chests
-     */
-    boolean hasTreasureChests(TreasureChest treasureChest, int amount);
-
-    /**
-     * Gets how many of a specific treasure chest the player currently owns.
-     *
-     * @param treasureChest the treasure chest type
-     * @return the number of chests owned
-     */
-    int getTreasureChests(TreasureChest treasureChest);
-
-    /**
-     * Updates the number of a specific treasure chest owned by the player.
-     *
-     * @param treasureChest the treasure chest type
-     * @param amount        the new amount
-     */
-    @ApiStatus.Internal
-    void setTreasureChests(TreasureChest treasureChest, int amount);
-
-    /**
-     * Gets a map of all treasure chest types owned by the player.
-     *
-     * @return a map of {@link TreasureChest} to quantity
-     */
-    @ApiStatus.Internal
-    Map<TreasureChest, Integer> getTreasureChests();
-
-    /**
      * Checks whether a gadget is currently on cooldown for this player.
      *
      * @param gadget the gadget type
@@ -345,46 +233,4 @@ public interface User extends Translator {
      */
     void setCooldown(GadgetType gadget, double time);
 
-    /**
-     * Checks whether the player has at least a given amount of ammo for a gadget.
-     *
-     * @param gadget the gadget type
-     * @param amount the required amount
-     * @return {@code true} if the player has enough ammo
-     */
-    boolean hasAmmo(GadgetType gadget, int amount);
-
-    /**
-     * Gets the amount of ammo the player currently has for a gadget.
-     *
-     * @param gadget the gadget type
-     * @return the current ammo count
-     */
-    int getAmmo(GadgetType gadget);
-
-    /**
-     * Updates the ammo count for a specific gadget.
-     *
-     * @param gadget the gadget type
-     * @param amount the new ammo amount
-     */
-    @ApiStatus.Internal
-    void setAmmo(GadgetType gadget, int amount);
-
-    /**
-     * Gets all stored gadget ammo amounts of the player.
-     *
-     * @return a map of {@link GadgetType} to ammo count
-     */
-    @ApiStatus.Internal
-    Map<GadgetType, Integer> getAmmo();
-
-    /**
-     * Returns a formatted display string containing the player’s name, database ID, and UUID.
-     *
-     * @return a human-readable user identifier string
-     */
-    default String getDebugName() {
-        return getName() + " (" + getDatabaseId() + ", " + getUniqueId().toString() + ")";
-    }
 }

@@ -74,47 +74,11 @@ public interface CosmeticType<T extends CosmeticType<T, B>, B extends CosmeticBe
     boolean hasPermission(Player player);
 
     /**
-     * Checks if the specified player has permission to purchase this cosmetic.
-     *
-     * @param player the player to check permissions for
-     * @return true if the player has permission, false otherwise
-     */
-    boolean hasPurchasePermission(Player player);
-
-    /**
      * Checks if this cosmetic type is currently enabled.
      *
      * @return true if enabled, false otherwise
      */
     boolean isEnabled();
-
-    /**
-     * Sets whether this cosmetic can be purchased.
-     *
-     * @param purchasable true to make the cosmetic purchasable, false otherwise
-     */
-    void setPurchasable(boolean purchasable);
-
-    /**
-     * Checks if this cosmetic can be purchased.
-     *
-     * @return true if purchasable, false otherwise
-     */
-    boolean isPurchasable();
-
-    /**
-     * Sets the cost to purchase this cosmetic.
-     *
-     * @param cost the purchase cost
-     */
-    void setCost(int cost);
-
-    /**
-     * Gets the cost to purchase this cosmetic.
-     *
-     * @return the purchase cost
-     */
-    int getCost();
 
     /**
      * Gets the item stack representation of this cosmetic.
@@ -129,13 +93,6 @@ public interface CosmeticType<T extends CosmeticType<T, B>, B extends CosmeticBe
      * @return the cosmetic rarity
      */
     CosmeticRarity getRarity();
-
-    /**
-     * Gets the treasure chests this cosmetic can appear in.
-     *
-     * @return a list of treasure chest keys
-     */
-    List<String> getTreasureChests();
 
     /**
      * Builder interface for constructing cosmetic type instances.
@@ -176,30 +133,6 @@ public interface CosmeticType<T extends CosmeticType<T, B>, B extends CosmeticBe
          * @return this builder for method chaining
          */
         S enabled(boolean enabled);
-
-        /**
-         * Sets whether this cosmetic can be purchased.
-         *
-         * @param purchasable true if purchasable, false otherwise
-         * @return this builder for method chaining
-         */
-        S purchasable(boolean purchasable);
-
-        /**
-         * Sets the purchase cost for this cosmetic.
-         *
-         * @param cost the purchase cost
-         * @return this builder for method chaining
-         */
-        S cost(int cost);
-
-        /**
-         * Sets the treasure chests this cosmetic can appear in.
-         *
-         * @param chests the list of treasure chest keys
-         * @return this builder for method chaining
-         */
-        S treasureChests(List<String> chests);
 
         /**
          * Sets the factory for creating behavior instances.
