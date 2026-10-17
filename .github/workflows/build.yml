@@ -54,3 +54,68 @@ jobs:
         with:
           name: KiwiCosmetics
           path: build/libs/KiwiCosmetics-*.jar
+
+  # Starts a real Paper server with the plugin, runs a few commands and fails on plugin errors.
+  smoke-test:
+    needs: build
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        minecraft: ['26.1.2', '26.3']
+    steps:
+      - name: Set up Java 25
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '25'
+
+      - name: Download plugin
+        uses: actions/download-artifact@v4
+        with:
+          name: KiwiCosmetics
+          path: server/plugins
+
+      - name: Download Paper ${{ matrix.minecraft }}
+        working-directory: server
+        run: |
+          url=$(curl -fsSL "https://fill.papermc.io/v3/projects/paper/versions/${{ matrix.minecraft }}/builds/latest" | jq -r '.downloads["server:default"].url')
+          echo "Paper: $url"
+          curl -fsSL -o paper.jar "$url"
+          echo "eula=true" > eula.txt
+          printf 'online-mode=false\nlevel-type=minecraft\\:flat\ngenerate-structures=false\nspawn-protection=0\n' > server.properties
+
+      - name: Run server
+        working-directory: server
+        run: |
+          mkfifo console
+          (sleep 600; echo stop) > /dev/null &
+          tail -f console | timeout 600 java -Xmx2G -jar paper.jar --nogui > server.log 2>&1 &
+          exec 3> console
+          until grep -q 'Done (' server.log; do
+            if ! pgrep -f paper.jar > /dev/null; then echo "Server died"; cat server.log; exit 1; fi
+            sleep 2
+          done
+          for command in "kiwicosmetics" "kc permission trails" "kc permission particle_effects" "hats list" "rainbow list" "kc reload" "hats reload"; do
+            echo "$command" >&3
+            sleep 3
+          done
+          echo "stop" >&3
+          for i in $(seq 1 60); do pgrep -f paper.jar > /dev/null || break; sleep 2; done
+          cat server.log
+
+      - name: Check for plugin errors
+        working-directory: server
+        run: |
+          grep -n "KiwiCosmetics" server.log | head -50
+          if ! grep -q "\[KiwiCosmetics\] Initialized!" server.log; then
+            echo "::error::KiwiCosmetics did not enable"; exit 1
+          fi
+          # Errors logged by or mentioning the plugin, unknown translations and broken config items
+          if grep -nE "Unknown string|Failed to parse item|Error occurred while (enabling|disabling) KiwiCosmetics|me\.dtbh\.kiwicosmetics" server.log \
+              | grep -vE "^\S*\s*at |Loading server plugin|Enabling KiwiCosmetics|Disabling KiwiCosmetics"; then
+            echo "::error::KiwiCosmetics logged errors (see above)"; exit 1
+          fi
+          if grep -nE "(ERROR|WARN)\]: \[KiwiCosmetics\]" server.log | grep -v "need Paper"; then
+            echo "::warning::KiwiCosmetics logged warnings (see above)"
+          fi
