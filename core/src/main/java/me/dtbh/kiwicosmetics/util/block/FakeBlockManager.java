@@ -28,10 +28,13 @@ import org.bukkit.block.data.Openable;
 import org.bukkit.block.data.Powerable;
 import org.bukkit.block.data.type.Bed;
 import org.bukkit.block.data.type.Piston;
+import org.bukkit.block.data.type.Slab;
+import org.bukkit.block.data.type.Stairs;
 import org.bukkit.block.data.type.TechnicalPiston;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitTask;
+import org.jetbrains.annotations.Nullable;
 import me.dtbh.kiwicosmetics.KiwiCosmeticsPlugin;
 import me.dtbh.kiwicosmetics.util.MetadataUtil;
 
@@ -117,7 +120,7 @@ public class FakeBlockManager {
         if (!overwrite && isFakeBlock(block)) {
             return false;
         }
-        if (!canSetFakeBlock(block)) {
+        if (!canSetFakeBlock(block, blockData)) {
             return false;
         }
         MetadataUtil.setCustomBlock(block);
@@ -191,20 +194,31 @@ public class FakeBlockManager {
      * Checks whether a block is suitable for a client-side replacement.
      */
     public boolean canSetFakeBlock(Block block) {
-        Material material = block.getType();
+        return canSetFakeBlock(block, null);
+    }
 
-        if (!material.isBlock() || !material.isSolid() || !material.isOccluding()) {
+    /**
+     * Checks whether a block is suitable for a client-side replacement with the given data.
+     * Slabs and stairs are only replaced by another slab or stair, so their shape stays the same.
+     */
+    public boolean canSetFakeBlock(Block block, @Nullable BlockData fakeData) {
+        Material material = block.getType();
+        BlockData blockData = block.getBlockData();
+        boolean sameShape = fakeData != null
+                && (blockData instanceof Slab && fakeData instanceof Slab
+                || blockData instanceof Stairs && fakeData instanceof Stairs);
+
+        if (!material.isBlock() || !material.isSolid() || (!material.isOccluding() && !sameShape)) {
             return false;
         }
         if (BLOCKED_MATERIALS.contains(material)) {
             return false;
         }
         for (Tag<Material> tag : BLOCKED_TAGS) {
-            if (tag.isTagged(material)) {
+            if (tag.isTagged(material) && !(sameShape && (tag == Tag.SLABS || tag == Tag.STAIRS))) {
                 return false;
             }
         }
-        BlockData blockData = block.getBlockData();
 
         if (blockData instanceof Openable // doors, trapdoors, fence gates
                 || blockData instanceof Bed

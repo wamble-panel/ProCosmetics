@@ -18,10 +18,13 @@
 package me.dtbh.kiwicosmetics.cosmetic.trail;
 
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.BlockData;
+import org.bukkit.block.data.type.Slab;
+import org.bukkit.block.data.type.Stairs;
 import org.jetbrains.annotations.Nullable;
 import me.dtbh.kiwicosmetics.KiwiCosmeticsPlugin;
 import me.dtbh.kiwicosmetics.api.cosmetic.CosmeticContext;
@@ -30,12 +33,15 @@ import me.dtbh.kiwicosmetics.api.cosmetic.particleeffect.ParticleEffectType;
 import me.dtbh.kiwicosmetics.util.MathUtil;
 import me.dtbh.kiwicosmetics.util.ParticleUtil;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Turns the ground you walk on into other blocks for a few seconds. The blocks are fake
  * (client-side, shown to everyone nearby), the real world never changes, and special blocks
  * like chests, doors and beds are skipped by the {@link me.dtbh.kiwicosmetics.util.block.FakeBlockManager}.
+ * Slabs and stairs become a slab or stair of a matching block with the same shape, trails
+ * without a matching slab leave them alone.
  */
 public class BlockTrail implements ParticleEffectBehavior {
 
@@ -44,6 +50,8 @@ public class BlockTrail implements ParticleEffectBehavior {
     private static final long DEFAULT_DURATION_TICKS = 60L;
 
     private final List<BlockData> blocks;
+    private final List<Material> slabs = new ArrayList<>();
+    private final List<Material> stairs = new ArrayList<>();
     private final boolean wide;
     private final boolean cycle;
     private final Particle particle;
@@ -53,16 +61,31 @@ public class BlockTrail implements ParticleEffectBehavior {
     private int ticks;
 
     /**
-     * @param blocks   the blocks to show
-     * @param wide     also change the four blocks around the one you stand on
-     * @param cycle    go through the blocks in order (rainbows) instead of picking at random
-     * @param particle optional particle at your feet while walking
+     * @param blocks     the blocks to show
+     * @param shapeBases block names used on slabs and stairs, {@code <base>_slab} and {@code <base>_stairs}
+     * @param wide       also change the four blocks around the one you stand on
+     * @param cycle      go through the blocks in order (rainbows) instead of picking at random
+     * @param particle   optional particle at your feet while walking
      */
-    public BlockTrail(List<BlockData> blocks, boolean wide, boolean cycle, @Nullable Particle particle) {
+    public BlockTrail(List<BlockData> blocks, List<String> shapeBases, boolean wide, boolean cycle, @Nullable Particle particle) {
         this.blocks = blocks;
         this.wide = wide;
         this.cycle = cycle;
         this.particle = particle;
+
+        for (String base : shapeBases) {
+            addShape(slabs, base + "_slab", Slab.class);
+            addShape(stairs, base + "_stairs", Stairs.class);
+        }
+    }
+
+    private static void addShape(List<Material> shapes, String name, Class<? extends BlockData> type) {
+        Material material = Material.matchMaterial(name);
+
+        if (material != null && material.isBlock() && !shapes.contains(material)
+                && type.isInstance(material.createBlockData())) {
+            shapes.add(material);
+        }
     }
 
     @Override
@@ -100,11 +123,43 @@ public class BlockTrail implements ParticleEffectBehavior {
     }
 
     private void place(Block block) {
-        BlockData data = cycle ? blocks.get(index % blocks.size()) : MathUtil.getRandomElement(blocks);
+        BlockData data = trailData(block.getBlockData());
 
         if (data != null && PLUGIN.getFakeBlockManager().setFakeBlock(block, data, false, durationTicks)) {
             index++;
         }
+    }
+
+    /**
+     * The trail block for the ground: the same slab or stair shape when the ground is one.
+     */
+    @Nullable
+    private BlockData trailData(BlockData ground) {
+        if (ground instanceof Slab slab) {
+            if (slabs.isEmpty()) {
+                return null;
+            }
+            Slab data = (Slab) pick(slabs).createBlockData();
+            data.setType(slab.getType());
+            data.setWaterlogged(slab.isWaterlogged());
+            return data;
+        }
+        if (ground instanceof Stairs stair) {
+            if (stairs.isEmpty()) {
+                return null;
+            }
+            Stairs data = (Stairs) pick(stairs).createBlockData();
+            data.setFacing(stair.getFacing());
+            data.setHalf(stair.getHalf());
+            data.setShape(stair.getShape());
+            data.setWaterlogged(stair.isWaterlogged());
+            return data;
+        }
+        return pick(blocks);
+    }
+
+    private <T> T pick(List<T> list) {
+        return cycle ? list.get(index % list.size()) : MathUtil.getRandomElement(list);
     }
 
     @Override
