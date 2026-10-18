@@ -75,7 +75,7 @@ menu:
         count: 1
         slot: 11
       trails:
-        item: "minecraft:blaze_powder"
+        item: "minecraft:pink_glazed_terracotta"
         count: 1
         slot: 12
       gadgets:

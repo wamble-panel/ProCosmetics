@@ -122,10 +122,10 @@
     "<#CDB4DB>ꜱʜᴀᴘᴇꜱ ᴀɴᴅ ꜱᴘᴀʀᴋʟᴇꜱ",
     "<#CDB4DB>ᴀʀᴏᴜɴᴅ ʏᴏᴜʀ ʙᴏᴅʏ"
   ],
-  "category.trails.name": "ᴛʀᴀɪʟꜱ",
+  "category.trails.name": "ʙʟᴏᴄᴋ ᴛʀᴀɪʟꜱ",
   "category.trails.desc": [
-    "<#CDB4DB>ʟᴇᴀᴠᴇ ᴀ ᴛʀᴀɪʟ ʙᴇʜɪɴᴅ",
-    "<#CDB4DB>ᴡʜᴇʀᴇᴠᴇʀ ʏᴏᴜ ᴡᴀʟᴋ"
+    "<#CDB4DB>ᴛᴜʀɴ ᴛʜᴇ ɢʀᴏᴜɴᴅ ʏᴏᴜ ᴡᴀʟᴋ",
+    "<#CDB4DB>ᴏɴ ɪɴᴛᴏ ᴘʀᴇᴛᴛʏ ʙʟᴏᴄᴋꜱ"
   ],
   "category.gadgets.name": "ɢᴀᴅɢᴇᴛꜱ",
   "category.gadgets.desc": [
@@ -1371,80 +1371,6 @@
     "<#FFD8BE>ᴀ ʀɪɴɢ ᴏꜰ ᴘᴇᴛᴀʟꜱ ᴛʜᴀᴛ",
     "<#FFD8BE>ᴅʀɪꜰᴛ ᴏꜰꜰ ᴏɴ ᴛʜᴇ ʙʀᴇᴇᴢᴇ"
   ],
-  "cosmetic.trails.rainbow_dust": "ʀᴀɪɴʙᴏᴡ ᴅᴜꜱᴛ",
-  "menu.trails.rainbow_dust.desc": [
-    "<#FFD8BE>ʟᴇᴀᴠᴇ ᴀ ᴛʀᴀɪʟ ᴏꜰ",
-    "<#FFD8BE>ᴇᴠᴇʀ ᴄʜᴀɴɢɪɴɢ ᴄᴏʟᴏʀꜱ"
-  ],
-  "cosmetic.trails.flame": "ꜰʟᴀᴍᴇ",
-  "menu.trails.flame.desc": [
-    "<#FFD8BE>ʟᴇᴀᴠᴇ ᴀ ᴛʀᴀɪʟ ᴏꜰ ꜰɪʀᴇ"
-  ],
-  "cosmetic.trails.soul_flame": "ꜱᴏᴜʟ ꜰʟᴀᴍᴇ",
-  "menu.trails.soul_flame.desc": [
-    "<#FFD8BE>ʟᴇᴀᴠᴇ ᴀ ᴛʀᴀɪʟ ᴏꜰ",
-    "<#FFD8BE>ʙʟᴜᴇ ꜱᴏᴜʟ ꜰɪʀᴇ"
-  ],
-  "cosmetic.trails.hearts": "ʜᴇᴀʀᴛꜱ",
-  "menu.trails.hearts.desc": [
-    "<#FFD8BE>ꜱᴘʀᴇᴀᴅ ᴛʜᴇ ʟᴏᴠᴇ",
-    "<#FFD8BE>ᴡʜᴇʀᴇᴠᴇʀ ʏᴏᴜ ᴡᴀʟᴋ"
-  ],
-  "cosmetic.trails.music_notes": "ᴍᴜꜱɪᴄ ɴᴏᴛᴇꜱ",
-  "menu.trails.music_notes.desc": [
-    "<#FFD8BE>ᴇᴠᴇʀʏ ꜱᴛᴇᴘ ᴘʟᴀʏꜱ",
-    "<#FFD8BE>ᴀ ᴄᴏʟᴏʀꜰᴜʟ ɴᴏᴛᴇ"
-  ],
-  "cosmetic.trails.cherry_blossom": "ᴄʜᴇʀʀʏ ʙʟᴏꜱꜱᴏᴍ",
-  "menu.trails.cherry_blossom.desc": [
-    "<#FFD8BE>ᴄʜᴇʀʀʏ ᴘᴇᴛᴀʟꜱ ꜰᴏʟʟᴏᴡ",
-    "<#FFD8BE>ʏᴏᴜʀ ᴇᴠᴇʀʏ ꜱᴛᴇᴘ"
-  ],
-  "cosmetic.trails.autumn_leaves": "ᴀᴜᴛᴜᴍɴ ʟᴇᴀᴠᴇꜱ",
-  "menu.trails.autumn_leaves.desc": [
-    "<#FFD8BE>ʟᴇᴀᴠᴇ ᴀ ᴛʀᴀɪʟ ᴏꜰ",
-    "<#FFD8BE>ꜰᴀʟʟɪɴɢ ᴘᴏᴘʟᴀʀ ʟᴇᴀᴠᴇꜱ"
-  ],
-  "cosmetic.trails.starlight": "ꜱᴛᴀʀʟɪɢʜᴛ",
-  "menu.trails.starlight.desc": [
-    "<#FFD8BE>ꜱᴘᴀʀᴋʟᴇ ʟɪᴋᴇ ᴛʜᴇ",
-    "<#FFD8BE>ɴɪɢʜᴛ ꜱᴋʏ"
-  ],
-  "cosmetic.trails.comet": "ᴄᴏᴍᴇᴛ",
-  "menu.trails.comet.desc": [
-    "<#FFD8BE>ꜱᴛʀᴇᴀᴋ ᴀᴄʀᴏꜱꜱ ᴛʜᴇ",
-    "<#FFD8BE>ᴡᴏʀʟᴅ ʟɪᴋᴇ ᴀ ᴄᴏᴍᴇᴛ"
-  ],
-  "cosmetic.trails.frost": "ꜰʀᴏꜱᴛ",
-  "menu.trails.frost.desc": [
-    "<#FFD8BE>ʟᴇᴀᴠᴇ ᴀ ᴛʀᴀɪʟ ᴏꜰ",
-    "<#FFD8BE>ꜱɴᴏᴡꜰʟᴀᴋᴇꜱ ᴀɴᴅ ꜰʀᴏꜱᴛ"
-  ],
-  "cosmetic.trails.ender": "ᴇɴᴅᴇʀ",
-  "menu.trails.ender.desc": [
-    "<#FFD8BE>ᴍʏꜱᴛᴇʀɪᴏᴜꜱ ᴘᴏʀᴛᴀʟ",
-    "<#FFD8BE>ᴘᴀʀᴛɪᴄʟᴇꜱ ꜰᴏʟʟᴏᴡ ʏᴏᴜ"
-  ],
-  "cosmetic.trails.sulfur_bubbles": "ꜱᴜʟꜰᴜʀ ʙᴜʙʙʟᴇꜱ",
-  "menu.trails.sulfur_bubbles.desc": [
-    "<#FFD8BE>ʟᴇᴀᴠᴇ ᴀ ᴛʀᴀɪʟ ᴏꜰ",
-    "<#FFD8BE>ʙᴜʙʙʟɪɴɢ ꜱᴜʟꜰᴜʀ"
-  ],
-  "cosmetic.trails.fireflies": "ꜰɪʀᴇꜰʟɪᴇꜱ",
-  "menu.trails.fireflies.desc": [
-    "<#FFD8BE>ꜰɪʀᴇꜰʟɪᴇꜱ ꜰᴏʟʟᴏᴡ",
-    "<#FFD8BE>ʏᴏᴜ ᴀʀᴏᴜɴᴅ"
-  ],
-  "cosmetic.trails.copper_sparks": "ᴄᴏᴘᴘᴇʀ ꜱᴘᴀʀᴋꜱ",
-  "menu.trails.copper_sparks.desc": [
-    "<#FFD8BE>ʟᴇᴀᴠᴇ ᴀ ᴛʀᴀɪʟ ᴏꜰ",
-    "<#FFD8BE>ɢʀᴇᴇɴ ᴄᴏᴘᴘᴇʀ ꜰʟᴀᴍᴇꜱ"
-  ],
-  "cosmetic.trails.toxic_gas": "ᴛᴏxɪᴄ ɢᴀꜱ",
-  "menu.trails.toxic_gas.desc": [
-    "<#FFD8BE>ʟᴇᴀᴠᴇ ᴀ ᴄʟᴏᴜᴅ ᴏꜰ",
-    "<#FFD8BE>ɴᴏxɪᴏᴜꜱ ɢᴀꜱ ʙᴇʜɪɴᴅ"
-  ],
   "cosmetic.gadgets.hype_train": "ʜʏᴘᴇ ᴛʀᴀɪɴ",
   "menu.gadgets.hype_train.desc": [
     "<#FFD8BE>ᴅʀɪᴠᴇ ᴀ ᴛʀᴀɪɴ ᴛʜᴀᴛ ᴏᴛʜᴇʀ ᴘʟᴀʏᴇʀꜱ",
@@ -1455,5 +1381,100 @@
   "cosmetic.gadgets.hype_train.joined": "<#B5EAD7>✦ <#FFC8DD><player> <#FFD8BE>ʜᴏᴘᴘᴇᴅ ᴏɴ ᴛʜᴇ ʜʏᴘᴇ ᴛʀᴀɪɴ!",
   "cosmetic.gadgets.hype_train.left": "<#FF9AA2>✘ <#FFC8DD><player> <#FFD8BE>ʜᴏᴘᴘᴇᴅ ᴏꜰꜰ ᴛʜᴇ ᴛʀᴀɪɴ.",
   "cosmetic.gadgets.hype_train.full": "<#FF9AA2>✘ <#FFD8BE>ᴛʜᴇ ʜʏᴘᴇ ᴛʀᴀɪɴ ɪꜱ ꜰᴜʟʟ!",
-  "cosmetic.gadgets.hype_train.ended": "<#CDB4DB>✦ <#FFD8BE>ᴛʜᴀɴᴋꜱ ꜰᴏʀ ʀɪᴅɪɴɢ ᴛʜᴇ <#FFC8DD>ʜʏᴘᴇ ᴛʀᴀɪɴ<#FFD8BE>!"
+  "cosmetic.gadgets.hype_train.ended": "<#CDB4DB>✦ <#FFD8BE>ᴛʜᴀɴᴋꜱ ꜰᴏʀ ʀɪᴅɪɴɢ ᴛʜᴇ <#FFC8DD>ʜʏᴘᴇ ᴛʀᴀɪɴ<#FFD8BE>!",
+  "cosmetic.trails.rainbow": "ʀᴀɪɴʙᴏᴡ ʀᴏᴀᴅ",
+  "menu.trails.rainbow.desc": [
+    "<#FFD8BE>ᴇᴠᴇʀʏ ꜱᴛᴇᴘ ᴀ ɴᴇᴡ ᴄᴏʟᴏʀ",
+    "<#FFD8BE>ᴏꜰ ᴛʜᴇ ʀᴀɪɴʙᴏᴡ"
+  ],
+  "cosmetic.trails.pastel": "ᴘᴀꜱᴛᴇʟ ꜱᴛᴇᴘꜱ",
+  "menu.trails.pastel.desc": [
+    "<#FFD8BE>ꜱᴏꜰᴛ ᴘᴀꜱᴛᴇʟ ᴡᴏᴏʟ",
+    "<#FFD8BE>ꜰᴏʟʟᴏᴡꜱ ʏᴏᴜʀ ꜰᴇᴇᴛ"
+  ],
+  "cosmetic.trails.candy_cane": "ᴄᴀɴᴅʏ ᴄᴀɴᴇ",
+  "menu.trails.candy_cane.desc": [
+    "<#FFD8BE>ʀᴇᴅ ᴀɴᴅ ᴡʜɪᴛᴇ ꜱᴛʀɪᴘᴇꜱ",
+    "<#FFD8BE>ᴡʜᴇʀᴇᴠᴇʀ ʏᴏᴜ ᴡᴀʟᴋ"
+  ],
+  "cosmetic.trails.frost": "ꜰʀᴏꜱᴛ ᴡᴀʟᴋᴇʀ",
+  "menu.trails.frost.desc": [
+    "<#FFD8BE>ꜰʀᴇᴇᴢᴇ ᴛʜᴇ ɢʀᴏᴜɴᴅ",
+    "<#FFD8BE>ᴀʀᴏᴜɴᴅ ʏᴏᴜ ɪɴᴛᴏ ɪᴄᴇ"
+  ],
+  "cosmetic.trails.magma": "ᴍᴀɢᴍᴀ ᴡᴀʟᴋ",
+  "menu.trails.magma.desc": [
+    "<#FFD8BE>ʟᴇᴀᴠᴇ ɢʟᴏᴡɪɴɢ ᴍᴀɢᴍᴀ",
+    "<#FFD8BE>ɪɴ ʏᴏᴜʀ ꜰᴏᴏᴛꜱᴛᴇᴘꜱ"
+  ],
+  "cosmetic.trails.golden": "ɢᴏʟᴅᴇɴ ᴘᴀᴛʜ",
+  "menu.trails.golden.desc": [
+    "<#FFD8BE>ᴡᴀʟᴋ ᴏɴ ɢᴏʟᴅ,",
+    "<#FFD8BE>ʏᴏᴜ ᴅᴇꜱᴇʀᴠᴇ ɪᴛ"
+  ],
+  "cosmetic.trails.gemstone": "ɢᴇᴍꜱᴛᴏɴᴇ ᴛʀᴀɪʟ",
+  "menu.trails.gemstone.desc": [
+    "<#FFD8BE>ᴅɪᴀᴍᴏɴᴅꜱ, ᴇᴍᴇʀᴀʟᴅꜱ",
+    "<#FFD8BE>ᴀɴᴅ ᴀᴍᴇᴛʜʏꜱᴛ"
+  ],
+  "cosmetic.trails.nether": "ɴᴇᴛʜᴇʀ ʙʟᴏᴏᴍ",
+  "menu.trails.nether.desc": [
+    "<#FFD8BE>ᴄʀɪᴍꜱᴏɴ ᴀɴᴅ ᴡᴀʀᴘᴇᴅ",
+    "<#FFD8BE>ɴʏʟɪᴜᴍ ꜱᴘʀᴇᴀᴅꜱ ᴜɴᴅᴇʀ ʏᴏᴜ"
+  ],
+  "cosmetic.trails.ocean": "ᴏᴄᴇᴀɴ ꜰʟᴏᴏʀ",
+  "menu.trails.ocean.desc": [
+    "<#FFD8BE>ᴘʀɪꜱᴍᴀʀɪɴᴇ ᴀɴᴅ ꜱᴇᴀ",
+    "<#FFD8BE>ʟᴀɴᴛᴇʀɴꜱ ꜰʀᴏᴍ ᴛʜᴇ ᴅᴇᴇᴘ"
+  ],
+  "cosmetic.trails.galaxy": "ɢᴀʟᴀxʏ ᴡᴀʟᴋ",
+  "menu.trails.galaxy.desc": [
+    "<#FFD8BE>ꜱᴛᴀʀʀʏ ᴏʙꜱɪᴅɪᴀɴ",
+    "<#FFD8BE>ꜱᴘᴀʀᴋʟᴇꜱ ʙᴇʜɪɴᴅ ʏᴏᴜ"
+  ],
+  "cosmetic.trails.sculk": "ꜱᴄᴜʟᴋ ꜱᴘʀᴇᴀᴅ",
+  "menu.trails.sculk.desc": [
+    "<#FFD8BE>ᴛʜᴇ ꜱᴄᴜʟᴋ ꜰᴏʟʟᴏᴡꜱ",
+    "<#FFD8BE>ʏᴏᴜʀ ᴇᴠᴇʀʏ ꜱᴛᴇᴘ"
+  ],
+  "cosmetic.trails.copper": "ᴄᴏᴘᴘᴇʀ ᴀɢᴇ",
+  "menu.trails.copper.desc": [
+    "<#FFD8BE>ᴄᴏᴘᴘᴇʀ ᴛʜᴀᴛ ᴀɢᴇꜱ",
+    "<#FFD8BE>ᴀꜱ ʏᴏᴜ ᴡᴀʟᴋ"
+  ],
+  "cosmetic.trails.cherry": "ᴄʜᴇʀʀʏ ɢʀᴏᴠᴇ",
+  "menu.trails.cherry.desc": [
+    "<#FFD8BE>ᴘɪɴᴋ ᴄʜᴇʀʀʏ ʙʟᴏꜱꜱᴏᴍꜱ",
+    "<#FFD8BE>ʙʟᴏᴏᴍ ᴜɴᴅᴇʀ ʏᴏᴜ"
+  ],
+  "cosmetic.trails.amethyst": "ᴀᴍᴇᴛʜʏꜱᴛ ꜱᴛᴇᴘꜱ",
+  "menu.trails.amethyst.desc": [
+    "<#FFD8BE>ꜱʜɪᴍᴍᴇʀɪɴɢ ᴀᴍᴇᴛʜʏꜱᴛ",
+    "<#FFD8BE>ᴄʀʏꜱᴛᴀʟ ᴛɪʟᴇꜱ"
+  ],
+  "cosmetic.trails.honey": "ʜᴏɴᴇʏ ᴛʀᴀɪʟ",
+  "menu.trails.honey.desc": [
+    "<#FFD8BE>ꜱᴡᴇᴇᴛ ᴀɴᴅ ꜱᴛɪᴄᴋʏ",
+    "<#FFD8BE>ʜᴏɴᴇʏᴄᴏᴍʙ ꜱᴛᴇᴘꜱ"
+  ],
+  "cosmetic.trails.cinnabar": "ᴄɪɴɴᴀʙᴀʀ ᴛʀᴀɪʟ",
+  "menu.trails.cinnabar.desc": [
+    "<#FFD8BE>ᴠɪᴠɪᴅ ʀᴇᴅ ᴄɪɴɴᴀʙᴀʀ",
+    "<#FFD8BE>ꜰʀᴏᴍ ᴛʜᴇ ᴅᴇᴇᴘ ᴄᴀᴠᴇꜱ"
+  ],
+  "cosmetic.trails.sulfur": "ꜱᴜʟꜰᴜʀ ꜱᴘʀɪɴɢꜱ",
+  "menu.trails.sulfur.desc": [
+    "<#FFD8BE>ʙᴜʙʙʟɪɴɢ ʏᴇʟʟᴏᴡ ꜱᴜʟꜰᴜʀ",
+    "<#FFD8BE>ᴜɴᴅᴇʀ ʏᴏᴜʀ ꜰᴇᴇᴛ"
+  ],
+  "cosmetic.trails.resin": "ʀᴇꜱɪɴ ᴘᴀᴛʜ",
+  "menu.trails.resin.desc": [
+    "<#FFD8BE>ᴡᴀʀᴍ ᴏʀᴀɴɢᴇ ʀᴇꜱɪɴ",
+    "<#FFD8BE>ʙʀɪᴄᴋꜱ ʙᴇʜɪɴᴅ ʏᴏᴜ"
+  ],
+  "cosmetic.trails.pale_garden": "ᴘᴀʟᴇ ɢᴀʀᴅᴇɴ",
+  "menu.trails.pale_garden.desc": [
+    "<#FFD8BE>ᴘᴀʟᴇ ᴍᴏꜱꜱ ᴀɴᴅ ᴏᴀᴋ",
+    "<#FFD8BE>ꜰʀᴏᴍ ᴛʜᴇ ᴇᴇʀɪᴇ ɢᴀʀᴅᴇɴ"
+  ]
 }

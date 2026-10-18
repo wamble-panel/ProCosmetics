@@ -67,21 +67,7 @@ import me.dtbh.kiwicosmetics.cosmetic.particleeffect.ParticleEffectTypeImpl;
 import me.dtbh.kiwicosmetics.cosmetic.particleeffect.type.*;
 import me.dtbh.kiwicosmetics.cosmetic.particleeffect.type.Bunny;
 import me.dtbh.kiwicosmetics.cosmetic.particleeffect.type.Confetti;
-import me.dtbh.kiwicosmetics.cosmetic.trail.type.RainbowDustTrail;
-import me.dtbh.kiwicosmetics.cosmetic.trail.type.FlameTrail;
-import me.dtbh.kiwicosmetics.cosmetic.trail.type.SoulFlameTrail;
-import me.dtbh.kiwicosmetics.cosmetic.trail.type.HeartTrail;
-import me.dtbh.kiwicosmetics.cosmetic.trail.type.NoteTrail;
-import me.dtbh.kiwicosmetics.cosmetic.trail.type.CherryBlossomTrail;
-import me.dtbh.kiwicosmetics.cosmetic.trail.type.AutumnLeavesTrail;
-import me.dtbh.kiwicosmetics.cosmetic.trail.type.StarlightTrail;
-import me.dtbh.kiwicosmetics.cosmetic.trail.type.CometTrail;
-import me.dtbh.kiwicosmetics.cosmetic.trail.type.FrostTrail;
-import me.dtbh.kiwicosmetics.cosmetic.trail.type.EnderTrail;
-import me.dtbh.kiwicosmetics.cosmetic.trail.type.SulfurBubbleTrail;
-import me.dtbh.kiwicosmetics.cosmetic.trail.type.FireflyTrail;
-import me.dtbh.kiwicosmetics.cosmetic.trail.type.CopperSparkTrail;
-import me.dtbh.kiwicosmetics.cosmetic.trail.type.ToxicTrail;
+import me.dtbh.kiwicosmetics.cosmetic.trail.BlockTrails;
 import me.dtbh.kiwicosmetics.menu.CosmeticMenuImpl;
 import me.dtbh.kiwicosmetics.KiwiCosmeticsPlugin;
 import me.dtbh.kiwicosmetics.api.cosmetic.CosmeticRarity;
@@ -305,22 +291,28 @@ public class CategoryRegistriesImpl implements CategoryRegistries {
         particleEffects.register(particleEffects.builder("aurora_wings").readFromConfig().factory(AuroraWings::new).repeatDelay(2).build());
         particleEffects.register(particleEffects.builder("blossom_ring").readFromConfig().factory(BlossomRing::new).repeatDelay(2).build());
 
+        // Block trails reuse the particle effect machinery: a behavior that runs every few ticks
+        BlockTrails.load();
         CosmeticRegistry<ParticleEffectType, ParticleEffectBehavior, ParticleEffectType.Builder> trailRegistry = trails().getCosmeticRegistry();
-        trailRegistry.register(trailRegistry.builder("rainbow_dust").readFromConfig().factory(RainbowDustTrail::new).repeatDelay(1).build());
-        trailRegistry.register(trailRegistry.builder("flame").readFromConfig().factory(FlameTrail::new).repeatDelay(1).build());
-        trailRegistry.register(trailRegistry.builder("soul_flame").readFromConfig().factory(SoulFlameTrail::new).repeatDelay(1).build());
-        trailRegistry.register(trailRegistry.builder("hearts").readFromConfig().factory(HeartTrail::new).repeatDelay(2).build());
-        trailRegistry.register(trailRegistry.builder("music_notes").readFromConfig().factory(NoteTrail::new).repeatDelay(2).build());
-        trailRegistry.register(trailRegistry.builder("cherry_blossom").readFromConfig().factory(CherryBlossomTrail::new).repeatDelay(2).build());
-        trailRegistry.register(trailRegistry.builder("autumn_leaves").readFromConfig().factory(AutumnLeavesTrail::new).repeatDelay(2).build());
-        trailRegistry.register(trailRegistry.builder("starlight").readFromConfig().factory(StarlightTrail::new).repeatDelay(1).build());
-        trailRegistry.register(trailRegistry.builder("comet").readFromConfig().factory(CometTrail::new).repeatDelay(1).build());
-        trailRegistry.register(trailRegistry.builder("frost").readFromConfig().factory(FrostTrail::new).repeatDelay(1).build());
-        trailRegistry.register(trailRegistry.builder("ender").readFromConfig().factory(EnderTrail::new).repeatDelay(1).build());
-        trailRegistry.register(trailRegistry.builder("sulfur_bubbles").readFromConfig().factory(SulfurBubbleTrail::new).repeatDelay(1).build());
-        trailRegistry.register(trailRegistry.builder("fireflies").readFromConfig().factory(FireflyTrail::new).repeatDelay(2).build());
-        trailRegistry.register(trailRegistry.builder("copper_sparks").readFromConfig().factory(CopperSparkTrail::new).repeatDelay(1).build());
-        trailRegistry.register(trailRegistry.builder("toxic_gas").readFromConfig().factory(ToxicTrail::new).repeatDelay(1).build());
+        trailRegistry.register(trailRegistry.builder("rainbow").readFromConfig().factory(BlockTrails::rainbow).repeatDelay(2).build());
+        trailRegistry.register(trailRegistry.builder("pastel").readFromConfig().factory(BlockTrails::pastel).repeatDelay(2).build());
+        trailRegistry.register(trailRegistry.builder("candy_cane").readFromConfig().factory(BlockTrails::candyCane).repeatDelay(2).build());
+        trailRegistry.register(trailRegistry.builder("frost").readFromConfig().factory(BlockTrails::frost).repeatDelay(2).build());
+        trailRegistry.register(trailRegistry.builder("magma").readFromConfig().factory(BlockTrails::magma).repeatDelay(2).build());
+        trailRegistry.register(trailRegistry.builder("golden").readFromConfig().factory(BlockTrails::golden).repeatDelay(2).build());
+        trailRegistry.register(trailRegistry.builder("gemstone").readFromConfig().factory(BlockTrails::gemstone).repeatDelay(2).build());
+        trailRegistry.register(trailRegistry.builder("nether").readFromConfig().factory(BlockTrails::nether).repeatDelay(2).build());
+        trailRegistry.register(trailRegistry.builder("ocean").readFromConfig().factory(BlockTrails::ocean).repeatDelay(2).build());
+        trailRegistry.register(trailRegistry.builder("galaxy").readFromConfig().factory(BlockTrails::galaxy).repeatDelay(2).build());
+        trailRegistry.register(trailRegistry.builder("sculk").readFromConfig().factory(BlockTrails::sculk).repeatDelay(2).build());
+        trailRegistry.register(trailRegistry.builder("copper").readFromConfig().factory(BlockTrails::copper).repeatDelay(2).build());
+        trailRegistry.register(trailRegistry.builder("cherry").readFromConfig().factory(BlockTrails::cherry).repeatDelay(2).build());
+        trailRegistry.register(trailRegistry.builder("amethyst").readFromConfig().factory(BlockTrails::amethyst).repeatDelay(2).build());
+        trailRegistry.register(trailRegistry.builder("honey").readFromConfig().factory(BlockTrails::honey).repeatDelay(2).build());
+        trailRegistry.register(trailRegistry.builder("cinnabar").readFromConfig().factory(BlockTrails::cinnabar).repeatDelay(2).build());
+        trailRegistry.register(trailRegistry.builder("sulfur").readFromConfig().factory(BlockTrails::sulfur).repeatDelay(2).build());
+        trailRegistry.register(trailRegistry.builder("resin").readFromConfig().factory(BlockTrails::resin).repeatDelay(2).build());
+        trailRegistry.register(trailRegistry.builder("pale_garden").readFromConfig().factory(BlockTrails::paleGarden).repeatDelay(2).build());
 
 
     }

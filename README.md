@@ -11,8 +11,10 @@ merged with the hats and rainbow armor of the old KiwiCosmetics plugin.
 
 - **Permission only.** No coins, no shop, no treasure chests: a cosmetic is unlocked when the player has its permission.
 - **/cosmetics** opens the menu, **/cosmetics &lt;category&gt;** opens a category directly (`particles`, `trails`, `hats`, ...).
-- **Trails** that follow you while you walk, and **new particle shapes** using the 26.2/26.3 particles
-  (poplar leaves, geysers, sulfur bubbles, noxious gas, fireflies, copper fire, trails). On older versions they fall back to similar particles.
+- **Block trails**: the ground you walk on turns into other blocks for a few seconds (rainbow wool, ice, gold,
+  cinnabar, sulfur, cherry, sculk...). The blocks are fake, only shown to players; the world never changes.
+- **New particle shapes** using the 26.2/26.3 particles (poplar leaves, geysers, sulfur bubbles, noxious gas,
+  fireflies, copper fire, trails). On older versions they fall back to similar particles.
 - **Hype Train** gadget, like on Hypixel: ride the locomotive, other players right-click the train to hop on,
   carriages follow your exact path and a boss bar shows the hype.
 - **Hats & rainbow armor** (Paper): `/hats` and `/rainbow` work exactly like before, and every hat can also be worn
