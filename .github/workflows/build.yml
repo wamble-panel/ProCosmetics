@@ -61,6 +61,16 @@ jobs:
           chmod +x gradlew
           ./gradlew clean build --no-daemon
 
+      - name: Probe paper mannequin API (temporary)
+        continue-on-error: true
+        run: |
+          find ~/.gradle /home/runner/work -name '*.jar' 2>/dev/null | grep -iE "paper-api|paper.*dev|mojang-mapped|userdev" | head -20
+          for jar in $(find ~/.gradle /home/runner/work -name '*.jar' 2>/dev/null | grep -iE "paper-api" | grep -v sources | head -3); do
+            echo "== $jar"; unzip -l "$jar" | grep -iE "entity/Mannequin|ResolvableProfile" | awk '{print $4}'
+            javap -cp "$jar" org.bukkit.entity.Mannequin || true
+            javap -cp "$jar" io.papermc.paper.datacomponent.item.ResolvableProfile || true
+          done
+
       - name: Upload jar
         uses: actions/upload-artifact@v4
         with:
