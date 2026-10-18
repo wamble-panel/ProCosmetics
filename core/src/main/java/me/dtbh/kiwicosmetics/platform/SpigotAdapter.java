@@ -30,10 +30,12 @@ import net.md_5.bungee.chat.ComponentSerializer;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.Mannequin;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.TextDisplay;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.profile.PlayerProfile;
 import org.jetbrains.annotations.Nullable;
 import me.dtbh.kiwicosmetics.api.platform.PlatformAdapter;
 
@@ -155,5 +157,15 @@ public class SpigotAdapter implements PlatformAdapter {
     @Override
     public Inventory createInventory(Player player, int rows, Component title) {
         return Bukkit.createInventory(player, rows, LEGACY_SERIALIZER.serialize(title));
+    }
+
+    @Override
+    public void setMannequinProfile(Mannequin mannequin, PlayerProfile profile) {
+        mannequin.setPlayerProfile(profile);
+    }
+
+    @Override
+    public void hideMannequinDescription(Mannequin mannequin) {
+        mannequin.setHideDescription(true);
     }
 }

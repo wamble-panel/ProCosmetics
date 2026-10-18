@@ -17,16 +17,19 @@
  */
 package me.dtbh.kiwicosmetics.platform;
 
+import io.papermc.paper.datacomponent.item.ResolvableProfile;
 import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.Mannequin;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.TextDisplay;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.profile.PlayerProfile;
 import org.jetbrains.annotations.Nullable;
 import me.dtbh.kiwicosmetics.api.platform.PlatformAdapter;
 
@@ -84,5 +87,16 @@ public class PaperAdapter implements PlatformAdapter {
     @Override
     public Inventory createInventory(Player player, int rows, Component title) {
         return Bukkit.createInventory(player, rows, title);
+    }
+
+    @Override
+    public void setMannequinProfile(Mannequin mannequin, PlayerProfile profile) {
+        // Every profile Paper hands out is its own PlayerProfile
+        mannequin.setProfile(ResolvableProfile.resolvableProfile((com.destroystokyo.paper.profile.PlayerProfile) profile));
+    }
+
+    @Override
+    public void hideMannequinDescription(Mannequin mannequin) {
+        mannequin.setDescription((Component) null);
     }
 }

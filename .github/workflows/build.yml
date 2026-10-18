@@ -44,32 +44,10 @@ jobs:
             ~/.m2/repository/com/mojang
           key: spigot-26.1.2-26.2-26.3-v2
 
-      - name: Probe mannequin API (temporary)
-        continue-on-error: true
-        run: |
-          api=~/.m2/repository/org/spigotmc/spigot-api/26.3-R0.1-SNAPSHOT/spigot-api-26.3-R0.1-SNAPSHOT.jar
-          echo "=== spigot classes"; unzip -l "$api" | grep -iE "mannequin|ResolvableProfile|PlayerProfile|MainHand" | awk '{print $4}'
-          for c in org.bukkit.entity.Mannequin org.bukkit.profile.PlayerProfile; do javap -cp "$api" "$c" || true; done
-          javap -cp "$api" org.bukkit.entity.EntityType | grep -iE "MANNEQUIN|ARMOR_STAND|ITEM_DISPLAY" || true
-          javap -cp "$api" org.bukkit.attribute.Attribute | grep -i "SCALE" || true
-          echo "=== paper"
-          jar=$(find ~/.gradle -name 'paper-api-26.2*.jar' 2>/dev/null | grep -v sources | head -1); echo "$jar"
-          [ -n "$jar" ] && { unzip -l "$jar" | grep -iE "mannequin|ResolvableProfile" | awk '{print $4}'; javap -cp "$jar" org.bukkit.entity.Mannequin; javap -cp "$jar" io.papermc.paper.datacomponent.item.ResolvableProfile; } || true
-
       - name: Build plugin
         run: |
           chmod +x gradlew
           ./gradlew clean build --no-daemon
-
-      - name: Probe paper mannequin API (temporary)
-        continue-on-error: true
-        run: |
-          find ~/.gradle /home/runner/work -name '*.jar' 2>/dev/null | grep -iE "paper-api|paper.*dev|mojang-mapped|userdev" | head -20
-          for jar in $(find ~/.gradle /home/runner/work -name '*.jar' 2>/dev/null | grep -iE "paper-api" | grep -v sources | head -3); do
-            echo "== $jar"; unzip -l "$jar" | grep -iE "entity/Mannequin|ResolvableProfile" | awk '{print $4}'
-            javap -cp "$jar" org.bukkit.entity.Mannequin || true
-            javap -cp "$jar" io.papermc.paper.datacomponent.item.ResolvableProfile || true
-          done
 
       - name: Upload jar
         uses: actions/upload-artifact@v4
@@ -118,7 +96,7 @@ jobs:
             if ! pgrep -f paper.jar > /dev/null; then echo "Server died"; cat server.log; exit 1; fi
             sleep 2
           done
-          for command in "kiwicosmetics" "kc permission trails" "kc permission particle_effects" "hats list" "rainbow list" "kc reload" "hats reload"; do
+          for command in "kiwicosmetics" "kc permission trails" "kc permission particle_effects" "kc permission plushies" "hats list" "rainbow list" "kc reload" "hats reload"; do
             echo "$command" >&3
             sleep 3
           done

@@ -37,6 +37,8 @@ import me.dtbh.kiwicosmetics.api.cosmetic.music.MusicBehavior;
 import me.dtbh.kiwicosmetics.api.cosmetic.music.MusicType;
 import me.dtbh.kiwicosmetics.api.cosmetic.particleeffect.ParticleEffectBehavior;
 import me.dtbh.kiwicosmetics.api.cosmetic.particleeffect.ParticleEffectType;
+import me.dtbh.kiwicosmetics.api.cosmetic.plushie.PlushieBehavior;
+import me.dtbh.kiwicosmetics.api.cosmetic.plushie.PlushieType;
 import me.dtbh.kiwicosmetics.api.cosmetic.registry.CategoryRegistries;
 import me.dtbh.kiwicosmetics.api.cosmetic.registry.CosmeticCategory;
 import me.dtbh.kiwicosmetics.api.cosmetic.registry.CosmeticRegistry;
@@ -67,6 +69,8 @@ import me.dtbh.kiwicosmetics.cosmetic.particleeffect.ParticleEffectTypeImpl;
 import me.dtbh.kiwicosmetics.cosmetic.particleeffect.type.*;
 import me.dtbh.kiwicosmetics.cosmetic.particleeffect.type.Bunny;
 import me.dtbh.kiwicosmetics.cosmetic.particleeffect.type.Confetti;
+import me.dtbh.kiwicosmetics.cosmetic.plushie.PlushieTypeImpl;
+import me.dtbh.kiwicosmetics.cosmetic.plushie.type.DefaultPlushie;
 import me.dtbh.kiwicosmetics.cosmetic.trail.BlockTrails;
 import me.dtbh.kiwicosmetics.menu.CosmeticMenuImpl;
 import me.dtbh.kiwicosmetics.KiwiCosmeticsPlugin;
@@ -90,6 +94,7 @@ public class CategoryRegistriesImpl implements CategoryRegistries {
         register(new CosmeticCategoryImpl<>(BuiltIn.DEATH_EFFECTS, DeathEffectTypeImpl.BuilderImpl::new, CosmeticMenuImpl::new));
         register(new CosmeticCategoryImpl<>(BuiltIn.GADGETS, GadgetTypeImpl.BuilderImpl::new, CosmeticMenuImpl::new));
         register(new CosmeticCategoryImpl<>(BuiltIn.MINIATURES, MiniatureTypeImpl.BuilderImpl::new, CosmeticMenuImpl::new));
+        register(new CosmeticCategoryImpl<>(BuiltIn.PLUSHIES, PlushieTypeImpl.BuilderImpl::new, CosmeticMenuImpl::new));
         register(new CosmeticCategoryImpl<>(BuiltIn.MUSIC, MusicTypeImpl.BuilderImpl::new, CosmeticMenuImpl::new));
         register(new CosmeticCategoryImpl<>(BuiltIn.PARTICLE_EFFECTS, ParticleEffectTypeImpl.BuilderImpl::new, CosmeticMenuImpl::new));
         register(new CosmeticCategoryImpl<>(BuiltIn.TRAILS, ParticleEffectTypeImpl.BuilderImpl::new, CosmeticMenuImpl::new));
@@ -232,6 +237,14 @@ public class CategoryRegistriesImpl implements CategoryRegistries {
         miniatures.register(miniatures.builder("witch").readFromConfig().factory(Witch::new).build());
         miniatures.register(miniatures.builder("zebra").readFromConfig().factory(Zebra::new).build());
         miniatures.register(miniatures.builder("zombie").readFromConfig().factory(Zombie::new).build());
+
+        // Every plushie in plushies.yml is loaded, so server owners can add their own skins
+        CosmeticRegistry<PlushieType, PlushieBehavior, PlushieType.Builder> plushies = plushies().getCosmeticRegistry();
+        for (String key : plushies().getConfig().getSectionKeys("cosmetics")) {
+            if (!plushies.isRegistered(key)) {
+                plushies.register(plushies.builder(key).readFromConfig().factory(DefaultPlushie::new).build());
+            }
+        }
 
 
 

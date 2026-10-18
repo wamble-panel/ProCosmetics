@@ -36,6 +36,8 @@ import me.dtbh.kiwicosmetics.api.cosmetic.music.MusicBehavior;
 import me.dtbh.kiwicosmetics.api.cosmetic.music.MusicType;
 import me.dtbh.kiwicosmetics.api.cosmetic.particleeffect.ParticleEffectBehavior;
 import me.dtbh.kiwicosmetics.api.cosmetic.particleeffect.ParticleEffectType;
+import me.dtbh.kiwicosmetics.api.cosmetic.plushie.PlushieBehavior;
+import me.dtbh.kiwicosmetics.api.cosmetic.plushie.PlushieType;
 
 import java.util.Collection;
 
@@ -197,6 +199,15 @@ public interface CategoryRegistries {
     }
 
     /**
+     * Gets the plushies cosmetic category.
+     *
+     * @return the built-in {@code plushies} category, or {@code null} if not registered
+     */
+    default CosmeticCategory<PlushieType, PlushieBehavior, PlushieType.Builder> plushies() {
+        return getCategory(BuiltIn.PLUSHIES);
+    }
+
+    /**
      * Defines constant keys for all built-in cosmetic categories.
      */
     interface BuiltIn {
@@ -245,6 +256,11 @@ public interface CategoryRegistries {
          * Built-in key for trails.
          */
         String TRAILS = "trails";
+
+        /**
+         * Built-in key for plushies.
+         */
+        String PLUSHIES = "plushies";
 
         /**
          * Built-in key for hats (from hats.yml, Paper only).

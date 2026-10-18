@@ -110,6 +110,10 @@ menu:
         item: "minecraft:music_disc_mall[!minecraft:jukebox_playable, !minecraft:rarity]"
         count: 1
         slot: 24
+      plushies:
+        item: "minecraft:player_head[profile={name:'Notch'},!minecraft:rarity]"
+        count: 1
+        slot: 31
 
   # Every category menu (particles, trails, gadgets...) shares this layout.
   category:
@@ -141,4 +145,4 @@ menu:
       count: 1
 
 # Do not edit this!
-config_version: 2
+config_version: 3

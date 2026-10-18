@@ -64,6 +64,7 @@ public class CosmeticsCommand extends SimpleCommand<CommandSender> {
             case "balloon" -> "balloons";
             case "banner" -> "banners";
             case "miniature", "minis", "mini" -> "miniatures";
+            case "plushie", "plush", "plushes" -> "plushies";
             case "arrows", "arrow" -> "arrow_effects";
             case "deaths", "death" -> "death_effects";
             case "songs", "song" -> "music";

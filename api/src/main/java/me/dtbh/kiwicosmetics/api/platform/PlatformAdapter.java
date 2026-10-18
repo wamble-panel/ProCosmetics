@@ -21,10 +21,12 @@ import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.text.Component;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.Mannequin;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.TextDisplay;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.profile.PlayerProfile;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
@@ -112,4 +114,19 @@ public interface PlatformAdapter {
      * @return the created inventory
      */
     Inventory createInventory(Player player, int rows, Component title);
+
+    /**
+     * Gives a mannequin the skin of a profile.
+     *
+     * @param mannequin the mannequin to change
+     * @param profile   the profile whose skin to use
+     */
+    void setMannequinProfile(Mannequin mannequin, PlayerProfile profile);
+
+    /**
+     * Hides the description line ("NPC") shown below a mannequin.
+     *
+     * @param mannequin the mannequin to change
+     */
+    void hideMannequinDescription(Mannequin mannequin);
 }

@@ -1,0 +1,66 @@
+# Enable/disable this entire category.
+# When disabled, players cannot equip any cosmetics from this category as they will NOT be loaded into cache.
+enabled: true
+
+# Plushies are little player figures that sit on an invisible cushion next to you.
+# You can add as many plushies as you like, every entry below is loaded.
+#
+#   skin:  "self"                 the skin of the player wearing it
+#          a player name          e.g. "Notch", looked up once and cached
+#          a texture URL          e.g. "http://textures.minecraft.net/texture/<hash>"
+#          a textures value       the base64 value used by player heads
+#   scale: size compared to a player (0.5 = half size)
+#   name:  optional, shown in the menu instead of a translation from the lang file
+#
+# Permission: kiwicosmetics.cosmetic.plushies.<key>
+cosmetics:
+  mini_me:
+    enabled: true
+    rarity: "rare"
+    skin: "self"
+    scale: 0.5
+    item: "minecraft:player_head[!minecraft:rarity]"
+    count: 1
+
+  notch:
+    enabled: true
+    rarity: "legendary"
+    skin: "Notch"
+    scale: 0.5
+    item: "minecraft:player_head[profile={name:'Notch'},!minecraft:rarity]"
+    count: 1
+
+  jeb:
+    enabled: true
+    rarity: "epic"
+    skin: "jeb_"
+    scale: 0.5
+    item: "minecraft:player_head[profile={name:'jeb_'},!minecraft:rarity]"
+    count: 1
+
+  dinnerbone:
+    enabled: true
+    rarity: "epic"
+    skin: "Dinnerbone"
+    scale: 0.5
+    item: "minecraft:player_head[profile={name:'Dinnerbone'},!minecraft:rarity]"
+    count: 1
+
+  grumm:
+    enabled: true
+    rarity: "epic"
+    skin: "Grumm"
+    scale: 0.5
+    item: "minecraft:player_head[profile={name:'Grumm'},!minecraft:rarity]"
+    count: 1
+
+  tiny_me:
+    enabled: true
+    rarity: "legendary"
+    skin: "self"
+    scale: 0.3
+    item: "minecraft:player_head[!minecraft:rarity]"
+    count: 1
+
+# Do not edit this!
+config_version: 1

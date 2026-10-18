@@ -1,7 +1,7 @@
 # KiwiCosmetics
 
 Cosmetics for Minecraft servers (Spigot & Paper **26.1+**, Java 25): particles, trails, gadgets, hats,
-rainbow armor, balloons, banners, miniatures, arrow & death effects and music, all in one plugin with a
+rainbow armor, balloons, banners, miniatures, plushies, arrow & death effects and music, all in one plugin with a
 pastel, small-caps menu.
 
 KiwiCosmetics is a fork of [ProCosmetics](https://github.com/FilleDev/ProCosmetics) by FilleDev (GPLv3),
@@ -37,7 +37,7 @@ SQL/Mongo/Redis storage and the hotbar menu item.
 
 `/kc permission <category>` lists every permission of a category (click to copy).
 
-Categories: `particle_effects`, `trails`, `gadgets`, `hats`, `balloons`, `banners`, `miniatures`, `arrow_effects`, `death_effects`, `music`.
+Categories: `particle_effects`, `trails`, `gadgets`, `hats`, `balloons`, `banners`, `miniatures`, `plushies`, `arrow_effects`, `death_effects`, `music`.
 
 ## Updating from the old KiwiCosmetics (hats + rainbow armor)
 
