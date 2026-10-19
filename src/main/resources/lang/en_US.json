@@ -155,7 +155,7 @@
   "category.plushies.name": "ᴘʟᴜꜱʜɪᴇꜱ",
   "category.plushies.desc": [
     "<#CDB4DB>ꜱǫᴜɪꜱʜʏ ᴘʟᴀʏᴇʀ ᴅᴏʟʟꜱ",
-    "<#CDB4DB>ᴛʜᴀᴛ ꜱɪᴛ ʙʏ ʏᴏᴜʀ ꜱɪᴅᴇ"
+    "<#CDB4DB>ᴛᴏ ᴅᴇᴄᴏʀᴀᴛᴇ ʏᴏᴜʀ ʙᴀꜱᴇ"
   ],
   "category.arrow_effects.name": "ᴀʀʀᴏᴡ ᴇꜰꜰᴇᴄᴛꜱ",
   "category.arrow_effects.desc": [
@@ -1492,12 +1492,12 @@
   "cosmetic.plushies.notch": "ɴᴏᴛᴄʜ ᴘʟᴜꜱʜɪᴇ",
   "menu.plushies.notch.desc": [
     "<#FFD8BE>ᴛʜᴇ ᴄʀᴇᴀᴛᴏʀ ᴏꜰ ᴍɪɴᴇᴄʀᴀꜰᴛ,",
-    "<#FFD8BE>ɴᴏᴡ ᴘᴏᴄᴋᴇᴛ ꜱɪᴢᴇᴅ"
+    "<#FFD8BE>ɴᴏᴡ ꜱʜᴇʟꜰ ꜱɪᴢᴇᴅ"
   ],
   "cosmetic.plushies.jeb": "ᴊᴇʙ ᴘʟᴜꜱʜɪᴇ",
   "menu.plushies.jeb.desc": [
     "<#FFD8BE>ᴀ ꜰʟᴜꜰꜰʏ ʟɪᴛᴛʟᴇ ᴊᴇʙ_",
-    "<#FFD8BE>ᴛᴏ ᴋᴇᴇᴘ ʏᴏᴜ ᴄᴏᴍᴘᴀɴʏ"
+    "<#FFD8BE>ꜰᴏʀ ʏᴏᴜʀ ꜱʜᴇʟꜰ"
   ],
   "cosmetic.plushies.dinnerbone": "ᴅɪɴɴᴇʀʙᴏɴᴇ ᴘʟᴜꜱʜɪᴇ",
   "menu.plushies.dinnerbone.desc": [
@@ -1506,12 +1506,33 @@
   ],
   "cosmetic.plushies.grumm": "ɢʀᴜᴍᴍ ᴘʟᴜꜱʜɪᴇ",
   "menu.plushies.grumm.desc": [
-    "<#FFD8BE>ᴀ ᴄᴜᴅᴅʟʏ ɢʀᴜᴍᴍ ᴛʜᴀᴛ",
-    "<#FFD8BE>ꜰᴏʟʟᴏᴡꜱ ʏᴏᴜ ᴀʀᴏᴜɴᴅ"
+    "<#FFD8BE>ᴀ ᴄᴜᴅᴅʟʏ ɢʀᴜᴍᴍ",
+    "<#FFD8BE>ꜰᴏʀ ʏᴏᴜʀ ʙᴇᴅʀᴏᴏᴍ"
   ],
   "cosmetic.plushies.tiny_me": "ᴛɪɴʏ ᴍᴇ",
   "menu.plushies.tiny_me.desc": [
     "<#FFD8BE>ᴀɴ ᴇᴠᴇɴ ꜱᴍᴀʟʟᴇʀ ʏᴏᴜ,",
     "<#FFD8BE>ᴇxᴛʀᴀ ꜱǫᴜɪꜱʜʏ!"
-  ]
+  ],
+  "menu.plushies.cosmetic.unlocked": [
+    "<#A2D2FF>➜ <#FFD8BE>ᴄʟɪᴄᴋ ᴛᴏ ɢᴇᴛ ᴛʜᴇ ᴘʟᴜꜱʜɪᴇ"
+  ],
+  "item.plushie.name": "<gradient:#FFB5A7:#FFC8DD><bold><name></bold></gradient> <#8A8A8A>(ᴘʟᴜꜱʜɪᴇ)",
+  "item.plushie.desc": [
+    "<#CDB4DB>ᴀ ꜱᴏꜰᴛ ʟɪᴛᴛʟᴇ ᴅᴇᴄᴏʀᴀᴛɪᴏɴ",
+    "",
+    "<#A2D2FF>➜ <#FFD8BE>ʀɪɢʜᴛ-ᴄʟɪᴄᴋ ᴀ ʙʟᴏᴄᴋ ᴛᴏ ᴘʟᴀᴄᴇ ɪᴛ",
+    "<#A2D2FF>➜ <#FFD8BE>ʀɪɢʜᴛ-ᴄʟɪᴄᴋ ɪᴛ ᴛᴏ ɢɪᴠᴇ ɪᴛ ᴀ ʜᴜɢ",
+    "<#A2D2FF>➜ <#FFD8BE>ʜɪᴛ ᴏʀ ꜱɴᴇᴀᴋ-ᴄʟɪᴄᴋ ᴛᴏ ᴘɪᴄᴋ ɪᴛ ᴜᴘ"
+  ],
+  "plushies.received": "<gradient:#FFB5A7:#FFC8DD><bold>✦ ᴋɪᴡɪ</bold></gradient> <#8A8A8A>• <#B5EAD7>✔ <#FFD8BE>ʏᴏᴜ ɢᴏᴛ <#FFC8DD><cosmetic><#FFD8BE>! ʀɪɢʜᴛ-ᴄʟɪᴄᴋ ᴀ ʙʟᴏᴄᴋ ᴛᴏ ᴘʟᴀᴄᴇ ɪᴛ.",
+  "plushies.already_have": "<gradient:#FFB5A7:#FFC8DD><bold>✦ ᴋɪᴡɪ</bold></gradient> <#8A8A8A>• <#FF9AA2>✘ ʏᴏᴜ ᴀʟʀᴇᴀᴅʏ ʜᴀᴠᴇ <#FFC8DD><cosmetic> <#FF9AA2>ɪɴ ʏᴏᴜʀ ɪɴᴠᴇɴᴛᴏʀʏ.",
+  "plushies.inventory_full": "<gradient:#FFB5A7:#FFC8DD><bold>✦ ᴋɪᴡɪ</bold></gradient> <#8A8A8A>• <#FF9AA2>✘ ʏᴏᴜʀ ɪɴᴠᴇɴᴛᴏʀʏ ɪꜱ ꜰᴜʟʟ.",
+  "plushies.placed": "<gradient:#FFB5A7:#FFC8DD><bold>✦ ᴋɪᴡɪ</bold></gradient> <#8A8A8A>• <#B5EAD7>✔ <#FFD8BE>ᴘʟᴀᴄᴇᴅ <#FFC8DD><cosmetic><#FFD8BE>. <#8A8A8A>(<count>/<max>)",
+  "plushies.limit": "<gradient:#FFB5A7:#FFC8DD><bold>✦ ᴋɪᴡɪ</bold></gradient> <#8A8A8A>• <#FF9AA2>✘ ʏᴏᴜ ᴄᴀɴ ᴏɴʟʏ ᴘʟᴀᴄᴇ <#FFE5EC><max> <#FF9AA2>ᴘʟᴜꜱʜɪᴇꜱ. ʜɪᴛ ᴏɴᴇ ᴛᴏ ᴘɪᴄᴋ ɪᴛ ᴜᴘ.",
+  "plushies.no_space": "<gradient:#FFB5A7:#FFC8DD><bold>✦ ᴋɪᴡɪ</bold></gradient> <#8A8A8A>• <#FF9AA2>✘ ᴛʜᴇʀᴇ ɪꜱ ɴᴏ ʀᴏᴏᴍ ꜰᴏʀ ᴀ ᴘʟᴜꜱʜɪᴇ ᴛʜᴇʀᴇ.",
+  "plushies.no_ground": "<gradient:#FFB5A7:#FFC8DD><bold>✦ ᴋɪᴡɪ</bold></gradient> <#8A8A8A>• <#FF9AA2>✘ ᴘʟᴜꜱʜɪᴇꜱ ɴᴇᴇᴅ ꜱᴏᴍᴇᴛʜɪɴɢ ᴛᴏ ꜱɪᴛ ᴏɴ.",
+  "plushies.occupied": "<gradient:#FFB5A7:#FFC8DD><bold>✦ ᴋɪᴡɪ</bold></gradient> <#8A8A8A>• <#FF9AA2>✘ ᴛʜᴇʀᴇ ɪꜱ ᴀʟʀᴇᴀᴅʏ ᴀ ᴘʟᴜꜱʜɪᴇ ᴛʜᴇʀᴇ.",
+  "plushies.not_owner": "<gradient:#FFB5A7:#FFC8DD><bold>✦ ᴋɪᴡɪ</bold></gradient> <#8A8A8A>• <#FF9AA2>✘ ᴛʜɪꜱ ᴘʟᴜꜱʜɪᴇ ʙᴇʟᴏɴɢꜱ ᴛᴏ <#FFC8DD><owner><#FF9AA2>.",
+  "plushies.picked_up": "<gradient:#FFB5A7:#FFC8DD><bold>✦ ᴋɪᴡɪ</bold></gradient> <#8A8A8A>• <#B5EAD7>✔ <#FFD8BE>ᴘɪᴄᴋᴇᴅ ᴜᴘ <#FFC8DD><cosmetic><#FFD8BE>."
 }

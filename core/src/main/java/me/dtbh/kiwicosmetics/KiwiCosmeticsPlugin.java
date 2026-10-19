@@ -34,6 +34,7 @@ import me.dtbh.kiwicosmetics.command.CommandBase;
 import me.dtbh.kiwicosmetics.command.SimpleCommand;
 import me.dtbh.kiwicosmetics.command.commands.*;
 import me.dtbh.kiwicosmetics.config.ConfigManagerImpl;
+import me.dtbh.kiwicosmetics.cosmetic.plushie.PlushieFurniture;
 import me.dtbh.kiwicosmetics.cosmetic.registry.CategoryRegistriesImpl;
 import me.dtbh.kiwicosmetics.cosmetic.registry.CosmeticRarityRegistryImpl;
 import me.dtbh.kiwicosmetics.listener.*;
@@ -78,6 +79,7 @@ public class KiwiCosmeticsPlugin extends JavaPlugin implements KiwiCosmetics {
     private PlatformAdapter platformAdapter;
     private WorldGuardManager worldGuardManager;
     private Wardrobe wardrobe;
+    private PlushieFurniture plushieFurniture;
 
     @Override
     public void onLoad() {
@@ -114,6 +116,7 @@ public class KiwiCosmeticsPlugin extends JavaPlugin implements KiwiCosmetics {
         userManager = new UserManagerImpl(this);
         menuManager = new MenuManagerImpl(this);
         fakeBlockManager = new FakeBlockManager(this);
+        plushieFurniture = new PlushieFurniture(this);
         placeholderManager = new PlaceholderManager(this);
         commandBase = new CommandBase(this);
 
@@ -155,7 +158,8 @@ public class KiwiCosmeticsPlugin extends JavaPlugin implements KiwiCosmetics {
                 new EntityListener(),
                 new FallDamageListener(this),
                 new InventoryListener(),
-                new PlayerListener(this)
+                new PlayerListener(this),
+                plushieFurniture
         );
     }
 
@@ -327,6 +331,10 @@ public class KiwiCosmeticsPlugin extends JavaPlugin implements KiwiCosmetics {
      */
     public Wardrobe getWardrobe() {
         return wardrobe;
+    }
+
+    public PlushieFurniture getPlushieFurniture() {
+        return plushieFurniture;
     }
 
     public WorldGuardManager getWorldGuardManager() {

@@ -47,6 +47,7 @@ public final class PlushieSkins {
     public static final String SELF = "self";
 
     private static final String PROFILE_NAME = "KiwiPlushie";
+    private static final String SLIM_SUFFIX = "#slim";
     private static final Map<String, PlayerProfile> CACHE = new ConcurrentHashMap<>();
 
     private PlushieSkins() {
@@ -88,6 +89,33 @@ public final class PlushieSkins {
         }
     }
 
+    /**
+     * The skin of a player as a texture URL ({@code #slim} appended for slim skins), or null
+     * when the player has no skin (offline mode).
+     */
+    @Nullable
+    public static String skinOf(Player player) {
+        PlayerTextures textures = player.getPlayerProfile().getTextures();
+        URL skin = textures.getSkin();
+
+        if (skin == null) {
+            return null;
+        }
+        return skin + (textures.getSkinModel() == PlayerTextures.SkinModel.SLIM ? SLIM_SUFFIX : "");
+    }
+
+    /**
+     * A profile carrying only a skin, from a texture URL or a base64 textures value.
+     * Player names return null, they need a lookup.
+     */
+    @Nullable
+    public static PlayerProfile textureProfile(KiwiCosmeticsPlugin plugin, String skin) {
+        if (skin == null || skin.isBlank() || skin.trim().length() <= 16) {
+            return null;
+        }
+        return fromTexture(plugin, skin.trim());
+    }
+
     private static void lookup(KiwiCosmeticsPlugin plugin, String name, Consumer<PlayerProfile> callback) {
         PlayerProfile profile;
 
@@ -113,7 +141,12 @@ public final class PlushieSkins {
             String url = skin;
             PlayerTextures.SkinModel model = PlayerTextures.SkinModel.CLASSIC;
 
-            if (!skin.startsWith("http")) {
+            if (skin.startsWith("http")) {
+                if (skin.endsWith(SLIM_SUFFIX)) {
+                    url = skin.substring(0, skin.length() - SLIM_SUFFIX.length());
+                    model = PlayerTextures.SkinModel.SLIM;
+                }
+            } else {
                 // A base64 "textures" value: {"textures":{"SKIN":{"url":"...","metadata":{"model":"slim"}}}}
                 String json = new String(Base64.getDecoder().decode(skin), StandardCharsets.UTF_8);
                 JsonObject skinObject = JsonParser.parseString(json).getAsJsonObject()

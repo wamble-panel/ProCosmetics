@@ -33,7 +33,7 @@ public interface PlushieType extends CosmeticType<PlushieType, PlushieBehavior> 
     String getSkin();
 
     /**
-     * Gets the scale multiplier for this plushie's size.
+     * Gets the scale multiplier for the placed plushie's size.
      * A scale of 1.0 is the size of a player.
      *
      * @return the scale multiplier for the plushie

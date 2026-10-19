@@ -18,25 +18,10 @@
 package me.dtbh.kiwicosmetics.api.cosmetic.plushie;
 
 import me.dtbh.kiwicosmetics.api.cosmetic.Cosmetic;
-import me.dtbh.kiwicosmetics.api.nms.NMSEntity;
 
 /**
- * Represents a plushie cosmetic instance associated with a user.
- * Plushies are small skinned player figures that sit on an invisible seat next to the player.
+ * Represents a plushie cosmetic. Plushies are furniture: choosing one in the menu gives the
+ * player a plushie item, which places a small sitting player figure on the block it is used on.
  */
 public interface Plushie extends Cosmetic<PlushieType, PlushieBehavior> {
-
-    /**
-     * Gets the NMS entity of the skinned figure.
-     *
-     * @return the mannequin entity of this plushie
-     */
-    NMSEntity getNMSEntity();
-
-    /**
-     * Gets the invisible entity the plushie sits on.
-     *
-     * @return the seat entity of this plushie
-     */
-    NMSEntity getSeat();
 }

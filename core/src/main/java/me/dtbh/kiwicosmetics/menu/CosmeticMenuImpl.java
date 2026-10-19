@@ -245,7 +245,9 @@ public class CosmeticMenuImpl<T extends CosmeticType<T, ?>> extends PaginatedMen
             }
             lore.addAll(user.translateList("menu.cosmetic.info", resolvers));
             String state = equipped ? "equipped" : locked ? "locked" : "unlocked";
-            lore.addAll(user.translateList("menu.cosmetic." + state, resolvers));
+            // A category can word its click hint differently (plushies are given, not equipped)
+            String stateKey = "menu." + category.getKey() + ".cosmetic." + state;
+            lore.addAll(user.translateList(hasTranslation(stateKey) ? stateKey : "menu.cosmetic." + state, resolvers));
 
             ItemBuilderImpl itemBuilder = ItemBuilderImpl.of(cosmeticType.getItemStack());
 

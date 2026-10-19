@@ -2,17 +2,26 @@
 # When disabled, players cannot equip any cosmetics from this category as they will NOT be loaded into cache.
 enabled: true
 
-# Plushies are little player figures that sit on an invisible cushion next to you.
+# Plushies are furniture. Clicking one in the menu gives you a plushie item, right-click a block
+# to place it: a little player figure sitting on top of that block (slabs, carpets and fences too).
+# Right-click a placed plushie to hug it, hit it or sneak + right-click to pick it back up (its owner,
+# or players with kiwicosmetics.plushies.admin). Placed plushies are normal entities saved with the world.
+#
+# How many plushies one player can have placed at once. -1 for no limit.
+# Players with kiwicosmetics.plushies.unlimited ignore this.
+max_placed_per_player: 10
+
 # You can add as many plushies as you like, every entry below is loaded.
 #
-#   skin:  "self"                 the skin of the player wearing it
+#   skin:  "self"                 the skin of the player who got the plushie
 #          a player name          e.g. "Notch", looked up once and cached
 #          a texture URL          e.g. "http://textures.minecraft.net/texture/<hash>"
 #          a textures value       the base64 value used by player heads
 #   scale: size compared to a player (0.5 = half size)
 #   name:  optional, shown in the menu instead of a translation from the lang file
+#   item:  the plushie item and its menu icon
 #
-# Permission: kiwicosmetics.cosmetic.plushies.<key>
+# Permission: kiwicosmetics.cosmetic.plushies.<key> (needed to get and to place it)
 cosmetics:
   mini_me:
     enabled: true
@@ -63,4 +72,4 @@ cosmetics:
     count: 1
 
 # Do not edit this!
-config_version: 1
+config_version: 2

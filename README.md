@@ -17,6 +17,9 @@ merged with the hats and rainbow armor of the old KiwiCosmetics plugin.
   fireflies, copper fire, trails). On older versions they fall back to similar particles.
 - **Hype Train** gadget, like on Hypixel: ride the locomotive, other players right-click the train to hop on,
   carriages follow your exact path and a boss bar shows the hype.
+- **Plushies**: furniture for your base. Pick one in the menu to get a plushie item, right-click a block and a
+  half-size player figure sits on it (your own skin, a player's skin or any texture). Right-click it for a hug,
+  hit it or sneak + right-click to pick it back up. Placed plushies are normal entities saved with the world.
 - **Hats & rainbow armor** (Paper): `/hats` and `/rainbow` work exactly like before, and every hat can also be worn
   from the menu (visual only, the real helmet stays put).
 - No database: equipped cosmetics are remembered on the player (persistent data container).
@@ -32,6 +35,8 @@ SQL/Mongo/Redis storage and the hotbar menu item.
 | `kiwicosmetics.cosmetic.<category>.*` | - | a whole category, e.g. `kiwicosmetics.cosmetic.trails.*` |
 | `kiwicosmetics.cosmetic.<category>.<cosmetic>` | - | one cosmetic, e.g. `kiwicosmetics.cosmetic.particle_effects.angel_wings` |
 | `kiwicosmetics.command.cosmetics` / `equip` / `unequip` / `unequipall` | everyone | player commands |
+| `kiwicosmetics.plushies.unlimited` | op | place more plushies than `max_placed_per_player` |
+| `kiwicosmetics.plushies.admin` | op | pick up other players' plushies |
 | `kiwicosmetics.admin` | op | all `/kiwicosmetics` (`/kc`) commands, plus `kiwi.*` |
 | `kiwi.hats.*`, `kiwi.rainbow.*` | op | `/hats` and `/rainbow` (same nodes as before) |
 

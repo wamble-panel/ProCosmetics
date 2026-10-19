@@ -20,20 +20,11 @@ package me.dtbh.kiwicosmetics.cosmetic.plushie.type;
 import me.dtbh.kiwicosmetics.api.cosmetic.CosmeticContext;
 import me.dtbh.kiwicosmetics.api.cosmetic.plushie.PlushieBehavior;
 import me.dtbh.kiwicosmetics.api.cosmetic.plushie.PlushieType;
-import me.dtbh.kiwicosmetics.api.nms.NMSEntity;
 
 public class DefaultPlushie implements PlushieBehavior {
 
     @Override
     public void onEquip(CosmeticContext<PlushieType> context) {
-    }
-
-    @Override
-    public void setupEntity(CosmeticContext<PlushieType> context, NMSEntity nmsEntity) {
-    }
-
-    @Override
-    public void onUpdate(CosmeticContext<PlushieType> context, NMSEntity nmsEntity, int tick) {
     }
 
     @Override

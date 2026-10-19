@@ -18,8 +18,6 @@
 package me.dtbh.kiwicosmetics.api.cosmetic.plushie;
 
 import me.dtbh.kiwicosmetics.api.cosmetic.CosmeticBehavior;
-import me.dtbh.kiwicosmetics.api.cosmetic.CosmeticContext;
-import me.dtbh.kiwicosmetics.api.nms.NMSEntity;
 
 /**
  * Defines the behavior for plushie cosmetics.
@@ -28,21 +26,4 @@ import me.dtbh.kiwicosmetics.api.nms.NMSEntity;
  * @see PlushieType
  */
 public interface PlushieBehavior extends CosmeticBehavior<PlushieType> {
-
-    /**
-     * Called once the plushie entity has been created, before it is shown to anyone.
-     *
-     * @param context   the context containing information about the plushie cosmetic
-     * @param nmsEntity the mannequin entity of the plushie
-     */
-    void setupEntity(CosmeticContext<PlushieType> context, NMSEntity nmsEntity);
-
-    /**
-     * Called on every update tick for the plushie.
-     *
-     * @param context   the context containing information about the plushie cosmetic
-     * @param nmsEntity the mannequin entity of the plushie
-     * @param tick      the current tick count
-     */
-    void onUpdate(CosmeticContext<PlushieType> context, NMSEntity nmsEntity, int tick);
 }

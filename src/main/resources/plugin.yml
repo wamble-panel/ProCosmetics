@@ -64,6 +64,14 @@ permissions:
     description: Unlocks every cosmetic.
     default: op
 
+  # Plushies
+  kiwicosmetics.plushies.unlimited:
+    description: Place more plushies than max_placed_per_player in plushies.yml.
+    default: op
+  kiwicosmetics.plushies.admin:
+    description: Pick up plushies placed by other players.
+    default: op
+
   # Admin
   kiwicosmetics.admin:
     description: Every KiwiCosmetics admin command.
@@ -78,6 +86,8 @@ permissions:
       kiwicosmetics.command.reload: true
       kiwicosmetics.command.item: true
       kiwicosmetics.command.structure: true
+      kiwicosmetics.plushies.admin: true
+      kiwicosmetics.plushies.unlimited: true
       kiwi.*: true
 
   # Hats and rainbow armor (same nodes as the old KiwiCosmetics plugin)
