@@ -42,9 +42,11 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
@@ -239,7 +241,7 @@ public class PlushieFurniture implements Listener {
             return;
         }
         String skin = item.getItemMeta().getPersistentDataContainer().get(skinKey, PersistentDataType.STRING);
-        Mannequin mannequin = spawn(location, type, skin, player);
+        Mannequin mannequin = spawn(location, type, skin, headOf(item), player);
 
         placed.add(mannequin.getUniqueId() + "@" + target.getWorld().getName() + "@" + (target.getX() >> 4) + "@" + (target.getZ() >> 4));
         setPlaced(player, placed);
@@ -258,7 +260,23 @@ public class PlushieFurniture implements Listener {
                 Placeholder.unparsed("max", max >= 0 && !player.hasPermission(PERMISSION_UNLIMITED) ? String.valueOf(max) : "∞")));
     }
 
-    private Mannequin spawn(Location location, PlushieType type, @Nullable String skin, Player owner) {
+    /**
+     * A plain copy of the plushie item for the plushie to wear: same head, but without the
+     * plushie data, name and lore, so it is never a second plushie.
+     */
+    private ItemStack headOf(ItemStack item) {
+        return new ItemBuilderImpl(item)
+                .setAmount(1)
+                .modifyItemMeta(meta -> {
+                    meta.setDisplayName(null);
+                    meta.setLore(null);
+                    meta.getPersistentDataContainer().remove(typeKey);
+                    meta.getPersistentDataContainer().remove(skinKey);
+                })
+                .getItemStack();
+    }
+
+    private Mannequin spawn(Location location, PlushieType type, @Nullable String skin, ItemStack head, Player owner) {
         World world = location.getWorld();
         ItemDisplay seat = world.spawn(location, ItemDisplay.class, display ->
                 display.getPersistentDataContainer().set(typeKey, PersistentDataType.STRING, type.getKey()));
@@ -276,6 +294,11 @@ public class PlushieFurniture implements Listener {
             spawned.setPersistent(true);
             plugin.getPlatformAdapter().hideMannequinDescription(spawned);
 
+            EntityEquipment equipment = spawned.getEquipment();
+            if (equipment != null) {
+                equipment.setHelmet(head);
+            }
+
             PersistentDataContainer data = spawned.getPersistentDataContainer();
             data.set(typeKey, PersistentDataType.STRING, type.getKey());
             data.set(ownerKey, PersistentDataType.STRING, owner.getUniqueId().toString());
@@ -292,9 +315,26 @@ public class PlushieFurniture implements Listener {
             // Name lookups finish later, the plushie may have been picked up by then
             if (mannequin.isValid()) {
                 plugin.getPlatformAdapter().setMannequinProfile(mannequin, profile);
+                wearSkinIfBlank(mannequin, profile);
             }
         });
         return mannequin;
+    }
+
+    /**
+     * A head without a skin (a self plushie whose skin was unknown when it was handed out)
+     * gets the skin the plushie ended up with.
+     */
+    private void wearSkinIfBlank(Mannequin mannequin, PlayerProfile profile) {
+        EntityEquipment equipment = mannequin.getEquipment();
+        ItemStack helmet = equipment != null ? equipment.getHelmet() : null;
+
+        if (helmet == null || !(helmet.getItemMeta() instanceof SkullMeta skullMeta) || skullMeta.getOwnerProfile() != null) {
+            return;
+        }
+        skullMeta.setOwnerProfile(profile);
+        helmet.setItemMeta(skullMeta);
+        equipment.setHelmet(helmet);
     }
 
     // ---- placed plushies
@@ -338,6 +378,14 @@ public class PlushieFurniture implements Listener {
 
         if (event instanceof EntityDamageByEntityEvent byEntity && byEntity.getDamager() instanceof Player player) {
             pickUp(player, mannequin);
+        }
+    }
+
+    @EventHandler
+    public void onDeath(EntityDeathEvent event) {
+        // Only possible with commands, the worn head must not drop as a free item
+        if (isPlushie(event.getEntity())) {
+            event.getDrops().clear();
         }
     }
 
