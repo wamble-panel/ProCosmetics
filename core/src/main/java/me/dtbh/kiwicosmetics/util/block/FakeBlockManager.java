@@ -124,10 +124,15 @@ public class FakeBlockManager {
             return false;
         }
         MetadataUtil.setCustomBlock(block);
+        TrackedBlock previous = trackedBlocks.get(block);
+        Set<UUID> viewers = broadcastBlockChange(block, blockData);
+
+        if (previous != null) {
+            viewers.addAll(previous.viewers());
+        }
         trackedBlocks.put(block, new TrackedBlock(blockData, durationTicks < 0
                 ? PERMANENT
-                : currentTick + durationTicks));
-        broadcastBlockChange(block, blockData);
+                : currentTick + durationTicks, viewers));
         startTaskIfNeeded();
         return true;
     }
@@ -152,15 +157,17 @@ public class FakeBlockManager {
      * stops tracking the block.
      */
     public void resetFakeBlock(Block block) {
-        if (trackedBlocks.remove(block) != null) {
-            restore(block);
+        TrackedBlock tracked = trackedBlocks.remove(block);
+
+        if (tracked != null) {
+            restore(block, tracked);
         }
         stopTaskIfIdle();
     }
 
     public void shutdown() {
-        for (Block block : trackedBlocks.keySet()) {
-            restore(block);
+        for (Map.Entry<Block, TrackedBlock> entry : trackedBlocks.entrySet()) {
+            restore(entry.getKey(), entry.getValue());
         }
         trackedBlocks.clear();
         stopTaskIfIdle();
@@ -178,6 +185,7 @@ public class FakeBlockManager {
             if (block.getWorld().equals(player.getWorld())
                     && block.getLocation().distanceSquared(playerLocation) < VIEW_RANGE_SQUARED) {
                 player.sendBlockChange(block.getLocation(), entry.getValue().blockData());
+                entry.getValue().viewers().add(player.getUniqueId());
             }
         }
     }
@@ -243,7 +251,7 @@ public class FakeBlockManager {
 
             if (entry.getValue().isExpired(currentTick)) {
                 iterator.remove();
-                restore(entry.getKey());
+                restore(entry.getKey(), entry.getValue());
             }
         }
         stopTaskIfIdle();
@@ -262,20 +270,40 @@ public class FakeBlockManager {
         }
     }
 
-    private void restore(Block block) {
-        broadcastBlockChange(block, block.getBlockData());
+    /**
+     * Sends the real block back to everyone who was shown the fake one, even if they walked
+     * out of range since: their client still has the chunk and would keep the fake block.
+     */
+    private void restore(Block block, TrackedBlock tracked) {
+        Location location = block.getLocation();
+        BlockData real = block.getBlockData();
+        Set<UUID> viewers = tracked.viewers();
+        Location tmp = location.clone();
+
+        for (Player player : block.getWorld().getPlayers()) {
+            if (viewers.contains(player.getUniqueId())
+                    || player.getLocation(tmp).distanceSquared(location) < VIEW_RANGE_SQUARED) {
+                player.sendBlockChange(location, real);
+            }
+        }
         MetadataUtil.removeCustomBlock(block);
     }
 
-    private void broadcastBlockChange(Block block, BlockData blockData) {
+    /**
+     * @return the players the block change was sent to
+     */
+    private Set<UUID> broadcastBlockChange(Block block, BlockData blockData) {
         Location location = block.getLocation();
         Location tmp = location.clone();
+        Set<UUID> viewers = new HashSet<>();
 
         for (Player player : block.getWorld().getPlayers()) {
             if (player.getLocation(tmp).distanceSquared(location) < VIEW_RANGE_SQUARED) {
                 player.sendBlockChange(location, blockData);
+                viewers.add(player.getUniqueId());
             }
         }
+        return viewers;
     }
 
     /**
@@ -283,8 +311,9 @@ public class FakeBlockManager {
      *
      * @param blockData  the fake data currently shown to players
      * @param expiryTick internal tick at which the block expires, or {@link #PERMANENT}
+     * @param viewers    players that were sent the fake block
      */
-    private record TrackedBlock(BlockData blockData, long expiryTick) {
+    private record TrackedBlock(BlockData blockData, long expiryTick, Set<UUID> viewers) {
 
         boolean isExpired(long currentTick) {
             return expiryTick != PERMANENT && currentTick >= expiryTick;

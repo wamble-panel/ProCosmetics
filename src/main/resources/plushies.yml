@@ -3,7 +3,8 @@
 enabled: true
 
 # Plushies are furniture. Clicking one in the menu gives you a plushie item, right-click a block
-# to place it: a little player figure sitting on top of that block (slabs, carpets and fences too).
+# to place it: a little player figure sits exactly where you clicked (on slabs, carpets and fences too),
+# so plushies can sit right next to each other.
 # Right-click a placed plushie to hug it, hit it or sneak + right-click to pick it back up (its owner,
 # or players with kiwicosmetics.plushies.admin). Placed plushies are normal entities saved with the world.
 #

@@ -19,6 +19,7 @@ package me.dtbh.kiwicosmetics.cosmetic.plushie;
 
 import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
 import org.bukkit.Bukkit;
+import org.bukkit.FluidCollisionMode;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -53,6 +54,9 @@ import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.profile.PlayerProfile;
+import org.bukkit.util.BoundingBox;
+import org.bukkit.util.RayTraceResult;
+import org.bukkit.util.Vector;
 import org.jetbrains.annotations.Nullable;
 import me.dtbh.kiwicosmetics.KiwiCosmeticsPlugin;
 import me.dtbh.kiwicosmetics.api.config.Config;
@@ -78,6 +82,9 @@ public class PlushieFurniture implements Listener {
     public static final String PERMISSION_ADMIN = "kiwicosmetics.plushies.admin";
     private static final int DEFAULT_MAX_PLACED = 10;
     private static final String ENTRY_SEPARATOR = ";";
+    // How tall a sitting plushie is at scale 1, and how far from a wall it sits when a side is clicked
+    private static final double SEATED_HEIGHT = 1.2d;
+    private static final double WALL_DISTANCE = 0.2d;
 
     private final KiwiCosmeticsPlugin plugin;
     // On plushie items, placed mannequins and their seats: the plushie key
@@ -200,32 +207,29 @@ public class PlushieFurniture implements Listener {
             user.sendMessage(user.translate("cosmetic.locked", Placeholder.unparsed("cosmetic", type.getName(user))));
             return;
         }
-        // Grass and flowers get a plushie on them, anything else gets it on the clicked side
-        Block target = clicked.isPassable() && !clicked.isLiquid() ? clicked : clicked.getRelative(event.getBlockFace());
+        Location location = findSpot(player, clicked, event.getBlockFace());
 
-        if (!target.isEmpty() && !target.isPassable() || target.getType() == Material.LAVA) {
-            user.sendMessage(user.translate("plushies.no_space"));
-            return;
-        }
-        Block support = target.getRelative(BlockFace.DOWN);
-
-        if (!support.getType().isSolid()) {
+        if (location == null) {
             user.sendMessage(user.translate("plushies.no_ground"));
             return;
         }
-        // Sit on top of whatever is below: slabs, carpets and fences included
-        double y = support.getBoundingBox().getMaxY();
+        World world = location.getWorld();
+        double height = SEATED_HEIGHT * type.getScale();
 
-        if (y <= support.getY()) {
-            y = target.getY();
+        if (!isOpen(world, location.getX(), location.getY() + 0.05d, location.getZ())
+                || !isOpen(world, location.getX(), location.getY() + height, location.getZ())) {
+            user.sendMessage(user.translate("plushies.no_space"));
+            return;
         }
-        float yaw = Math.round((player.getLocation().getYaw() + 180.0f) / 45.0f) * 45.0f;
-        Location location = new Location(target.getWorld(), target.getX() + 0.5d, y, target.getZ() + 0.5d, yaw, 0.0f);
-
-        if (!target.getWorld().getNearbyEntities(location, 0.4d, 0.6d, 0.4d, this::isPlushie).isEmpty()) {
+        // Only the exact same spot is taken, plushies can sit right next to each other
+        if (!world.getNearbyEntities(location, 0.1d, height, 0.1d, this::isPlushie).isEmpty()) {
             user.sendMessage(user.translate("plushies.occupied"));
             return;
         }
+        float yaw = Math.round((player.getLocation().getYaw() + 180.0f) / 22.5f) * 22.5f;
+        location.setYaw(yaw);
+        Block target = world.getBlockAt(location.getBlockX(), Location.locToBlock(location.getY() + 0.05d), location.getBlockZ());
+
         List<String> placed = getPlaced(player);
         int max = getMaxPlaced();
 
@@ -251,7 +255,6 @@ public class PlushieFurniture implements Listener {
             inHand.setAmount(inHand.getAmount() - 1);
             player.getInventory().setItem(event.getHand(), inHand.getAmount() > 0 ? inHand : null);
         }
-        World world = location.getWorld();
         world.playSound(location, Sound.BLOCK_WOOL_PLACE, SoundCategory.BLOCKS, 1.0f, 1.2f);
         world.spawnParticle(Particle.HEART, location.clone().add(0.0d, 0.8d * type.getScale() / 0.5d, 0.0d), 1);
         user.sendMessage(user.translate("plushies.placed",
@@ -274,6 +277,69 @@ public class PlushieFurniture implements Listener {
                     meta.getPersistentDataContainer().remove(skinKey);
                 })
                 .getItemStack();
+    }
+
+    /**
+     * Where the plushie goes: the exact point the player looks at on top of a block, or the
+     * floor right in front of a wall when its side is clicked. Snapped to the 1/16 pixel grid.
+     *
+     * @return the spot, or null when there is nothing to sit on
+     */
+    @Nullable
+    private Location findSpot(Player player, Block clicked, BlockFace clickedFace) {
+        World world = player.getWorld();
+        Location eye = player.getEyeLocation();
+        // Passable blocks (grass, flowers) are looked through, the plushie sits on the ground below
+        RayTraceResult hit = world.rayTraceBlocks(eye, eye.getDirection(), 8.0d, FluidCollisionMode.NEVER, true);
+        Vector point;
+        BlockFace face;
+
+        if (hit != null && hit.getHitBlock() != null && hit.getHitBlockFace() != null) {
+            point = hit.getHitPosition();
+            face = hit.getHitBlockFace();
+        } else {
+            point = clicked.getLocation().toVector().add(new Vector(0.5d, 0.5d, 0.5d)).add(clickedFace.getDirection().multiply(0.5d));
+            face = clickedFace;
+        }
+
+        if (face == BlockFace.DOWN) {
+            return null;
+        }
+        if (face != BlockFace.UP) {
+            point = point.clone().add(face.getDirection().multiply(WALL_DISTANCE));
+            Block column = world.getBlockAt(point.getBlockX(), point.getBlockY(), point.getBlockZ());
+            Block support = column.isPassable() ? column.getRelative(BlockFace.DOWN) : column;
+            double top = support.getBoundingBox().getMaxY();
+
+            if (!support.getType().isSolid() || top <= support.getY()) {
+                return null;
+            }
+            point.setY(top);
+        }
+        return new Location(world, snap(point.getX()), point.getY(), snap(point.getZ()));
+    }
+
+    private static double snap(double value) {
+        return Math.round(value * 16.0d) / 16.0d;
+    }
+
+    /**
+     * Whether a point is not inside a block's collision, so slabs, stairs and carpets count
+     * by their real shape.
+     */
+    private static boolean isOpen(World world, double x, double y, double z) {
+        Block block = world.getBlockAt(Location.locToBlock(x), Location.locToBlock(y), Location.locToBlock(z));
+
+        if (block.getType() == Material.LAVA) {
+            return false;
+        }
+        if (block.isPassable()) {
+            return true;
+        }
+        double rx = x - block.getX();
+        double ry = y - block.getY();
+        double rz = z - block.getZ();
+        return !block.getCollisionShape().overlaps(new BoundingBox(rx - 0.01d, ry - 0.01d, rz - 0.01d, rx + 0.01d, ry + 0.01d, rz + 0.01d));
     }
 
     private Mannequin spawn(Location location, PlushieType type, @Nullable String skin, ItemStack head, Player owner) {
