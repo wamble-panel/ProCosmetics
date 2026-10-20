@@ -68,35 +68,35 @@ public final class BlockTrails {
     }
 
     public static BlockTrail rainbow() {
-        return new BlockTrail(RAINBOW, shapes(RAINBOW, "red_nether_brick", "smooth_red_sandstone", "bamboo", "mossy_cobblestone", "prismarine", "warped", "purpur", "crimson"), false, true, null);
+        return new BlockTrail(RAINBOW, shapes(RAINBOW), false, true, null);
     }
 
     public static BlockTrail pastel() {
-        return new BlockTrail(PASTEL, shapes(PASTEL, "cherry", "smooth_quartz", "prismarine_brick", "bamboo", "purpur"), false, true, Particle.HAPPY_VILLAGER);
+        return new BlockTrail(PASTEL, shapes(PASTEL), false, true, Particle.HAPPY_VILLAGER);
     }
 
     public static BlockTrail candyCane() {
-        return new BlockTrail(CANDY_CANE, shapes(CANDY_CANE, "red_nether_brick", "smooth_quartz"), false, true, null);
+        return new BlockTrail(CANDY_CANE, shapes(CANDY_CANE), false, true, null);
     }
 
     public static BlockTrail frost() {
-        return new BlockTrail(FROST, shapes(FROST, "smooth_quartz", "prismarine_brick", "polished_diorite"), true, false, Particle.SNOWFLAKE);
+        return new BlockTrail(FROST, shapes(FROST), true, false, Particle.SNOWFLAKE);
     }
 
     public static BlockTrail magma() {
-        return new BlockTrail(MAGMA, shapes(MAGMA, "blackstone", "red_nether_brick", "nether_brick"), false, false, Particle.SMALL_FLAME);
+        return new BlockTrail(MAGMA, shapes(MAGMA), false, false, Particle.SMALL_FLAME);
     }
 
     public static BlockTrail golden() {
-        return new BlockTrail(GOLDEN, shapes(GOLDEN, "bamboo", "smooth_sandstone"), false, false, Particle.WAX_ON);
+        return new BlockTrail(GOLDEN, shapes(GOLDEN), false, false, Particle.WAX_ON);
     }
 
     public static BlockTrail gemstone() {
-        return new BlockTrail(GEMSTONE, shapes(GEMSTONE, "prismarine", "dark_prismarine", "purpur", "warped"), false, false, Particle.ELECTRIC_SPARK);
+        return new BlockTrail(GEMSTONE, shapes(GEMSTONE), false, false, Particle.ELECTRIC_SPARK);
     }
 
     public static BlockTrail nether() {
-        return new BlockTrail(NETHER, shapes(NETHER, "crimson", "warped", "red_nether_brick"), true, false, Particle.CRIMSON_SPORE);
+        return new BlockTrail(NETHER, shapes(NETHER), true, false, Particle.CRIMSON_SPORE);
     }
 
     public static BlockTrail ocean() {
@@ -104,11 +104,11 @@ public final class BlockTrails {
     }
 
     public static BlockTrail galaxy() {
-        return new BlockTrail(GALAXY, shapes(GALAXY, "polished_blackstone", "blackstone", "deepslate_tile"), false, false, Particle.END_ROD);
+        return new BlockTrail(GALAXY, shapes(GALAXY), false, false, Particle.END_ROD);
     }
 
     public static BlockTrail sculk() {
-        return new BlockTrail(SCULK, shapes(SCULK, "deepslate_tile", "polished_deepslate"), true, false, Particle.SCULK_SOUL);
+        return new BlockTrail(SCULK, shapes(SCULK), true, false, Particle.SCULK_SOUL);
     }
 
     public static BlockTrail copper() {
@@ -124,23 +124,23 @@ public final class BlockTrails {
     }
 
     public static BlockTrail honey() {
-        return new BlockTrail(HONEY, shapes(HONEY, "bamboo", "smooth_sandstone", "smooth_red_sandstone"), false, false, Particle.FALLING_HONEY);
+        return new BlockTrail(HONEY, shapes(HONEY), false, false, Particle.FALLING_HONEY);
     }
 
     public static BlockTrail cinnabar() {
-        return new BlockTrail(CINNABAR, shapes(CINNABAR, "red_nether_brick", "granite"), false, false, Particle.CRIMSON_SPORE);
+        return new BlockTrail(CINNABAR, shapes(CINNABAR), false, false, Particle.CRIMSON_SPORE);
     }
 
     public static BlockTrail sulfur() {
-        return new BlockTrail(SULFUR, shapes(SULFUR, "bamboo", "smooth_sandstone", "end_stone_brick"), false, false, ParticleUtil.find("SULFUR_BUBBLES", Particle.WAX_OFF));
+        return new BlockTrail(SULFUR, shapes(SULFUR), false, false, ParticleUtil.find("SULFUR_BUBBLES", Particle.WAX_OFF));
     }
 
     public static BlockTrail resin() {
-        return new BlockTrail(RESIN, shapes(RESIN, "smooth_red_sandstone"), false, false, null);
+        return new BlockTrail(RESIN, shapes(RESIN), false, false, null);
     }
 
     public static BlockTrail paleGarden() {
-        return new BlockTrail(PALE_GARDEN, shapes(PALE_GARDEN, "smooth_quartz", "birch"), true, false, Particle.WHITE_ASH);
+        return new BlockTrail(PALE_GARDEN, shapes(PALE_GARDEN), true, false, Particle.WHITE_ASH);
     }
 
     /**
@@ -160,10 +160,12 @@ public final class BlockTrails {
     }
 
     /**
-     * Slab and stair names for a trail: one per trail block that has them ({@code cherry_planks} gives
-     * {@code cherry}, {@code prismarine_bricks} gives {@code prismarine_brick}), then the look-alikes.
+     * Slab and stair names for a trail, only from its own blocks ({@code cherry_planks} gives
+     * {@code cherry}, {@code prismarine_bricks} gives {@code prismarine_brick}), plus other cuts of the
+     * same block. Trails of wool, concrete or ice have no slabs or stairs in vanilla, so they leave
+     * slabs and stairs alone; if a version adds e.g. {@code red_wool_slab}, it is used automatically.
      */
-    private static List<String> shapes(List<BlockData> blocks, String... lookAlikes) {
+    private static List<String> shapes(List<BlockData> blocks, String... sameBlock) {
         List<String> result = new ArrayList<>();
 
         for (BlockData data : blocks) {
@@ -180,7 +182,7 @@ public final class BlockTrails {
                 result.add(name);
             }
         }
-        result.addAll(List.of(lookAlikes));
+        result.addAll(List.of(sameBlock));
         return result;
     }
 

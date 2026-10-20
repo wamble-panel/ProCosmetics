@@ -40,8 +40,8 @@ import java.util.List;
  * Turns the ground you walk on into other blocks for a few seconds. The blocks are fake
  * (client-side, shown to everyone nearby), the real world never changes, and special blocks
  * like chests, doors and beds are skipped by the {@link me.dtbh.kiwicosmetics.util.block.FakeBlockManager}.
- * Slabs and stairs become a slab or stair of a matching block with the same shape, trails
- * without a matching slab leave them alone.
+ * Slabs and stairs become a slab or stair of one of the trail's own blocks with the same shape;
+ * trails whose blocks have no slabs or stairs (wool, concrete, ice) leave them alone.
  */
 public class BlockTrail implements ParticleEffectBehavior {
 
