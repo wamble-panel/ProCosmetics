@@ -22,12 +22,14 @@ import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
 import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;
 import org.bukkit.Sound;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.plugin.Plugin;
 import me.dtbh.kiwicosmetics.api.KiwiCosmetics;
 import me.dtbh.kiwicosmetics.api.config.Config;
 import me.dtbh.kiwicosmetics.api.cosmetic.Cosmetic;
 import me.dtbh.kiwicosmetics.api.cosmetic.registry.CosmeticCategory;
 import me.dtbh.kiwicosmetics.api.menu.Menu;
 import me.dtbh.kiwicosmetics.api.user.User;
+import me.dtbh.kiwicosmetics.locale.LanguageManagerImpl;
 import me.dtbh.kiwicosmetics.menu.MenuImpl;
 import me.dtbh.kiwicosmetics.menu.MenuStyle;
 import me.dtbh.kiwicosmetics.util.item.ItemBuilderImpl;
@@ -37,7 +39,7 @@ import java.util.List;
 
 /**
  * The menu /cosmetics opens: a header with the player's progress, one tile per category,
- * and buttons to unequip everything or close the menu.
+ * links to other plugins' menus (pets, tags, glow) and buttons to unequip everything or close the menu.
  */
 public class MainMenu extends MenuImpl {
 
@@ -84,6 +86,8 @@ public class MainMenu extends MenuImpl {
             });
         }
 
+        addLinks(config);
+
         // Header with the overall progress
         TagResolver progress = progressResolvers(unlockedTotal, total);
         ItemBuilderImpl header = new ItemBuilderImpl(config, PATH + "header");
@@ -115,6 +119,67 @@ public class MainMenu extends MenuImpl {
         });
 
         drawBorder(config);
+    }
+
+    /**
+     * Tiles that run a command, for cosmetics handled by other plugins (/pets, /tags, /eglow).
+     * A link is hidden when its plugin isn't installed or the player lacks its permission.
+     */
+    private void addLinks(Config config) {
+        for (String key : config.getSectionKeys(PATH + "links")) {
+            String path = PATH + "links." + key;
+
+            if (!config.hasKey(path + ".slot") || !config.hasKey(path + ".command")) {
+                continue;
+            }
+            String requiredPlugin = config.hasKey(path + ".plugin") ? config.getString(path + ".plugin") : "";
+
+            if (!requiredPlugin.isEmpty() && !isPluginEnabled(requiredPlugin)) {
+                continue;
+            }
+            String permission = config.hasKey(path + ".permission") ? config.getString(path + ".permission") : "";
+
+            if (!permission.isEmpty() && !player.hasPermission(permission)) {
+                continue;
+            }
+            String nameKey = "menu.link." + key;
+            String name = hasTranslation(nameKey) ? user.translateRaw(nameKey)
+                    : config.hasKey(path + ".name") ? MenuStyle.smallCaps(config.getString(path + ".name"))
+                    : MenuStyle.smallCaps(key.replace('_', ' '));
+
+            List<Component> lore = new ArrayList<>();
+            if (hasTranslation(nameKey + ".desc")) {
+                lore.addAll(user.translateList(nameKey + ".desc"));
+            }
+            lore.addAll(user.translateList("menu.link.desc"));
+
+            ItemBuilderImpl item = new ItemBuilderImpl(config, path);
+            item.setDisplayName(user.translate("menu.link.name", Placeholder.unparsed("name", name)));
+            item.setLore(lore);
+
+            String command = config.getString(path + ".command");
+            String finalCommand = command.startsWith("/") ? command.substring(1) : command;
+
+            setItem(item.getSlot(), item.hide().getItemStack(), event -> {
+                playClickSound();
+                player.closeInventory();
+                // Next tick, so the other plugin's menu doesn't open while this one is closing
+                plugin.getSyncExecutor().execute(() -> player.performCommand(finalCommand.replace("%player%", player.getName())));
+            });
+        }
+    }
+
+    private boolean isPluginEnabled(String name) {
+        for (Plugin installed : plugin.getJavaPlugin().getServer().getPluginManager().getPlugins()) {
+            if (installed.getName().equalsIgnoreCase(name)) {
+                return installed.isEnabled();
+            }
+        }
+        return false;
+    }
+
+    private boolean hasTranslation(String key) {
+        return ((LanguageManagerImpl) plugin.getLanguageManager()).has(key, user.getLocale());
     }
 
     private ItemStack getCategoryItem(CosmeticCategory<?, ?, ?> category, int unlocked, int amount) {

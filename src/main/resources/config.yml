@@ -114,6 +114,30 @@ menu:
         item: "minecraft:player_head[profile={name:'Notch'},!minecraft:rarity]"
         count: 1
         slot: 31
+    # Tiles that open other plugins' menus by running a command as the player.
+    # plugin:     only shown when this plugin is installed (leave out to always show)
+    # permission: only shown to players with this permission (optional)
+    # name:       used when lang/en_US.json has no "menu.link.<key>" translation
+    # command:    without the slash, %player% is the player's name
+    links:
+      pets:
+        item: "minecraft:wolf_spawn_egg"
+        count: 1
+        slot: 29
+        plugin: "SimplePets"
+        command: "pets"
+      tags:
+        item: "minecraft:name_tag"
+        count: 1
+        slot: 30
+        plugin: "EternalTags"
+        command: "tags"
+      glow:
+        item: "minecraft:glow_ink_sac"
+        count: 1
+        slot: 32
+        plugin: "eGlow"
+        command: "eglow"
 
   # Every category menu (particles, trails, gadgets...) shares this layout.
   category:
@@ -145,4 +169,4 @@ menu:
       count: 1
 
 # Do not edit this!
-config_version: 3
+config_version: 4

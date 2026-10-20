@@ -1534,5 +1534,25 @@
   "plushies.no_ground": "<gradient:#FFB5A7:#FFC8DD><bold>✦ ᴋɪᴡɪ</bold></gradient> <#8A8A8A>• <#FF9AA2>✘ ᴘʟᴜꜱʜɪᴇꜱ ɴᴇᴇᴅ ꜱᴏᴍᴇᴛʜɪɴɢ ᴛᴏ ꜱɪᴛ ᴏɴ.",
   "plushies.occupied": "<gradient:#FFB5A7:#FFC8DD><bold>✦ ᴋɪᴡɪ</bold></gradient> <#8A8A8A>• <#FF9AA2>✘ ᴛʜᴇʀᴇ ɪꜱ ᴀʟʀᴇᴀᴅʏ ᴀ ᴘʟᴜꜱʜɪᴇ ᴛʜᴇʀᴇ.",
   "plushies.not_owner": "<gradient:#FFB5A7:#FFC8DD><bold>✦ ᴋɪᴡɪ</bold></gradient> <#8A8A8A>• <#FF9AA2>✘ ᴛʜɪꜱ ᴘʟᴜꜱʜɪᴇ ʙᴇʟᴏɴɢꜱ ᴛᴏ <#FFC8DD><owner><#FF9AA2>.",
-  "plushies.picked_up": "<gradient:#FFB5A7:#FFC8DD><bold>✦ ᴋɪᴡɪ</bold></gradient> <#8A8A8A>• <#B5EAD7>✔ <#FFD8BE>ᴘɪᴄᴋᴇᴅ ᴜᴘ <#FFC8DD><cosmetic><#FFD8BE>."
+  "plushies.picked_up": "<gradient:#FFB5A7:#FFC8DD><bold>✦ ᴋɪᴡɪ</bold></gradient> <#8A8A8A>• <#B5EAD7>✔ <#FFD8BE>ᴘɪᴄᴋᴇᴅ ᴜᴘ <#FFC8DD><cosmetic><#FFD8BE>.",
+  "menu.link.name": "<gradient:#FFB5A7:#FFC8DD><bold>✦ <name></bold></gradient>",
+  "menu.link.desc": [
+    "",
+    "<#A2D2FF>➜ <#FFD8BE>ᴄʟɪᴄᴋ ᴛᴏ ᴏᴘᴇɴ"
+  ],
+  "menu.link.pets": "ᴘᴇᴛꜱ",
+  "menu.link.pets.desc": [
+    "<#CDB4DB>ᴄᴜᴛᴇ ᴘᴇᴛꜱ ᴛʜᴀᴛ",
+    "<#CDB4DB>ꜰᴏʟʟᴏᴡ ʏᴏᴜ ᴀʀᴏᴜɴᴅ"
+  ],
+  "menu.link.tags": "ᴛᴀɢꜱ",
+  "menu.link.tags.desc": [
+    "<#CDB4DB>ᴀ ᴘʀᴇᴛᴛʏ ᴛᴀɢ",
+    "<#CDB4DB>ɴᴇxᴛ ᴛᴏ ʏᴏᴜʀ ɴᴀᴍᴇ"
+  ],
+  "menu.link.glow": "ɢʟᴏᴡ",
+  "menu.link.glow.desc": [
+    "<#CDB4DB>ᴍᴀᴋᴇ ʏᴏᴜʀꜱᴇʟꜰ ɢʟᴏᴡ",
+    "<#CDB4DB>ɪɴ ʏᴏᴜʀ ꜰᴀᴠᴏʀɪᴛᴇ ᴄᴏʟᴏʀ"
+  ]
 }

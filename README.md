@@ -20,6 +20,9 @@ merged with the hats and rainbow armor of the old KiwiCosmetics plugin.
 - **Plushies**: furniture for your base. Pick one in the menu to get a plushie item, right-click a block and a
   half-size player figure sits on it (your own skin, a player's skin or any texture). Right-click it for a hug,
   hit it or sneak + right-click to pick it back up. Placed plushies are normal entities saved with the world.
+- **Links to your other plugins**: the main menu has tiles that open **/pets** (SimplePets), **/tags** (EternalTags)
+  and **/eglow** (eGlow). Each tile only shows up when its plugin is installed; add your own under
+  `menu.main.links` in `config.yml`.
 - **Hats & rainbow armor** (Paper): `/hats` and `/rainbow` work exactly like before, and every hat can also be worn
   from the menu (visual only, the real helmet stays put).
 - No database: equipped cosmetics are remembered on the player (persistent data container).
