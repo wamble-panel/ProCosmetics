@@ -96,7 +96,7 @@ jobs:
             if ! pgrep -f paper.jar > /dev/null; then echo "Server died"; cat server.log; exit 1; fi
             sleep 2
           done
-          for command in "kiwicosmetics" "kc permission trails" "kc permission particle_effects" "kc permission plushies" "hats list" "rainbow list" "kc reload" "hats reload"; do
+          for command in "kiwicosmetics" "kc permission trails" "kc permission particle_effects" "kc permission plushies" "kc plushies reset Notch all" "hats list" "rainbow list" "kc reload" "hats reload"; do
             echo "$command" >&3
             sleep 3
           done

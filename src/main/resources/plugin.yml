@@ -86,6 +86,7 @@ permissions:
       kiwicosmetics.command.reload: true
       kiwicosmetics.command.item: true
       kiwicosmetics.command.structure: true
+      kiwicosmetics.command.plushies: true
       kiwicosmetics.plushies.admin: true
       kiwicosmetics.plushies.unlimited: true
       kiwi.*: true

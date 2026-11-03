@@ -38,6 +38,7 @@ public class KiwiCosmeticsCommand extends SimpleCommand<CommandSender> {
                 new ItemCommand(plugin),
                 new MenuCommand(plugin),
                 new PermissionCommand(plugin),
+                new PlushiesCommand(plugin),
                 new ReloadCommand(plugin),
                 new StructureCommand(plugin),
                 new UnequipAllPlayersCommand(plugin),

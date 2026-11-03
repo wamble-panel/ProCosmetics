@@ -176,6 +176,7 @@ public class KiwiCosmeticsPlugin extends JavaPlugin implements KiwiCosmetics {
             wardrobe.disable();
         }
         fakeBlockManager.shutdown();
+        plushieFurniture.shutdown();
         HandlerList.unregisterAll(this);
         getServer().getScheduler().cancelTasks(this);
 

@@ -53,6 +53,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
+import org.bukkit.permissions.PermissionAttachmentInfo;
 import org.bukkit.profile.PlayerProfile;
 import org.bukkit.util.BoundingBox;
 import org.bukkit.util.RayTraceResult;
@@ -69,6 +70,7 @@ import me.dtbh.kiwicosmetics.util.item.ItemBuilderImpl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.UUID;
 
 /**
@@ -80,6 +82,9 @@ public class PlushieFurniture implements Listener {
 
     public static final String PERMISSION_UNLIMITED = "kiwicosmetics.plushies.unlimited";
     public static final String PERMISSION_ADMIN = "kiwicosmetics.plushies.admin";
+    // kiwicosmetics.plushies.claims.<n>: claim each plushie up to n times
+    public static final String PERMISSION_CLAIMS_PREFIX = "kiwicosmetics.plushies.claims.";
+    private static final int DEFAULT_MAX_CLAIMS = 1;
     private static final int DEFAULT_MAX_PLACED = 10;
     private static final String ENTRY_SEPARATOR = ";";
     // How tall a sitting plushie is at scale 1, and how far from a wall it sits when a side is clicked
@@ -87,17 +92,22 @@ public class PlushieFurniture implements Listener {
     private static final double WALL_DISTANCE = 0.2d;
 
     private final KiwiCosmeticsPlugin plugin;
+    private final PlushieClaims claims;
     // On plushie items, placed mannequins and their seats: the plushie key
     private final NamespacedKey typeKey;
     // On items and mannequins: the skin to use instead of the one in plushies.yml
     private final NamespacedKey skinKey;
     private final NamespacedKey ownerKey;
     private final NamespacedKey ownerNameKey;
+    // On items and placed mannequins: the claim the plushie belongs to
+    private final NamespacedKey claimKey;
     // On players: the plushies they placed, as "uuid@world@chunkX@chunkZ" entries
     private final NamespacedKey placedKey;
 
     public PlushieFurniture(KiwiCosmeticsPlugin plugin) {
         this.plugin = plugin;
+        this.claims = new PlushieClaims(plugin);
+        this.claimKey = new NamespacedKey(plugin, "plushie_claim");
         this.typeKey = new NamespacedKey(plugin, "plushie");
         this.skinKey = new NamespacedKey(plugin, "plushie_skin");
         this.ownerKey = new NamespacedKey(plugin, "plushie_owner");
@@ -112,8 +122,13 @@ public class PlushieFurniture implements Listener {
      * they were given to, so they keep looking like them when given away.
      */
     public void giveItem(User user, Player player, PlushieType type) {
-        if (hasItem(player, type)) {
-            user.sendMessage(user.translate("plushies.already_have", Placeholder.unparsed("cosmetic", type.getName(user))));
+        int max = getMaxClaims(player);
+        int claimed = claims.count(player.getUniqueId(), type.getKey());
+
+        if (max >= 0 && claimed >= max) {
+            user.sendMessage(user.translate("plushies.claim_limit",
+                    Placeholder.unparsed("cosmetic", type.getName(user)),
+                    Placeholder.unparsed("max", String.valueOf(max))));
             return;
         }
         if (player.getInventory().firstEmpty() == -1) {
@@ -121,16 +136,61 @@ public class PlushieFurniture implements Listener {
             return;
         }
         String skin = PlushieSkins.SELF.equalsIgnoreCase(type.getSkin()) ? PlushieSkins.skinOf(player) : null;
-        player.getInventory().addItem(createItem(user, type, skin));
+        String claimId = claims.create(player.getUniqueId(), type.getKey());
+        player.getInventory().addItem(createItem(user, type, skin, claimId));
         player.playSound(player, Sound.ENTITY_ITEM_PICKUP, 0.6f, 1.2f);
-        user.sendMessage(user.translate("plushies.received", Placeholder.unparsed("cosmetic", type.getName(user))));
+        user.sendMessage(user.translate("plushies.received",
+                Placeholder.unparsed("cosmetic", type.getName(user)),
+                Placeholder.unparsed("count", String.valueOf(claimed + 1)),
+                Placeholder.unparsed("max", max >= 0 ? String.valueOf(max) : "∞")));
     }
 
-    private ItemStack createItem(User user, PlushieType type, @Nullable String skin) {
+    /**
+     * How often a player may claim each plushie: the highest kiwicosmetics.plushies.claims.<n> they
+     * have, or max_claims_per_plushie from plushies.yml. -1 means no limit.
+     */
+    public int getMaxClaims(Player player) {
+        if (player.hasPermission(PERMISSION_UNLIMITED)) {
+            return -1;
+        }
+        int max = -2;
+
+        for (PermissionAttachmentInfo info : player.getEffectivePermissions()) {
+            String permission = info.getPermission().toLowerCase(Locale.ROOT);
+
+            if (info.getValue() && permission.startsWith(PERMISSION_CLAIMS_PREFIX)) {
+                try {
+                    max = Math.max(max, Integer.parseInt(permission.substring(PERMISSION_CLAIMS_PREFIX.length())));
+                } catch (NumberFormatException ignored) {
+                    // kiwicosmetics.plushies.claims.* and the like
+                }
+            }
+        }
+        if (max != -2) {
+            return max;
+        }
+        CosmeticCategory<PlushieType, PlushieBehavior, PlushieType.Builder> category = plugin.getCategoryRegistries().plushies();
+
+        if (category == null || !category.getConfig().hasKey("max_claims_per_plushie")) {
+            return DEFAULT_MAX_CLAIMS;
+        }
+        return category.getConfig().getInt("max_claims_per_plushie");
+    }
+
+    public PlushieClaims getClaims() {
+        return claims;
+    }
+
+    public void shutdown() {
+        claims.save();
+    }
+
+    private ItemStack createItem(User user, PlushieType type, @Nullable String skin, String claimId) {
         ItemBuilderImpl builder = new ItemBuilderImpl(type.getItemStack())
                 .setDisplayName(user.translate("item.plushie.name", Placeholder.unparsed("name", MenuStyle.smallCaps(type.getName(user)))))
                 .setLore(user.translateList("item.plushie.desc"))
-                .setCustomData(typeKey, PersistentDataType.STRING, type.getKey());
+                .setCustomData(typeKey, PersistentDataType.STRING, type.getKey())
+                .setCustomData(claimKey, PersistentDataType.STRING, claimId);
 
         if (skin != null) {
             builder.setCustomData(skinKey, PersistentDataType.STRING, skin);
@@ -145,15 +205,6 @@ public class PlushieFurniture implements Listener {
             }
         }
         return builder.hide().getItemStack();
-    }
-
-    private boolean hasItem(Player player, PlushieType type) {
-        for (ItemStack item : player.getInventory().getContents()) {
-            if (type.getKey().equals(readKey(item))) {
-                return true;
-            }
-        }
-        return false;
     }
 
     @Nullable
@@ -207,6 +258,15 @@ public class PlushieFurniture implements Listener {
             user.sendMessage(user.translate("cosmetic.locked", Placeholder.unparsed("cosmetic", type.getName(user))));
             return;
         }
+        // Items without a claim (handed out before claims existed) or copies of a placed one are void
+        String claimId = item.getItemMeta().getPersistentDataContainer().get(claimKey, PersistentDataType.STRING);
+        PlushieClaims.Claim claim = claims.get(claimId);
+
+        if (claim == null || !claim.type().equals(type.getKey()) || claim.placed() != null) {
+            player.getInventory().setItem(event.getHand(), null);
+            user.sendMessage(user.translate("plushies.invalid_item"));
+            return;
+        }
         Location location = findSpot(player, clicked, event.getBlockFace());
 
         if (location == null) {
@@ -246,6 +306,8 @@ public class PlushieFurniture implements Listener {
         }
         String skin = item.getItemMeta().getPersistentDataContainer().get(skinKey, PersistentDataType.STRING);
         Mannequin mannequin = spawn(location, type, skin, headOf(item), player);
+        mannequin.getPersistentDataContainer().set(claimKey, PersistentDataType.STRING, claimId);
+        claims.setPlaced(claimId, mannequin.getUniqueId());
 
         placed.add(mannequin.getUniqueId() + "@" + target.getWorld().getName() + "@" + (target.getX() >> 4) + "@" + (target.getZ() >> 4));
         setPlaced(player, placed);
@@ -275,6 +337,7 @@ public class PlushieFurniture implements Listener {
                     meta.setLore(null);
                     meta.getPersistentDataContainer().remove(typeKey);
                     meta.getPersistentDataContainer().remove(skinKey);
+                    meta.getPersistentDataContainer().remove(claimKey);
                 })
                 .getItemStack();
     }
@@ -473,7 +536,15 @@ public class PlushieFurniture implements Listener {
         PlushieType type = getType(data.get(typeKey, PersistentDataType.STRING));
 
         if (type != null) {
-            ItemStack item = createItem(user, type, data.get(skinKey, PersistentDataType.STRING));
+            // Back to an item under the same claim; plushies placed before claims existed get one now
+            String claimId = data.get(claimKey, PersistentDataType.STRING);
+
+            if (claims.get(claimId) != null) {
+                claims.setPlaced(claimId, null);
+            } else {
+                claimId = claims.create(owner != null ? UUID.fromString(owner) : player.getUniqueId(), type.getKey());
+            }
+            ItemStack item = createItem(user, type, data.get(skinKey, PersistentDataType.STRING), claimId);
             player.getInventory().addItem(item).values().forEach(left -> location.getWorld().dropItem(location, left));
         }
         Entity seat = mannequin.getVehicle();

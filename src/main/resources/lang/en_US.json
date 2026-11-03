@@ -1525,7 +1525,7 @@
     "<#A2D2FF>➜ <#FFD8BE>ʀɪɢʜᴛ-ᴄʟɪᴄᴋ ɪᴛ ᴛᴏ ɢɪᴠᴇ ɪᴛ ᴀ ʜᴜɢ",
     "<#A2D2FF>➜ <#FFD8BE>ʜɪᴛ ᴏʀ ꜱɴᴇᴀᴋ-ᴄʟɪᴄᴋ ᴛᴏ ᴘɪᴄᴋ ɪᴛ ᴜᴘ"
   ],
-  "plushies.received": "<gradient:#FFB5A7:#FFC8DD><bold>✦ ᴋɪᴡɪ</bold></gradient> <#8A8A8A>• <#B5EAD7>✔ <#FFD8BE>ʏᴏᴜ ɢᴏᴛ <#FFC8DD><cosmetic><#FFD8BE>! ʀɪɢʜᴛ-ᴄʟɪᴄᴋ ᴀ ʙʟᴏᴄᴋ ᴛᴏ ᴘʟᴀᴄᴇ ɪᴛ.",
+  "plushies.received": "<gradient:#FFB5A7:#FFC8DD><bold>✦ ᴋɪᴡɪ</bold></gradient> <#8A8A8A>• <#B5EAD7>✔ <#FFD8BE>ʏᴏᴜ ɢᴏᴛ <#FFC8DD><cosmetic><#FFD8BE>! ʀɪɢʜᴛ-ᴄʟɪᴄᴋ ᴀ ʙʟᴏᴄᴋ ᴛᴏ ᴘʟᴀᴄᴇ ɪᴛ. <#8A8A8A>(<count>/<max> ᴄʟᴀɪᴍᴇᴅ)",
   "plushies.already_have": "<gradient:#FFB5A7:#FFC8DD><bold>✦ ᴋɪᴡɪ</bold></gradient> <#8A8A8A>• <#FF9AA2>✘ ʏᴏᴜ ᴀʟʀᴇᴀᴅʏ ʜᴀᴠᴇ <#FFC8DD><cosmetic> <#FF9AA2>ɪɴ ʏᴏᴜʀ ɪɴᴠᴇɴᴛᴏʀʏ.",
   "plushies.inventory_full": "<gradient:#FFB5A7:#FFC8DD><bold>✦ ᴋɪᴡɪ</bold></gradient> <#8A8A8A>• <#FF9AA2>✘ ʏᴏᴜʀ ɪɴᴠᴇɴᴛᴏʀʏ ɪꜱ ꜰᴜʟʟ.",
   "plushies.placed": "<gradient:#FFB5A7:#FFC8DD><bold>✦ ᴋɪᴡɪ</bold></gradient> <#8A8A8A>• <#B5EAD7>✔ <#FFD8BE>ᴘʟᴀᴄᴇᴅ <#FFC8DD><cosmetic><#FFD8BE>. <#8A8A8A>(<count>/<max>)",
@@ -1535,6 +1535,9 @@
   "plushies.occupied": "<gradient:#FFB5A7:#FFC8DD><bold>✦ ᴋɪᴡɪ</bold></gradient> <#8A8A8A>• <#FF9AA2>✘ ᴛʜᴇʀᴇ ɪꜱ ᴀʟʀᴇᴀᴅʏ ᴀ ᴘʟᴜꜱʜɪᴇ ᴛʜᴇʀᴇ.",
   "plushies.not_owner": "<gradient:#FFB5A7:#FFC8DD><bold>✦ ᴋɪᴡɪ</bold></gradient> <#8A8A8A>• <#FF9AA2>✘ ᴛʜɪꜱ ᴘʟᴜꜱʜɪᴇ ʙᴇʟᴏɴɢꜱ ᴛᴏ <#FFC8DD><owner><#FF9AA2>.",
   "plushies.picked_up": "<gradient:#FFB5A7:#FFC8DD><bold>✦ ᴋɪᴡɪ</bold></gradient> <#8A8A8A>• <#B5EAD7>✔ <#FFD8BE>ᴘɪᴄᴋᴇᴅ ᴜᴘ <#FFC8DD><cosmetic><#FFD8BE>.",
+  "plushies.claim_limit": "<gradient:#FFB5A7:#FFC8DD><bold>✦ ᴋɪᴡɪ</bold></gradient> <#8A8A8A>• <#FF9AA2>✘ ʏᴏᴜ ᴀʟʀᴇᴀᴅʏ ᴄʟᴀɪᴍᴇᴅ <#FFC8DD><cosmetic> <#FF9AA2>(<max>/<max>). <#8A8A8A>ʟᴏꜱᴛ ɪᴛ? ᴀꜱᴋ ᴀ ꜱᴛᴀꜰꜰ ᴍᴇᴍʙᴇʀ.",
+  "plushies.invalid_item": "<gradient:#FFB5A7:#FFC8DD><bold>✦ ᴋɪᴡɪ</bold></gradient> <#8A8A8A>• <#FF9AA2>✘ ᴛʜɪꜱ ᴘʟᴜꜱʜɪᴇ ɪᴛᴇᴍ ɪꜱ ɴᴏ ʟᴏɴɢᴇʀ ᴠᴀʟɪᴅ ᴀɴᴅ ᴡᴀꜱ ʀᴇᴍᴏᴠᴇᴅ. <#8A8A8A>ɢᴇᴛ ʏᴏᴜʀ ᴘʟᴜꜱʜɪᴇ ꜰʀᴏᴍ /ᴄᴏꜱᴍᴇᴛɪᴄꜱ.",
+  "command.plushies.reset": "<gradient:#FFB5A7:#FFC8DD><bold>✦ ᴋɪᴡɪ</bold></gradient> <#8A8A8A>• <#B5EAD7>✔ <#FFD8BE>ʀᴇꜱᴇᴛ <#FFE5EC><count> <#FFD8BE>ᴘʟᴜꜱʜɪᴇ ᴄʟᴀɪᴍ(ꜱ) ᴏꜰ <#FFC8DD><player><#FFD8BE>. ᴛʜᴇɪʀ ᴏʟᴅ ɪᴛᴇᴍꜱ ɴᴏ ʟᴏɴɢᴇʀ ᴡᴏʀᴋ.",
   "menu.link.name": "<gradient:#FFB5A7:#FFC8DD><bold>✦ <name></bold></gradient>",
   "menu.link.desc": [
     "",

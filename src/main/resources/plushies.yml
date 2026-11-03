@@ -12,6 +12,13 @@ enabled: true
 # Players with kiwicosmetics.plushies.unlimited ignore this.
 max_placed_per_player: 10
 
+# How many times a player can claim each plushie from the menu. -1 for no limit.
+# Give kiwicosmetics.plushies.claims.<n> (e.g. kiwicosmetics.plushies.claims.2) to allow more,
+# the highest one wins. kiwicosmetics.plushies.unlimited ignores this too.
+# Claims are saved in plushie_claims.yml; copied items or items from before claims can't be placed.
+# Lost the item? /kc plushies reset <player> <plushie|all> lets them claim again.
+max_claims_per_plushie: 1
+
 # You can add as many plushies as you like, every entry below is loaded.
 #
 #   skin:  "self"                 the skin of the player who got the plushie
@@ -73,4 +80,4 @@ cosmetics:
     count: 1
 
 # Do not edit this!
-config_version: 2
+config_version: 3

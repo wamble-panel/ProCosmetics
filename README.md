@@ -40,10 +40,12 @@ SQL/Mongo/Redis storage and the hotbar menu item.
 | `kiwicosmetics.command.cosmetics` / `equip` / `unequip` / `unequipall` | everyone | player commands |
 | `kiwicosmetics.plushies.unlimited` | op | place more plushies than `max_placed_per_player` |
 | `kiwicosmetics.plushies.admin` | op | pick up other players' plushies |
+| `kiwicosmetics.plushies.claims.<n>` | - | claim each plushie up to `n` times (default `max_claims_per_plushie`, 1) |
 | `kiwicosmetics.admin` | op | all `/kiwicosmetics` (`/kc`) commands, plus `kiwi.*` |
 | `kiwi.hats.*`, `kiwi.rainbow.*` | op | `/hats` and `/rainbow` (same nodes as before) |
 
 `/kc permission <category>` lists every permission of a category (click to copy).
+`/kc plushies reset <player> <plushie|all>` lets a player claim plushies again (their old items stop working).
 
 Categories: `particle_effects`, `trails`, `gadgets`, `hats`, `balloons`, `banners`, `miniatures`, `plushies`, `arrow_effects`, `death_effects`, `music`.
 
